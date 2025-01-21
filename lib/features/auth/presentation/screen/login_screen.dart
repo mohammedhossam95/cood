@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/utils/values/assets.dart';
 import '/config/locale/app_localizations.dart';
 import '/core/utils/enums.dart';
 import '/core/widgets/custom_alert.dart';
@@ -20,7 +21,6 @@ import '../../../../config/routes/app_routes.dart';
 import '../../../../core/utils/constants.dart';
 import '../../../../core/utils/validator.dart';
 import '../../../../core/utils/values/text_styles.dart';
-import '../../../../core/widgets/country_code_widget.dart';
 import '../../../../core/widgets/tags_text_form_field.dart';
 import '../../../../injection_container.dart';
 
@@ -58,153 +58,206 @@ class LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
+  bool isSecured = true;
+  bool isCheck = true;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => unFocus(),
       child: Scaffold(
-        appBar: AppBar(
-          elevation: 8,
-          iconTheme: const IconThemeData(color: Colors.white),
-          backgroundColor: colors.main,
-          title: Row(
-            children: [
-              const Spacer(),
-              Text(
-                'register'.tr,
-                style: TextStyles.bold12(color: colors.upBackGround),
-              ),
-            ],
-          ),
-        ),
-        backgroundColor: colors.upBackGround,
+        backgroundColor: colors.backGround,
         body: Form(
           key: _formKey,
           child: SafeArea(
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Gaps.vGap40,
+                  Gaps.vGap100,
+                  Gaps.vGap100,
+                  Image.asset(
+                    ImgAssets.jzlLogo,
+                  ),
+                  Gaps.vGap100,
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    padding: EdgeInsets.symmetric(horizontal: 30.w),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'loginWelcome'.tr,
-                          style: TextStyles.bold24(color: colors.main),
-                          textAlign: TextAlign.right,
+                          'login'.tr,
+                          style: TextStyles.bold24(
+                            color: colors.main,
+                          ),
                         ),
                         Gaps.vGap10,
-                        Text(
-                          'loginWelcomeDesc'.tr,
-                          style: TextStyles.medium17(color: colors.main),
-                          textAlign: TextAlign.right,
+                        // CountryCodeWidget(
+                        //   country: selcCountry,
+                        //   updateValue: (Country value) {
+                        //     setState(() {
+                        //       selcCountry = value;
+                        //     });
+                        //   },
+                        // ),
+                        // SizedBox(width: 8.w),
+                        AppTextFormField(
+                          backgroundColor: colors.upBackGround,
+                          controller: phoneController,
+                          focusNode: phoneFocus,
+                          keyboardType: TextInputType.phone,
+                          textInputAction: TextInputAction.done,
+                          isPhone: false,
+                          validatorType: ValidatorType.phone,
+                          hintText: 'phone_number'.tr,
+                          borderColor: colors.main,
                         ),
-                        Gaps.vGap40,
-                        Row(
-                          children: [
-                            CountryCodeWidget(
-                              country: selcCountry,
-                              updateValue: (Country value) {
-                                setState(() {
-                                  selcCountry = value;
-                                });
-                              },
-                            ),
-                            SizedBox(width: 8.w),
-                            Expanded(
-                              child: AppTextFormField(
-                                controller: phoneController,
-                                focusNode: phoneFocus,
-                                keyboardType: TextInputType.phone,
-                                textInputAction: TextInputAction.done,
-                                isPhone: false,
-                                validatorType: ValidatorType.phone,
-                                hintText: 'phone_number'.tr,
-                              ),
-                            ),
-                          ],
-                        ),
+
                         Gaps.vGap25,
                         AppTextFormField(
+                          backgroundColor: colors.upBackGround,
                           controller: passwordController,
                           focusNode: passwordFocus,
                           hintText: 'password'.tr,
-                          obscureText: true,
+                          obscureText: isSecured,
                           textInputAction: TextInputAction.next,
                           validatorType: ValidatorType.password,
-                        ),
-                        Gaps.vGap40,
-                        BlocConsumer<NewLoginCubit, NewLoginState>(
-                          listener: (context, state) {
-                            if (state is NewLoginSuccessState) {
-                              log(state.resp.details?.token ?? '');
-
-                              BlocProvider.of<AutoLoginCubit>(context)
-                                  .saveUserCycle(type: UserCycle.auth);
-                              BlocProvider.of<AutoLoginCubit>(context)
-                                  .saveUserType(type: UserType.approved);
-                              Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                Routes.mainPageRoute,
-                                (Route route) => false,
-                              );
-                            }
-                            if (state is NewLoginErrorState) {
-                              if (state.errorMessage ==
-                                      "هذا العميل غير موجود" ||
-                                  state.errorMessage ==
-                                      "This user is not found") {
-                                CustomAlert().showAlertDialog(
-                                  context: context,
-                                  onpress: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      Routes.otpAuthRoute,
-                                      arguments: AuthParam(phoneController.text,
-                                          selcCountry.phoneCode, ""),
-                                    );
+                          borderColor: colors.main,
+                          suffixIcon: isSecured == true
+                              ? IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      isSecured = !isSecured;
+                                    });
                                   },
-                                  title: state.errorMessage,
-                                  subTitle: "create_account".tr,
-                                  btnTitle: 'confirm',
-                                  isDismissible: true,
-                                  color: colors.secondary,
-                                );
-                              } else {
-                                Constants.showSnakToast(
-                                  context: context,
-                                  type: 3,
-                                  message: state.errorMessage,
-                                );
-                              }
-
-                              log(userType!.name);
-                            }
-                          },
-                          builder: (context, state) {
-                            return Column(
-                              children: [
-                                (state is NewLoginLoadingState)
-                                    ? LoadingView(
-                                        bgColor: colors.secondary,
-                                      )
-                                    : MyDefaultButton(
-                                        color: colors.secondary,
-                                        borderColor: colors.secondary,
-                                        onPressed: () =>
-                                            // Navigator.pushNamed(context,
-                                            //     Routes.otpAuthRoute),
-                                            onLoginPressed(context),
-                                        btnText: 'login',
-                                      ),
-                                // if (state is LoginErrorState) ...[]
-                              ],
-                            );
-                          },
+                                  icon: Icon(
+                                    Icons.visibility,
+                                  ),
+                                )
+                              : IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      isSecured = !isSecured;
+                                    });
+                                  },
+                                  icon: Icon(
+                                    Icons.visibility_off,
+                                  ),
+                                ),
                         ),
+                        Gaps.vGap8,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Checkbox(
+                                  value: isCheck,
+                                  activeColor: colors.main,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isCheck = value ?? false;
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  'remember_me'.tr,
+                                  style: TextStyles.semiBold14(),
+                                )
+                              ],
+                            ),
+                            Text(
+                              'forget_password'.tr,
+                              style: TextStyles.semiBold14(),
+                            ),
+                          ],
+                        ),
+                        Gaps.vGap78,
+                        // BlocConsumer<NewLoginCubit, NewLoginState>(
+                        //   listener: (context, state) {
+                        //     if (state is NewLoginSuccessState) {
+                        //       log(state.resp.details?.token ?? '');
+
+                        //       BlocProvider.of<AutoLoginCubit>(context)
+                        //           .saveUserCycle(type: UserCycle.auth);
+                        //       BlocProvider.of<AutoLoginCubit>(context)
+                        //           .saveUserType(type: UserType.approved);
+                        //       Navigator.pushNamedAndRemoveUntil(
+                        //         context,
+                        //         Routes.mainPageRoute,
+                        //         (Route route) => false,
+                        //       );
+                        //     }
+                        //     if (state is NewLoginErrorState) {
+                        //       if (state.errorMessage ==
+                        //               "هذا العميل غير موجود" ||
+                        //           state.errorMessage ==
+                        //               "This user is not found") {
+                        //         CustomAlert().showAlertDialog(
+                        //           context: context,
+                        //           onpress: () {
+                        //             Navigator.pushNamed(
+                        //               context,
+                        //               Routes.otpAuthRoute,
+                        //               arguments: AuthParam(phoneController.text,
+                        //                   selcCountry.phoneCode, ""),
+                        //             );
+                        //           },
+                        //           title: state.errorMessage,
+                        //           subTitle: "create_account".tr,
+                        //           btnTitle: 'confirm',
+                        //           isDismissible: true,
+                        //           color: colors.secondary,
+                        //         );
+                        //       } else {
+                        //         Constants.showSnakToast(
+                        //           context: context,
+                        //           type: 3,
+                        //           message: state.errorMessage,
+                        //         );
+                        //       }
+
+                        //       log(userType!.name);
+                        //     }
+                        //   },
+                        //   builder: (context, state) {
+                        //     return Column(
+                        //       children: [
+                        //         (state is NewLoginLoadingState)
+                        //             ? LoadingView(
+                        //                 bgColor: colors.secondary,
+                        //               )
+                        //             :
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 50.w),
+                          child: MyDefaultButton(
+                            color: colors.main,
+                            borderColor: colors.main,
+                            onPressed: () =>
+                                // Navigator.pushNamed(context,
+                                //     Routes.otpAuthRoute),
+                                onLoginPressed(context),
+                            btnText: 'login',
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'not_have_account'.tr,
+                              style: TextStyles.bold17(),
+                            ),
+                            Gaps.hGap6,
+                            Text(
+                              'create_new_account'.tr,
+                              style: TextStyles.bold17(color: colors.main),
+                            ),
+                          ],
+                        ),
+                        // if (state is LoginErrorState) ...[]
+                        //   ],
+                        // ),
+                        // },
+                        // ),
                       ],
                     ),
                   ),
@@ -220,20 +273,21 @@ class LoginScreenState extends State<LoginScreen> {
   onLoginPressed(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      try {
-        login(phoneController.text, passwordController.text);
-      } on PlatformException catch (e) {
-        debugPrint(e.toString());
-        unFocus();
-        Future.delayed(Duration.zero, () {
-          if (!context.mounted) return;
-          Constants.showSnakToast(
-            type: 2,
-            context: context,
-            message: 'invalidPhoneText'.tr,
-          );
-        });
-      }
+      Navigator.pushReplacementNamed(context, Routes.mainPageRoute);
+      // try {
+      //   login(phoneController.text, passwordController.text);
+      // } on PlatformException catch (e) {
+      //   debugPrint(e.toString());
+      //   unFocus();
+      //   Future.delayed(Duration.zero, () {
+      //     if (!context.mounted) return;
+      //     Constants.showSnakToast(
+      //       type: 2,
+      //       context: context,
+      //       message: 'invalidPhoneText'.tr,
+      //     );
+      //   });
+      // }
     }
   }
 

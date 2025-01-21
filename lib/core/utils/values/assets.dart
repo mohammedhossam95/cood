@@ -11,7 +11,7 @@ class ImgAssets {
   static const String imagesLightMode = 'assets/images/light-mode.png';
 
   static const String splashCar = 'assets/images/splash_car.png';
-  static const String jzlLogo = 'assets/images/jzl_logo.png';
+  static const String jzlLogo = 'assets/images/app_logo.png';
   static const String imagesLogoAr = 'assets/images/logo.jpg';
   static const String imagesLogoEn = 'assets/images/logo.jpg';
 
