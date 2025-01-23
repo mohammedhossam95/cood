@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../features/auth/presentation/screen/forget_password_screen.dart';
 import '/core/params/car_params.dart';
 import '/features/auth/data/models/new_models/auth_model.dart';
 import '/features/auth/presentation/screen/kind_user_screen.dart';
@@ -147,6 +148,7 @@ class Routes {
   static const String editProfileScreenRoute = '/EditProfileScreen';
   static const String calnederScreemRoute = '/CalnederScreem';
   static const String newMapScreenRoute = '/NewMapScreen';
+  static const String forgetPasswordScreenRoute = '/ForgetPasswordScreen';
 }
 
 class AppRoutes {
@@ -170,6 +172,11 @@ class AppRoutes {
         return MaterialPageRoute(
           settings: routeSettings,
           builder: (BuildContext context) => const LoginScreen(),
+        );
+      case Routes.forgetPasswordScreenRoute:
+        return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (BuildContext context) => const ForgetPasswordScreen(),
         );
 
       case Routes.mobileScreen:
@@ -279,11 +286,11 @@ class AppRoutes {
           builder: (BuildContext context) => const KindUserScreen(),
         );
       case Routes.otpAuthRoute:
-        AuthParam authParam = routeSettings.arguments as AuthParam;
+        // AuthParam authParam = routeSettings.arguments as AuthParam;
         return MaterialPageRoute(
           settings: routeSettings,
           builder: (BuildContext context) => OtpAuthScreen(
-            authParam: authParam,
+            // authParam: authParam,
           ),
         );
       case Routes.successChangePassRoute:

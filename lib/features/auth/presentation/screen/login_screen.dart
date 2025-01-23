@@ -1,24 +1,16 @@
-import 'dart:developer';
-
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/utils/values/assets.dart';
 import '/config/locale/app_localizations.dart';
 import '/core/utils/enums.dart';
-import '/core/widgets/custom_alert.dart';
 import '/core/widgets/gaps.dart';
-import '/core/widgets/loading_view.dart';
 import '/core/widgets/my_default_button.dart';
-import '/features/auth/data/models/new_models/auth_model.dart';
 import '/features/auth/domain/usecases/new_usecases/new_login_usecase.dart';
 import '/features/auth/presentation/cubit/auto_login/auto_login_cubit.dart';
 import '/features/auth/presentation/cubit/new_cubit/new_login/new_login_cubit.dart';
 import '../../../../config/routes/app_routes.dart';
-import '../../../../core/utils/constants.dart';
 import '../../../../core/utils/validator.dart';
 import '../../../../core/utils/values/text_styles.dart';
 import '../../../../core/widgets/tags_text_form_field.dart';
@@ -105,7 +97,7 @@ class LoginScreenState extends State<LoginScreen> {
                           controller: phoneController,
                           focusNode: phoneFocus,
                           keyboardType: TextInputType.phone,
-                          textInputAction: TextInputAction.done,
+                          textInputAction: TextInputAction.next,
                           isPhone: false,
                           validatorType: ValidatorType.phone,
                           hintText: 'phone_number'.tr,
@@ -119,7 +111,7 @@ class LoginScreenState extends State<LoginScreen> {
                           focusNode: passwordFocus,
                           hintText: 'password'.tr,
                           obscureText: isSecured,
-                          textInputAction: TextInputAction.next,
+                          textInputAction: TextInputAction.done,
                           validatorType: ValidatorType.password,
                           borderColor: colors.main,
                           suffixIcon: isSecured == true
@@ -165,9 +157,17 @@ class LoginScreenState extends State<LoginScreen> {
                                 )
                               ],
                             ),
-                            Text(
-                              'forget_password'.tr,
-                              style: TextStyles.semiBold14(),
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  Routes.forgetPasswordScreenRoute,
+                                );
+                              },
+                              child: Text(
+                                'forget_password'.tr,
+                                style: TextStyles.semiBold14(),
+                              ),
                             ),
                           ],
                         ),

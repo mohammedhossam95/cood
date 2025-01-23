@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../core/error/failures.dart';
+import '../../../../../core/error/failures.dart';
 import '../../utils/values/strings.dart';
 import '../entity/pagination_response.dart';
 import '../usecase/additional_pagination_params.dart';

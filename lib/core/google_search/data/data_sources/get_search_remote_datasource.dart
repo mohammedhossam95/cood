@@ -6,8 +6,8 @@ import '../../core/client/http_client.dart';
 import '../../core/error/exceptions/key_empty_exception.dart';
 import '../../core/error/exceptions/network_exception.dart';
 import '../../core/error/exceptions/server_exception.dart';
-import '../../data/data_sources/iget_search_remote_datasource.dart';
-import '../../data/models/lat_lng_model.dart';
+import 'iget_search_remote_datasource.dart';
+import '../models/lat_lng_model.dart';
 import '../models/awesome_place_model.dart';
 
 class GetSearchRemoteDataSource implements IGetSearchRemoteDataSource {

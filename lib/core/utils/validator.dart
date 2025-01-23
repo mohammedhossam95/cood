@@ -1,4 +1,4 @@
-import '../utils/values/strings.dart';
+import 'values/strings.dart';
 
 abstract class Validator {
   static String? call({

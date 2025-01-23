@@ -769,5 +769,16 @@
   "forget_password":"هل نسيت كلمة المرور؟",
   "not_have_account":"ليس لدي حساب",
   "create_new_account":"إنشاء حساب جديد",
+  "---------- forget password screen ---------------": "",
+  "recover_your_password":" يرجى إدخال رقم جوالك المرتبط بحسابك لاستعادة كلمة المرور الخاصة بك.",
+  "recover_link":"إرسال رابط الاستعادة",
+  "enter_otp_number":"الرجاء إدخال كلمة المرور المؤقتة",
+  "otp_verification_code":"رمز التحقق OTP",
+  "otp_verification_phrase":"لقد أرسلنا رمز OTP إلى رقم هاتفك +11111111. أدخل رمز OTP أدناه للتحقق.",
+  "not_have_otp":"لم يتم استلام كلمة المرور المؤقتة؟",
+  "resend_code_otp":"إعادة إرسال كلمة المرور المؤقتة",
+  "modify_pass":"تعديل كلمة المرور",
+  "save_new_password":"حفظ كلمة المرور الجديدة",
+  "saved_new_password":"تم حفظ كلمة المرور الجديدة بنجاح!",
   "": ""
 }

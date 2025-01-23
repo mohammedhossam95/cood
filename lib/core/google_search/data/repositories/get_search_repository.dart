@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../core/error/exceptions/key_empty_exception.dart';
 import '../../core/error/failures/i_failure.dart';
-import '../../data/data_sources/get_search_remote_datasource.dart';
+import '../data_sources/get_search_remote_datasource.dart';
 import '../../domain/entities/awesome_place_entity.dart';
 import '../../domain/entities/lat_lng_entity.dart';
 import '../../domain/entities/param_search_entity.dart';

@@ -163,7 +163,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 listener: (context, state) {
                   Navigator.pushNamedAndRemoveUntil(
                     context,
-                    Routes.kindUserRoute,
+                    Routes.loginScreenRoute,
                     (route) => false,
                   );
                 },

@@ -20,7 +20,7 @@ import '../../../../core/utils/enums.dart';
 import '../../../../core/utils/log_utils.dart' as log;
 import '../../../../core/utils/values/strings.dart';
 import '../../../../injection_container.dart';
-import '../../data/datasources/auth_remote_datasource.dart';
+import '../datasources/auth_remote_datasource.dart';
 import '../../domain/entities/confirm_reset_password_response.dart';
 import '../../domain/entities/reset_password_response.dart';
 import '../../domain/entities/verify_reset_password_response.dart';
