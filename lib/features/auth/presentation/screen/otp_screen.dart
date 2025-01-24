@@ -164,7 +164,7 @@ class _OtpAuthScreenState extends State<OtpAuthScreen> {
                   Image.asset(ImageAssets.otpForgetPasswordScreenIcon),
                   Gaps.vGap15,
                   Text(
-                    'enter_otp_number'.tr,
+                    'enterOtpNumber'.tr,
                     style: TextStyles.bold24(color: colors.upBackGround),
                   ),
                 ],
@@ -186,14 +186,14 @@ class _OtpAuthScreenState extends State<OtpAuthScreen> {
                 children: [
                   Gaps.vGap20,
                   Text(
-                    'otp_verification_code'.tr,
+                    'otpVerificationCode'.tr,
                     style: TextStyles.bold32(color: colors.main),
                     textAlign: TextAlign.right,
                   ),
 
                   Gaps.vGap10,
                   Text(
-                    'otp_verification_phrase'.tr,
+                    'otpVerificationPhrase'.tr,
                     style: TextStyles.medium17(color: colors.blackColor),
                     textAlign: TextAlign.right,
                   ),
@@ -218,14 +218,14 @@ class _OtpAuthScreenState extends State<OtpAuthScreen> {
                       Column(
                         children: [
                           Text(
-                            'not_have_otp'.tr,
+                            'notHaveOtp'.tr,
                             style: TextStyles.bold15(),
                           ),
                           Gaps.vGap5,
                           InkWell(
                             onTap: () {},
                             child: Text(
-                              'resend_code_otp'.tr,
+                              'resendCodeOtp'.tr,
                               style: TextStyles.bold15(color: colors.main),
                             ),
                           ),
@@ -240,9 +240,11 @@ class _OtpAuthScreenState extends State<OtpAuthScreen> {
                       color: colors.main,
                       borderColor: colors.main,
                       onPressed: () =>
-                          // Navigator.pushNamed(context, Routes.otpAuthRoute),
-                          Navigator.pushNamed(
-                              context, Routes.confirmResetPasswordScreenRoute),
+                          Navigator.pushNamed(context, Routes.successOtpScreenRoute),
+                        //  Navigator.pushNamed(context, Routes.failedOtpScreenRoute),
+
+                          // Navigator.pushNamed(
+                          //     context, Routes.confirmResetPasswordScreenRoute),
                       // onLoginPressed(context),
                       btnText: 'confirm_button',
                     ),

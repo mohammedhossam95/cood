@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../features/auth/presentation/screen/forget_password_screen.dart';
 import '/core/params/car_params.dart';
-import '/features/auth/data/models/new_models/auth_model.dart';
 import '/features/auth/presentation/screen/kind_user_screen.dart';
 import '/features/auth/presentation/screen/mobile_screen.dart';
 import '/features/auth/presentation/screen/on_boarding_screen.dart';
@@ -26,10 +24,14 @@ import '../../core/utils/app_strings.dart';
 import '../../core/widgets/full_photo.dart';
 import '../../core/widgets/slider_photo.dart';
 import '../../features/auth/presentation/screen/confirm_reset_password_screen.dart';
+import '../../features/auth/presentation/screen/failed_otp_screen.dart';
+import '../../features/auth/presentation/screen/forget_password_screen.dart';
 import '../../features/auth/presentation/screen/login_screen.dart';
 import '../../features/auth/presentation/screen/register/delivery_register_screen.dart';
 import '../../features/auth/presentation/screen/register/washer_register_screen.dart';
 import '../../features/auth/presentation/screen/splash_screen.dart';
+import '../../features/auth/presentation/screen/success_otp_screen.dart';
+import '../../features/auth/presentation/screen/tearms_condations_screen.dart';
 import '../../features/auth/presentation/screen/verification_reset_password_screen.dart';
 import '../../features/auth/presentation/screen/welcome_screen.dart';
 import '../../features/tabbar/presentation/screens/main_page.dart';
@@ -149,6 +151,11 @@ class Routes {
   static const String calnederScreemRoute = '/CalnederScreem';
   static const String newMapScreenRoute = '/NewMapScreen';
   static const String forgetPasswordScreenRoute = '/ForgetPasswordScreen';
+  static const String tearmsAndCondationsAuthScreenRoute =
+      '/TearmsAndCondationsAuthScreenScreen';
+  static const String successOtpScreenRoute = '/SuccessOtpScreenScreen';
+  static const String failedOtpScreenRoute = '/FailedOtpScreenScreen';
+
 }
 
 class AppRoutes {
@@ -178,7 +185,16 @@ class AppRoutes {
           settings: routeSettings,
           builder: (BuildContext context) => const ForgetPasswordScreen(),
         );
-
+      case Routes.successOtpScreenRoute:
+        return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (BuildContext context) => const SuccessOtpScreen(),
+        );
+        case Routes.failedOtpScreenRoute:
+        return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (BuildContext context) => const FailedOtpScreen(),
+        );
       case Routes.mobileScreen:
         return MaterialPageRoute(
           settings: routeSettings,
@@ -188,6 +204,11 @@ class AppRoutes {
         return MaterialPageRoute(
           settings: routeSettings,
           builder: (BuildContext context) => const ContactUsScreen(),
+        );
+      case Routes.tearmsAndCondationsAuthScreenRoute:
+        return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (BuildContext context) => const TearmsCondationsScreen(),
         );
 
       case Routes.termsAndConditionsRoute:
@@ -290,8 +311,8 @@ class AppRoutes {
         return MaterialPageRoute(
           settings: routeSettings,
           builder: (BuildContext context) => OtpAuthScreen(
-            // authParam: authParam,
-          ),
+              // authParam: authParam,
+              ),
         );
       case Routes.successChangePassRoute:
         return MaterialPageRoute(
@@ -306,12 +327,9 @@ class AppRoutes {
         );
 
       case Routes.newUserRegisterRoute:
-        AuthParam authParam = routeSettings.arguments as AuthParam;
         return MaterialPageRoute(
           settings: routeSettings,
-          builder: (BuildContext context) => NewUserRegisterScreen(
-            authParam: authParam,
-          ),
+          builder: (BuildContext context) => NewUserRegisterScreen(),
         );
 
       case Routes.newDelivryRegisterRoute:

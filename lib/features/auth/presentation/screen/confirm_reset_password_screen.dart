@@ -82,7 +82,7 @@ class ConfirmResetPasswordScreenState
                         Image.asset(ImageAssets.otpForgetPasswordScreenIcon),
                         Gaps.vGap15,
                         Text(
-                          'modify_pass'.tr,
+                          'modifyPassword'.tr,
                           style: TextStyles.bold24(color: colors.upBackGround),
                         ),
                       ],
@@ -165,7 +165,7 @@ class ConfirmResetPasswordScreenState
                                   context, Routes.successChangePassRoute);
                             }
                           },
-                          btnText: 'save_new_password',
+                          btnText: 'saveNewPassword',
                           borderColor: colors.main,
                         ),
                       ],

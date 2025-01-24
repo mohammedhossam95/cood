@@ -2,7 +2,7 @@ import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/utils/values/assets.dart';
+
 import '/config/locale/app_localizations.dart';
 import '/core/utils/enums.dart';
 import '/core/widgets/gaps.dart';
@@ -12,6 +12,7 @@ import '/features/auth/presentation/cubit/auto_login/auto_login_cubit.dart';
 import '/features/auth/presentation/cubit/new_cubit/new_login/new_login_cubit.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/utils/validator.dart';
+import '../../../../core/utils/values/assets.dart';
 import '../../../../core/utils/values/text_styles.dart';
 import '../../../../core/widgets/tags_text_form_field.dart';
 import '../../../../injection_container.dart';
@@ -51,7 +52,7 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   bool isSecured = true;
-  bool isCheck = true;
+  bool isCheck = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -152,7 +153,7 @@ class LoginScreenState extends State<LoginScreen> {
                                   },
                                 ),
                                 Text(
-                                  'remember_me'.tr,
+                                  'rememberMe'.tr,
                                   style: TextStyles.semiBold14(),
                                 )
                               ],
@@ -165,7 +166,7 @@ class LoginScreenState extends State<LoginScreen> {
                                 );
                               },
                               child: Text(
-                                'forget_password'.tr,
+                                'forgetPassword'.tr,
                                 style: TextStyles.semiBold14(),
                               ),
                             ),
@@ -239,19 +240,25 @@ class LoginScreenState extends State<LoginScreen> {
                             btnText: 'login',
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'not_have_account'.tr,
-                              style: TextStyles.bold17(),
-                            ),
-                            Gaps.hGap6,
-                            Text(
-                              'create_new_account'.tr,
-                              style: TextStyles.bold17(color: colors.main),
-                            ),
-                          ],
+                        Gaps.vGap10,
+                        InkWell(
+                          onTap: (){
+                            Navigator.pushNamed(context, Routes.newUserRegisterRoute);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'notHaveAccount'.tr,
+                                style: TextStyles.bold17(),
+                              ),
+                              Gaps.hGap6,
+                              Text(
+                                'createNewAccount'.tr,
+                                style: TextStyles.bold17(color: colors.main),
+                              ),
+                            ],
+                          ),
                         ),
                         // if (state is LoginErrorState) ...[]
                         //   ],

@@ -65,7 +65,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 ),
                 Gaps.vGap50,
                 Text(
-                  'recover_your_password'.tr,
+                  'recoverYourPassword'.tr,
                   textAlign: TextAlign.center,
                   style: TextStyles.bold20(
                     color: colors.main,
@@ -93,7 +93,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         Navigator.pushNamed(context, Routes.otpAuthRoute);
                       }
                     },
-                    btnText: 'recover_link',
+                    btnText: 'recoverLink',
                     borderColor: colors.main,
                   ),
                 ),

@@ -2,12 +2,31 @@ import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/utils/values/text_styles.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../config/routes/app_routes.dart';
 import '../../../../core/utils/values/img_manager.dart';
 import '../../../../core/widgets/gaps.dart';
 import '../../../../injection_container.dart';
 
-class SuccessChangePasswordScreen extends StatelessWidget {
+class SuccessChangePasswordScreen extends StatefulWidget {
   const SuccessChangePasswordScreen({super.key});
+
+  @override
+  State<SuccessChangePasswordScreen> createState() =>
+      _SuccessChangePasswordScreenState();
+}
+
+class _SuccessChangePasswordScreenState
+    extends State<SuccessChangePasswordScreen> {
+  @override
+  void initState() {
+    Future.delayed(
+      Duration(seconds: 2),
+      () {
+         Navigator.pushNamed(context, Routes.mainPageRoute);
+      },
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +38,7 @@ class SuccessChangePasswordScreen extends StatelessWidget {
             Image.asset(ImageAssets.forgetPasswordCheckDoneScreenIcon),
             Gaps.vGap10,
             Text(
-              'saved_new_password'.tr,
+              'savedNewPassword'.tr,
               textAlign: TextAlign.center,
               style: TextStyles.bold24(color: colors.main),
             ),
