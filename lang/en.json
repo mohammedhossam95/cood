@@ -792,5 +792,8 @@
   "terms": "Terms",
   "acceptButton": "Accept",
   "dejectButton": "Reject",
+  "---------- home screen ---------------": "",
+  "tapBarItemCommunicationGuide": "Communication Guide",
+  "tapBarItemMyAccount": "My Account",
   "": ""
 }
