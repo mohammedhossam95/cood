@@ -97,9 +97,7 @@ extension ToastTypeColor on ToastType {
         return _Colors.warning;
       case ToastType.info:
         return _Colors.info;
-      default:
-        return _Colors.base;
-    }
+      }
   }
 
   IconData get icon {

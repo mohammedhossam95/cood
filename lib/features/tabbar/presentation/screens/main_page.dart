@@ -91,38 +91,38 @@ class _MainPageState extends State<MainPage> {
                 : null,
             bottomNavigationBar: Container(
               decoration: BoxDecoration(
-                  color: const Color(0xffF4E5FF),
+                  color: colors.main,
                   border: Border.all(width: 1, color: Colors.grey[200]!)),
               child: GNav(
                 selectedIndex: state.index,
                 onTabChange: (index) => context
                     .read<BottomNavBarCubit>()
                     .changeCurrentScreen(index: index),
-                textSize: 14.sp,
-                color: const Color(0xffC4C4C4),
+                textSize: 20.sp,
+                color: Colors.white,
+
                 gap: 2.r,
-                activeColor: colors.main,
+                activeColor: Colors.white,
                 // tabBackgroundColor: colors.main,
-                padding: EdgeInsets.symmetric(horizontal: 16.r, vertical: 14.r),
+                padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
                 style: GnavStyle.oldSchool,
                 // navigation bar padding
                 tabs: [
                   GButton(
                     icon: Icons.home_outlined,
                     text: Strings.home,
+                    iconSize: 30.r,
                   ),
                   GButton(
-                    icon: FontAwesomeIcons.carRear,
-                    text: 'bookings'.tr,
+                    icon: FontAwesomeIcons.bookOpen,
+                    text: 'tapBarItemCommunicationGuide'.tr,
+                    iconSize: 30.r,
                   ),
                   GButton(
-                    icon: Icons.percent,
-                    text: 'offers'.tr,
+                    icon: Icons.person,
+                    text: 'tapBarItemMyAccount'.tr,
+                    iconSize: 30.r,
                   ),
-                  GButton(
-                    icon: Icons.more_horiz,
-                    text: 'more'.tr,
-                  )
                 ],
               ),
             ),

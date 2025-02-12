@@ -4,9 +4,9 @@ import '../../../injection_container.dart';
 
 class MyColors {
   static const Color white = Colors.white;
-  static const Color backGround = Color(0xFFF6F7F6);
+  static const Color backGround = Color(0xFFF0F8FF);
   static const Color upBackGround = Color(0xFFFFFFFF);
-  static const Color main = Color(0xff4F008C);
+  static const Color main = Color(0xff297AFF);
   static const Color secondary = Color(0xffFF781F);
   static const Color secondryColor = Color(0xffF4E5FF);
   static const Color textColor = Color(0xFF656565);

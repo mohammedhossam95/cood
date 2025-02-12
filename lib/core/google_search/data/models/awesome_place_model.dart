@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../../data/models/prediction_model.dart';
+import 'prediction_model.dart';
 import '../../domain/entities/awesome_place_entity.dart';
 import '../../domain/entities/param_search_entity.dart';
 

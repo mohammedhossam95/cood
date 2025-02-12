@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:dartz/dartz.dart';
 
-import '../../../../../../core/error/failures.dart';
+import '../../../../../core/error/failures.dart';
 import '../../usecases/usecase.dart';
 import '../entity/pagination_response.dart';
 import 'additional_pagination_params.dart';

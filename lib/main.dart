@@ -18,8 +18,8 @@ Future<void> main() async {
       statusBarBrightness: Brightness.light,
       statusBarIconBrightness: Brightness.light,
       systemNavigationBarIconBrightness: Brightness.light,
-            systemNavigationBarColor: Color(0xff4F008C),
-      statusBarColor: Color(0xff4F008C),
+      systemNavigationBarColor: Color(0xffF0F8FF),
+      statusBarColor: Color(0xffF0F8FF),
     ),
   );
   // SystemChrome.setPreferredOrientations([

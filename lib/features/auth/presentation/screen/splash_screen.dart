@@ -1,10 +1,7 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '/core/utils/values/text_styles.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/utils/values/assets.dart';
@@ -50,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
         state is AutoLoginUserCycleState ? _goNext(state.userCycle) : () {};
       },
       child: Scaffold(
-        backgroundColor: colors.main,
+        backgroundColor: colors.backGround,
         body: Column(
           children: [
             Expanded(
@@ -62,20 +59,9 @@ class _SplashScreenState extends State<SplashScreen> {
                     child: Image.asset(
                         width: 184.w, height: 133.h, ImgAssets.jzlLogo),
                   ),
-                  Text(
-                    'JZL Car Rental',
-                    style: TextStyles.medium17(color: colors.upBackGround),
-                  ),
                 ],
               ),
             ),
-            Center(
-              child: Image.asset(
-                width: 495.w,
-                height: 264.h,
-                ImgAssets.splashCar,
-              ),
-            )
           ],
         ),
       ),
@@ -94,7 +80,7 @@ class _SplashScreenState extends State<SplashScreen> {
       // Navigator.pushReplacementNamed(context, Routes.kindUserRoute);
       Navigator.pushReplacementNamed(context, Routes.welcomeRoute);
     } else if (userCycle == UserCycle.login) {
-      Navigator.pushReplacementNamed(context, Routes.kindUserRoute);
+      Navigator.pushReplacementNamed(context, Routes.loginScreenRoute);
     } else if (userCycle == UserCycle.auth) {
       Navigator.pushReplacementNamed(context, Routes.mainPageRoute);
     } else if (userCycle == UserCycle.guest) {

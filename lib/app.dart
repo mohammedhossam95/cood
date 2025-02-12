@@ -41,29 +41,35 @@ class App extends ConsumerWidget {
         },
         builder: (context, state) {
           log('LocaleCubit state: ${state.locale.languageCode}');
-          return ScreenUtilInit(
-            designSize: const Size(
-              AppStrings.screenWidth,
-              AppStrings.screenHeight,
-            ),
-            minTextAdapt: true,
-            splitScreenMode: true,
-            builder: (context, child) {
-              return MaterialApp(
-                title: AppStrings.appName,
-                locale: state.locale,
-                debugShowCheckedModeBanner: false,
-                theme: getAppTheme(context, ref.watch(appThemeProvider)),
-                onGenerateRoute: AppRoutes.onGenerateRoute,
-                supportedLocales: AppLocalizationsSetup.supportedLocales,
-                localeResolutionCallback:
-                    AppLocalizationsSetup.localeResolutionCallback,
-                localizationsDelegates:
-                    AppLocalizationsSetup.localizationsDelegates,
-                navigatorObservers: <NavigatorObserver>[AppNavigatorObserver()],
-              );
-            },
-          );
+          return LayoutBuilder(builder: (context, constrants) {
+            return ScreenUtilInit(
+              designSize: Size(
+                constrants.maxWidth,
+                constrants.maxHeight,
+                // AppStrings.screenWidth,
+                // AppStrings.screenHeight,
+              ),
+              minTextAdapt: true,
+              splitScreenMode: true,
+              builder: (context, child) {
+                return MaterialApp(
+                  title: AppStrings.appName,
+                  locale: state.locale,
+                  debugShowCheckedModeBanner: false,
+                  theme: getAppTheme(context, ref.watch(appThemeProvider)),
+                  onGenerateRoute: AppRoutes.onGenerateRoute,
+                  supportedLocales: AppLocalizationsSetup.supportedLocales,
+                  localeResolutionCallback:
+                      AppLocalizationsSetup.localeResolutionCallback,
+                  localizationsDelegates:
+                      AppLocalizationsSetup.localizationsDelegates,
+                  navigatorObservers: <NavigatorObserver>[
+                    AppNavigatorObserver()
+                  ],
+                );
+              },
+            );
+          });
         },
       ),
     );

@@ -1,9 +1,7 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
-import '../../../../core/utils/values/svg_manager.dart';
 import '/core/widgets/gaps.dart';
 import '../../../../core/utils/values/text_styles.dart';
 import '../../../../injection_container.dart';
@@ -48,6 +46,7 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 18.h),
         decoration: BoxDecoration(
+            color: colors.upBackGround,
             border: Border.all(
               color: colors.dividerColor,
             ),
@@ -59,8 +58,8 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
               style: TextStyles.medium12(color: colors.body),
               textDirection: TextDirection.rtl,
             ),
-            SizedBox(width: 8.w),
-            SvgPicture.asset(SvgAssets.bell)
+            Gaps.hGap8,
+            Icon(Icons.keyboard_arrow_down_rounded),
           ],
         ),
       ),
