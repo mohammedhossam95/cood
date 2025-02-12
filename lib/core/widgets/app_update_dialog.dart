@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:store_redirect/store_redirect.dart';
 
 import '../../injection_container.dart';
 import '../utils/values/strings.dart';
@@ -45,13 +43,7 @@ class AppUpdateDialog extends StatelessWidget {
           ),
           SizedBox(height: 32.h),
           AppElevatedButton(
-            onPressed: () async {
-              final PackageInfo packageInfo = await PackageInfo.fromPlatform();
-              StoreRedirect.redirect(
-                androidAppId: packageInfo.packageName,
-                iOSAppId: packageInfo.packageName,
-              );
-            },
+            onPressed: () async {},
             text: Strings.update,
           ),
         ],

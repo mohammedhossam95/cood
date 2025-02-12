@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '/features/cars/cars_injection.dart';
@@ -14,17 +13,16 @@ import 'config/locale/app_localizations_setup.dart';
 import 'config/routes/app_routes.dart';
 import 'config/routes/navigator_observer.dart';
 import 'config/themes/app_theme.dart';
-import 'config/themes/provider/app_theme_provider.dart';
 import 'core/utils/app_strings.dart';
 import 'features/auth/auth_injection.dart';
 import 'features/language/language_injection.dart';
 import 'features/language/presentation/cubit/locale_cubit/locale_cubit.dart';
 
-class App extends ConsumerWidget {
+class App extends StatelessWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         ...languageBlocs,
@@ -56,7 +54,7 @@ class App extends ConsumerWidget {
                   title: AppStrings.appName,
                   locale: state.locale,
                   debugShowCheckedModeBanner: false,
-                  theme: getAppTheme(context, ref.watch(appThemeProvider)),
+                  theme: getAppTheme(context, true),
                   onGenerateRoute: AppRoutes.onGenerateRoute,
                   supportedLocales: AppLocalizationsSetup.supportedLocales,
                   localeResolutionCallback:

@@ -1,7 +1,9 @@
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/utils/values/assets.dart';
@@ -76,10 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
     //     (route) => false,
     //   );
     // } else
-    if (userCycle == UserCycle.firstOpen) {
-      // Navigator.pushReplacementNamed(context, Routes.kindUserRoute);
-      Navigator.pushReplacementNamed(context, Routes.welcomeRoute);
-    } else if (userCycle == UserCycle.login) {
+    if (userCycle == UserCycle.login) {
       Navigator.pushReplacementNamed(context, Routes.loginScreenRoute);
     } else if (userCycle == UserCycle.auth) {
       Navigator.pushReplacementNamed(context, Routes.mainPageRoute);

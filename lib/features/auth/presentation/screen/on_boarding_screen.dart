@@ -72,7 +72,7 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
                             curve: Curves.easeInOut,
                           );
                         } else {
-                          Navigator.pushNamed(context, Routes.kindUserRoute);
+                          Navigator.pushNamed(context, Routes.loginScreenRoute);
                         }
                       },
                     ),
@@ -108,7 +108,7 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
                             curve: Curves.easeInOut,
                           );
                         } else {
-                          Navigator.pushNamed(context, Routes.kindUserRoute);
+                          Navigator.pushNamed(context, Routes.loginScreenRoute);
                         }
                       },
                       child: IgnorePointer(

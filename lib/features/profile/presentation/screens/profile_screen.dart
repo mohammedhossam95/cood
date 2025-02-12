@@ -221,8 +221,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 .saveUserCycle(type: UserCycle.login);
                             BlocProvider.of<AutoLoginCubit>(context)
                                 .saveUserType(type: UserType.pending);
-                            Navigator.pushNamedAndRemoveUntil(context,
-                                Routes.kindUserRoute, (route) => false);
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              Routes.loginScreenRoute,
+                              (route) => false,
+                            );
                           }
                         },
                       );
@@ -242,8 +245,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 .saveUserCycle(type: UserCycle.login);
                             BlocProvider.of<AutoLoginCubit>(context)
                                 .saveUserType(type: UserType.pending);
-                            Navigator.pushNamedAndRemoveUntil(context,
-                                Routes.kindUserRoute, (route) => false);
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              Routes.loginScreenRoute,
+                              (route) => false,
+                            );
                           }
                         },
                       );

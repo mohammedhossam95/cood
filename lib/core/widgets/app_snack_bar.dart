@@ -97,7 +97,7 @@ extension ToastTypeColor on ToastType {
         return _Colors.warning;
       case ToastType.info:
         return _Colors.info;
-      }
+    }
   }
 
   IconData get icon {
@@ -109,7 +109,6 @@ extension ToastTypeColor on ToastType {
       case ToastType.warning:
         return Icons.warning_rounded;
       case ToastType.info:
-      default:
         return Icons.info_rounded;
     }
   }
@@ -120,5 +119,4 @@ abstract class _Colors {
   static const Color red = Color(0xFFE63D35);
   static const Color info = Color(0xFF296CAF);
   static const Color warning = Color(0xFFF7B313);
-  static const Color base = Color(0xFFE4E4E4);
 }

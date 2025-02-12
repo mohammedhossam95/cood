@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/core/services/local_database/database_helper.dart';
 import 'app.dart';
@@ -30,5 +29,5 @@ Future<void> main() async {
   Bloc.observer = AppBlocObserver();
   dioConsumer.updateDeviceTypeHeader();
   await DBHelper.initDB();
-  runApp(const ProviderScope(child: App()));
+  runApp(const App());
 }

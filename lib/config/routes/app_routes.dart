@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '/core/params/car_params.dart';
-import '/features/auth/presentation/screen/kind_user_screen.dart';
 import '/features/auth/presentation/screen/mobile_screen.dart';
 import '/features/auth/presentation/screen/on_boarding_screen.dart';
 import '/features/auth/presentation/screen/otp_screen.dart';
@@ -33,13 +32,11 @@ import '../../features/auth/presentation/screen/splash_screen.dart';
 import '../../features/auth/presentation/screen/success_otp_screen.dart';
 import '../../features/auth/presentation/screen/tearms_condations_screen.dart';
 import '../../features/auth/presentation/screen/verification_reset_password_screen.dart';
-import '../../features/auth/presentation/screen/welcome_screen.dart';
 import '../../features/tabbar/presentation/screens/main_page.dart';
 import '../../injection_container.dart';
 
 class Routes {
   static const String initialRoute = '/';
-  static const String welcomeRoute = '/WelcomeScreen';
   static const String landingPageRoute = '/LandingPage';
   static const String loginScreenRoute = '/LoginScreen';
   static const String mobileScreen = '/MobileScreen';
@@ -89,7 +86,6 @@ class Routes {
   static const String hospitalInvitationsRoute = '/HospitalInvitationsScreen';
   static const String hospitalInvitationDetailsRoute =
       '/HospitalInvitationDetailsScreen';
-  static const String kindUserRoute = '/KindUserScreen';
   static const String otpAuthRoute = '/OtpAuthScreen';
   static const String successChangePassRoute = '/SuccessChangePassScreen';
   static const String onBoardingRoute = '/OnBoardingScreen';
@@ -155,7 +151,6 @@ class Routes {
       '/TearmsAndCondationsAuthScreenScreen';
   static const String successOtpScreenRoute = '/SuccessOtpScreenScreen';
   static const String failedOtpScreenRoute = '/FailedOtpScreenScreen';
-
 }
 
 class AppRoutes {
@@ -167,12 +162,6 @@ class AppRoutes {
           builder: (BuildContext context) {
             return const SplashScreen();
           },
-        );
-
-      case Routes.welcomeRoute:
-        return MaterialPageRoute(
-          settings: routeSettings,
-          builder: (BuildContext context) => const WelcomeScreen(),
         );
 
       case Routes.loginScreenRoute:
@@ -190,7 +179,7 @@ class AppRoutes {
           settings: routeSettings,
           builder: (BuildContext context) => const SuccessOtpScreen(),
         );
-        case Routes.failedOtpScreenRoute:
+      case Routes.failedOtpScreenRoute:
         return MaterialPageRoute(
           settings: routeSettings,
           builder: (BuildContext context) => const FailedOtpScreen(),
@@ -301,11 +290,6 @@ class AppRoutes {
           ),
         );
 
-      case Routes.kindUserRoute:
-        return MaterialPageRoute(
-          settings: routeSettings,
-          builder: (BuildContext context) => const KindUserScreen(),
-        );
       case Routes.otpAuthRoute:
         // AuthParam authParam = routeSettings.arguments as AuthParam;
         return MaterialPageRoute(

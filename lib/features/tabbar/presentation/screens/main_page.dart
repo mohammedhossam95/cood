@@ -98,30 +98,29 @@ class _MainPageState extends State<MainPage> {
                 onTabChange: (index) => context
                     .read<BottomNavBarCubit>()
                     .changeCurrentScreen(index: index),
-                textSize: 20.sp,
+                textSize: 16.sp,
                 color: Colors.white,
-
                 gap: 2.r,
                 activeColor: Colors.white,
                 // tabBackgroundColor: colors.main,
-                padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
                 style: GnavStyle.oldSchool,
                 // navigation bar padding
                 tabs: [
                   GButton(
                     icon: Icons.home_outlined,
                     text: Strings.home,
-                    iconSize: 30.r,
+                    iconSize: 20.r,
                   ),
                   GButton(
                     icon: FontAwesomeIcons.bookOpen,
                     text: 'tapBarItemCommunicationGuide'.tr,
-                    iconSize: 30.r,
+                    iconSize: 20.r,
                   ),
                   GButton(
                     icon: Icons.person,
                     text: 'tapBarItemMyAccount'.tr,
-                    iconSize: 30.r,
+                    iconSize: 20.r,
                   ),
                 ],
               ),
