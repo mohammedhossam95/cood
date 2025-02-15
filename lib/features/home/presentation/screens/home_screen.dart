@@ -1,24 +1,22 @@
+
+
+import 'package:cood/core/utils/values/app_colors.dart';
+import 'package:cood/features/home/domain/entities/social_entity.dart';
+import 'package:cood/features/home/presentation/widgets/social_container_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '/config/locale/app_localizations.dart';
-import '/config/routes/app_routes.dart';
 import '/core/params/car_params.dart';
-import '/core/utils/constants.dart';
 import '/core/utils/log_utils.dart';
-import '/core/utils/validator.dart';
 import '/core/utils/values/text_styles.dart';
-import '/core/widgets/app_snack_bar.dart';
 import '/core/widgets/gaps.dart';
-import '/core/widgets/menu_text_form_field.dart';
 import '/core/widgets/my_default_button.dart';
 import '/features/home/domain/entities/plans_status_entity.dart';
 import '/features/home/presentation/cubit/get_plans_status_cubit/get_plans_status_cubit.dart';
-import '/features/home/presentation/screens/date_range.dart';
 import '/features/home/presentation/widgets/cities_list.dart';
 import '/features/home/presentation/widgets/home_app_bar.dart';
-import '/features/home/presentation/widgets/home_gallery.dart';
 import '/injection_container.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -41,6 +39,39 @@ class _HomeScreenState extends State<HomeScreen> {
   int? cityId;
   CarParams result = const CarParams();
   CarParams carParams = const CarParams();
+  //-------------------------------------------ali
+  List<Color> socialPhotoColors = [
+    MyColors.main,
+    MyColors.socialGreen,
+    MyColors.black,
+    MyColors.socialyellow,
+  ];
+  List<Color> socialBacgroundColors = [
+    MyColors.facbookItemColor,
+    MyColors.whatsAppItemColor,
+    MyColors.tikokItemColor,
+    MyColors.snapShatItemColor,
+  ];
+  
+  List<SocialEntity> sociaEntityModel = [
+    SocialEntity(
+        name: 'Andrew Tate',
+        email: 'Andrewtate25235@hotmail.com',
+        image: 'assets/images/facbook.png'),
+    SocialEntity(
+        name: 'Andrew Tate',
+        email: '+966599697364',
+        image: 'assets/images/Whatsapp 1.png'),
+    SocialEntity(
+        name: '@AndrewTate',
+        email: 'Andrewtate@hotmail.com',
+        image: 'assets/images/tiktok.png'),
+    SocialEntity(
+        name: '@AndrewTate',
+        email: 'Andrewtate@hotmail.com',
+        image: 'assets/images/snapchat.png'),
+  ];
+
   @override
   void initState() {
     BlocProvider.of<GetPlansStatusCubit>(context).getPlansStatus();
@@ -58,18 +89,15 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const HomeAppBar(),
-                const HomeGallery(),
+                //----------1
+                const HomeAppBar(), //no touch
+                //----------2
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 12.0, horizontal: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'rental_duration'.tr,
-                        style: TextStyles.regular14(color: colors.main),
-                      ),
                       Gaps.vGap12,
                       BlocBuilder<GetPlansStatusCubit, GetPlansStatusState>(
                         builder: (context, state) {
@@ -103,137 +131,72 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                       Gaps.vGap12,
-                      Text(
-                        'selected_pickup_city'.tr,
-                        style: TextStyles.regular14(color: colors.main),
-                      ),
-                      Gaps.vGap12,
-                      InkWell(
-                        onTap: () => showZipCodesSheet(),
-                        child: MenuTextFormField(
-                          controller: cityController,
-                          focusNode: cityFocusNode,
-                          onTap: () => showZipCodesSheet(),
-                          validate: (value) => Validator.call(
-                              value: value, type: ValidatorType.standard),
-                          hintText: 'choose_your_city_pickup_location'.tr,
-                        ),
-                      ),
-                      Gaps.vGap12,
-                      InkWell(
-                        onTap: () async {
-                          result = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const DateRange()),
-                          );
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16.w, vertical: 12.h),
-                          decoration: BoxDecoration(
-                            color: colors.main,
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.calendar_today_outlined,
-                                color: Colors.white,
-                              ),
-                              Gaps.hGap10,
-                              Text(
-                                'pickup_return_date_time'.tr,
-                                style:
-                                    TextStyles.regular14(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Gaps.vGap12,
-                      // _buildCheckboxOption(
-                      //   'return_to_same_location',
-                      //   isSamePickupLocation,
-                      //   (value) {
-                      //     setState(() {
-                      //       isSamePickupLocation = value ?? false;
-                      //     });
-                      //   },
-                      // ),
-                      _buildCheckboxOption(
-                        'driver_age_21_and_above',
-                        isDriverAgeAbove21,
-                        (value) {
-                          setState(() {
-                            isDriverAgeAbove21 = value ?? false;
-                          });
-                        },
-                      ),
-                      Gaps.vGap30,
-                      MyDefaultButton(
-                        btnText: 'start_search',
-                        onPressed: () {
-                          carParams = carParams.copyWith(
-                            recerveDataFrom: result.recerveDataFrom,
-                            recerveDataTo: result.recerveDataTo,
-                          );
-                          if (carParams.recerveDataFrom == null ||
-                              carParams.recerveDataTo == null ||
-                              carParams.cityId == null ||
-                              carParams.plan == null) {
-                            showAppSnackBar(
-                              context: context,
-                              message:
-                                  'please_make_sure_to_select_all_fields'.tr,
-                              type: ToastType.info,
-                            );
-                          } else {
-                            Navigator.pushNamed(context, Routes.carsScreenRoute,
-                                arguments: carParams);
-                          }
-                        },
-                        color: colors.secondary,
-                      ),
                     ],
                   ),
                 ),
+                //--------3
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 10.0.w),
+                  height: 420.h,
+                  decoration: BoxDecoration(
+                    color: MyColors.upBackGround,
+                    borderRadius: BorderRadius.circular(25.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color: MyColors.body.withOpacity(0.5), // Shadow color
+                        spreadRadius: 2.r, // Spread radius
+                        blurRadius: 10.r, // Blur radius
+                        offset: Offset(0, 3), // Offset in x and y directions
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding:  EdgeInsets.all(10.0.h),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: List.generate(
+                        sociaEntityModel.length,
+                        (index) => SocialContainerItem(
+                          entityModel: sociaEntityModel[index],
+                          socialPhotoColors: socialPhotoColors[index],
+                          socialBackgroundColors: socialBacgroundColors[index],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Gaps.vGap12,
+                //-----------------4
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.all(10.h),
+                        
+                          child: MyDefaultButton(
+                            onPressed: () {},
+                            height: 50.h,
+                            btnText: "link_other_accounts",
+                          ),
+                        
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.all(10.h),
+                        
+                          child: MyDefaultButton(
+                            onPressed: () {},
+                            height: 50.h,
+                            btnText: "communication_channels",
+                          ),
+                        ),
+                      ),
+                    
+                  ],
+                ),
               ],
-            ),
-          ),
-          Positioned(
-            bottom: 16.h,
-            left: 0,
-            child: InkWell(
-              onTap: () {
-                String url =
-                    'https://api.whatsapp.com/send/?phone=201093539408&text&type=phone_number&app_absent=0';
-
-                Constants.launchAppUrl(url).onError(
-                  (error, stackTrace) => Constants.showSnakToast(
-                    context: context,
-                    type: 3,
-                    message: error.toString(),
-                  ),
-                );
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 20.h),
-                decoration: BoxDecoration(
-                  color: colors.main,
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(20.r),
-                    topRight: Radius.circular(20.r),
-                  ),
-                ),
-                child: RotatedBox(
-                  quarterTurns: 1,
-                  child: Text(
-                    'contact_us'.tr,
-                    style: TextStyles.regular12(color: Colors.white),
-                  ),
-                ),
-              ),
             ),
           ),
         ],

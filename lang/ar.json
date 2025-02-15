@@ -727,7 +727,7 @@
   "do_you_need_help": "هل تحتاج لمساعدة؟",
   "or": "او",
   "no_reservations": "لا يوجد لديك أي حجوزات!",
-  "reservations": "الحجوزات",
+  "reservations": "دليل التواصل",
   "edit": "تعديل",
   "mobile_number": "رقم الجوال",
   "username": "إسم المستخدم",
@@ -800,5 +800,8 @@
   "---------- home screen ---------------": "",
   "tapBarItemCommunicationGuide": "دليل التواصل",
   "tapBarItemMyAccount": "حسابي",
-  "": ""
+  "link_other_accounts": "ربط حسابات اخري",
+  "communication_channels":"ربط قنوات تواصل",
+  "":""
+
 }

@@ -1,3 +1,4 @@
+import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -115,7 +116,7 @@ class MyTextFormField extends StatelessWidget {
                     ),
                   )
                 : null,
-        fillColor: backgroundColor ?? colors.upBackGround,
+        fillColor: backgroundColor ?? MyColors.white,
         filled: true,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(radius ?? 12.r)),
@@ -128,7 +129,7 @@ class MyTextFormField extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(radius ?? 12.r)),
           borderSide: BorderSide(
             color: borderColor ?? colors.main,
-            width: 1.0,
+            width: 2.0,
           ),
         ),
         focusedErrorBorder: OutlineInputBorder(
