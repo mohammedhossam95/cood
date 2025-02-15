@@ -20,7 +20,15 @@ class MyColors {
   static const Color successColor = Color(0xFF0FEF3D);
   static const Color errorColor = Color(0xFFEF0F0F);
   static const Color buttonColor2 = Color(0xFFEEEEEE);
+  //--------------------ali
+  static const Color facbookItemColor = Color(0xFFECF3FF);
+  static const Color whatsAppItemColor = Color(0xFFF2FFF6);
+  static const Color tikokItemColor = Color(0xFFEEEEEE);
+  static const Color snapShatItemColor = Color(0xFFFFFFD5);
+  static const Color socialGreen = Color(0xFF0DBB41);
+  static const Color socialyellow = Color(0xFFFFFC01);
 
+//---------------
   static const Color blackColor = Colors.black;
 
   static const Color colorCircle = Color(0xFFF3F7FF);

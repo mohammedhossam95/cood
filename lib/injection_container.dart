@@ -23,7 +23,7 @@ abstract class ServiceLocator {
   static final GetIt instance = GetIt.instance;
 
   static Future<void> init() async {
-    instance.allowReassignment = true;
+   instance.allowReassignment = true;
 
     /// Features
     await initLanguageFeatureInjection();

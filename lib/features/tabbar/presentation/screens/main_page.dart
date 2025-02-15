@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:badges/badges.dart' as badges;
+import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -67,13 +68,15 @@ class _MainPageState extends State<MainPage> {
           // },
           onPopInvoked: _onWillPop,
           child: Scaffold(
+            backgroundColor: MyColors.backGround,
             appBar: state.index != 0
                 ? AppBar(
                     leading: BackButton(
                       color: colors.main,
                     ),
-                    backgroundColor: colors.upBackGround,
-                    elevation: 4,
+                    
+                    backgroundColor: MyColors.backGround,
+                    elevation: 0,
                     title: Container(
                       width: ScreenUtil().screenWidth,
                       alignment:
@@ -84,9 +87,10 @@ class _MainPageState extends State<MainPage> {
                             : state.index == 1
                                 ? "reservations".tr
                                 : "offers".tr,
-                        style: TextStyles.semiBold16(color: colors.main),
+                        style: TextStyles.bold32(color: colors.main),
                       ),
                     ),
+                  
                   )
                 : null,
             bottomNavigationBar: Container(

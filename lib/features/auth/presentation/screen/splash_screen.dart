@@ -71,14 +71,14 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _goNext(UserCycle userCycle) {
-    // if (userCycle == UserCycle.firstOpen) {
-    //   Navigator.pushNamedAndRemoveUntil(
-    //     context,
-    //     Routes.onBoardingRoute,
-    //     (route) => false,
-    //   );
-    // } else
-    if (userCycle == UserCycle.login) {
+    if (userCycle == UserCycle.firstOpen) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        Routes.onBoardingRoute,
+        (route) => false,
+      );
+    } 
+    else if (userCycle == UserCycle.login) {
       Navigator.pushReplacementNamed(context, Routes.loginScreenRoute);
     } else if (userCycle == UserCycle.auth) {
       Navigator.pushReplacementNamed(context, Routes.mainPageRoute);

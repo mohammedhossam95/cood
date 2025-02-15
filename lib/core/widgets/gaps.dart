@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Gaps {
   //Horizontal
+  static Widget hGap1 = SizedBox(width: 1.0.w);
   static Widget hGap4 = SizedBox(width: 4.0.w);
   static Widget hGap2 = SizedBox(width: 2.0.w);
   static Widget hGap8 = SizedBox(width: 8.0.w);
