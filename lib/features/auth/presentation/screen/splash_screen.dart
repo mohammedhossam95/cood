@@ -2,11 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/utils/enums.dart';
-import '../../../../core/utils/values/assets.dart';
 import '../../../../injection_container.dart';
 import '../cubit/auto_login/auto_login_cubit.dart';
 
@@ -49,24 +47,15 @@ class _SplashScreenState extends State<SplashScreen> {
         state is AutoLoginUserCycleState ? _goNext(state.userCycle) : () {};
       },
       child: Scaffold(
-        backgroundColor: colors.backGround,
-        body: Column(
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Image.asset(
-                        width: 184.w, height: 133.h, ImgAssets.jzlLogo),
-                  ),
-                ],
+          backgroundColor: colors.backGround,
+          body: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/gifs/splash.gif"),
+                fit: BoxFit.cover,
               ),
             ),
-          ],
-        ),
-      ),
+          )),
     );
   }
 
@@ -77,8 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Routes.onBoardingRoute,
         (route) => false,
       );
-    } 
-    else if (userCycle == UserCycle.login) {
+    } else if (userCycle == UserCycle.login) {
       Navigator.pushReplacementNamed(context, Routes.loginScreenRoute);
     } else if (userCycle == UserCycle.auth) {
       Navigator.pushReplacementNamed(context, Routes.mainPageRoute);

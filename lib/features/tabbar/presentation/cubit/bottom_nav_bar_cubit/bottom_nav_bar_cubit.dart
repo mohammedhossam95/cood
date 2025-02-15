@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '/features/home/presentation/screens/home_screen.dart';
 import '/features/more/presentation/screens/more_screen.dart';
-import '/features/offers/presentation/screens/offers_screen.dart';
 import '/features/reservations/presentation/screens/reservations_screen.dart';
 
 part 'bottom_nav_bar_state.dart';
@@ -16,7 +15,6 @@ class BottomNavBarCubit extends Cubit<BottomNavBarState> {
   final List<Widget> screens = [
     const HomeScreen(),
     const ReservationScreen(),
-    const OffersScreen(),
     const MoreScreen(),
   ];
 

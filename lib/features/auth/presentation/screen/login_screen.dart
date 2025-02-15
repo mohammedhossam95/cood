@@ -66,7 +66,6 @@ class LoginScreenState extends State<LoginScreen> {
               child: Column(
                 children: [
                   Gaps.vGap100,
-                  Gaps.vGap100,
                   Image.asset(
                     ImgAssets.jzlLogo,
                   ),
@@ -242,8 +241,9 @@ class LoginScreenState extends State<LoginScreen> {
                         ),
                         Gaps.vGap10,
                         InkWell(
-                          onTap: (){
-                            Navigator.pushNamed(context, Routes.newUserRegisterRoute);
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, Routes.newUserRegisterRoute);
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

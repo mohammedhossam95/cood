@@ -1,5 +1,3 @@
-
-
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/features/home/domain/entities/social_entity.dart';
 import 'package:cood/features/home/presentation/widgets/social_container_item.dart';
@@ -16,7 +14,6 @@ import '/core/widgets/my_default_button.dart';
 import '/features/home/domain/entities/plans_status_entity.dart';
 import '/features/home/presentation/cubit/get_plans_status_cubit/get_plans_status_cubit.dart';
 import '/features/home/presentation/widgets/cities_list.dart';
-import '/features/home/presentation/widgets/home_app_bar.dart';
 import '/injection_container.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -52,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
     MyColors.tikokItemColor,
     MyColors.snapShatItemColor,
   ];
-  
+
   List<SocialEntity> sociaEntityModel = [
     SocialEntity(
         name: 'Andrew Tate',
@@ -90,7 +87,66 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //----------1
-                const HomeAppBar(), //no touch
+                // const HomeAppBar(), //no touch
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    children: [
+                      Center(
+                        child: Container(
+                          width: 50.w,
+                          height: 50.w,
+                          decoration: BoxDecoration(
+                            color: colors.main,
+                            border: Border.all(
+                              color: colors.main,
+                            ),
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
+                          clipBehavior: Clip.antiAlias,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10.r),
+                            child: Image.asset(
+                              "assets/images/user.jpeg",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Gaps.hGap10,
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'فهد سليمان',
+                              style: TextStyles.regular15(),
+                            ),
+                            Text(
+                              '359698845',
+                              style: TextStyles.regular12(),
+                            ),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.notifications,
+                          color: colors.main,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.settings,
+                          color: colors.main,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 //----------2
                 Padding(
                   padding: const EdgeInsets.symmetric(
@@ -151,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   child: Padding(
-                    padding:  EdgeInsets.all(10.0.h),
+                    padding: EdgeInsets.all(10.0.h),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: List.generate(
@@ -173,27 +229,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     Expanded(
                       child: Container(
                         margin: EdgeInsets.all(10.h),
-                        
-                          child: MyDefaultButton(
-                            onPressed: () {},
-                            height: 50.h,
-                            btnText: "link_other_accounts",
-                          ),
-                        
+                        child: MyDefaultButton(
+                          onPressed: () {},
+                          height: 50.h,
+                          btnText: "link_other_accounts",
+                        ),
                       ),
                     ),
                     Expanded(
                       child: Container(
                         margin: EdgeInsets.all(10.h),
-                        
-                          child: MyDefaultButton(
-                            onPressed: () {},
-                            height: 50.h,
-                            btnText: "communication_channels",
-                          ),
+                        child: MyDefaultButton(
+                          onPressed: () {},
+                          height: 50.h,
+                          btnText: "communication_channels",
                         ),
                       ),
-                    
+                    ),
                   ],
                 ),
               ],

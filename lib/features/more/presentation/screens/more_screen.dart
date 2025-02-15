@@ -2,6 +2,8 @@
 
 import 'dart:io';
 
+import 'package:cood/core/utils/values/text_styles.dart';
+import 'package:cood/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_plus/share_plus.dart';
@@ -27,6 +29,46 @@ class _MoreScreenState extends State<MoreScreen> {
       padding: EdgeInsets.all(25.r),
       child: Column(
         children: [
+          Gaps.vGap50,
+          Center(
+            child: Center(
+              child: Container(
+                width: 100.w,
+                height: 100.w,
+                decoration: BoxDecoration(
+                  color: colors.main,
+                  border: Border.all(
+                    color: colors.main,
+                  ),
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.r),
+                  child: Image.asset(
+                    "assets/images/user.jpeg",
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Gaps.vGap20,
+          Text(
+            'فهد سليمان',
+            style: TextStyles.regular15(),
+          ),
+          Gaps.vGap8,
+          Text(
+            '+966 55 555 5555',
+            style: TextStyles.regular12(),
+          ),
+          Gaps.vGap8,
+          Text(
+            '12345675555',
+            style: TextStyles.regular12(),
+          ),
+          Gaps.vGap16,
           MoreItemWidget(
             onTap: () {
               Constants.buildCustomShowModel(

@@ -69,30 +69,28 @@ class _MainPageState extends State<MainPage> {
           onPopInvoked: _onWillPop,
           child: Scaffold(
             backgroundColor: MyColors.backGround,
-            appBar: state.index != 0
-                ? AppBar(
-                    leading: BackButton(
-                      color: colors.main,
-                    ),
-                    
-                    backgroundColor: MyColors.backGround,
-                    elevation: 0,
-                    title: Container(
-                      width: ScreenUtil().screenWidth,
-                      alignment:
-                          isRtl ? Alignment.centerLeft : Alignment.centerRight,
-                      child: Text(
-                        state.index == 3
-                            ? "more".tr
-                            : state.index == 1
-                                ? "reservations".tr
-                                : "offers".tr,
-                        style: TextStyles.bold32(color: colors.main),
-                      ),
-                    ),
-                  
-                  )
-                : null,
+            // appBar: state.index != 0
+            //     ? AppBar(
+            //         leading: BackButton(
+            //           color: colors.main,
+            //         ),
+            //         backgroundColor: MyColors.backGround,
+            //         elevation: 0,
+            //         title: Container(
+            //           width: ScreenUtil().screenWidth,
+            //           alignment:
+            //               isRtl ? Alignment.centerLeft : Alignment.centerRight,
+            //           child: Text(
+            //             state.index == 2
+            //                 ? "more".tr
+            //                 : state.index == 1
+            //                     ? "reservations".tr
+            //                     : "offers".tr,
+            //             style: TextStyles.bold32(color: colors.main),
+            //           ),
+            //         ),
+            //       )
+            //     : null,
             bottomNavigationBar: Container(
               decoration: BoxDecoration(
                   color: colors.main,

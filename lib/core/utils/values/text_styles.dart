@@ -266,8 +266,10 @@ abstract class TextStyles {
   static TextStyle bold24({Color? color}) => TextStyle(
         color: color,
         fontSize: 24.sp,
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.w800,
         fontFamily: _font,
+        height: 44.98 / 24, // Converting line-height to Flutter's height factor
+        letterSpacing: 0, // Default is 0, but explicitly setting it
       );
 
   static TextStyle bold22({Color? color}) => TextStyle(

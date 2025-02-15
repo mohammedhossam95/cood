@@ -76,7 +76,9 @@ class _NewUserRegisterScreenState extends State<NewUserRegisterScreen> {
                   Gaps.vGap78,
                   Text(
                     'welcomphrase'.tr,
-                    style: TextStyles.bold24(color: colors.main),
+                    style: TextStyles.bold24(
+                      color: colors.main,
+                    ),
                   ),
                   Gaps.vGap5,
                   Text(
@@ -206,8 +208,9 @@ class _NewUserRegisterScreenState extends State<NewUserRegisterScreen> {
                       ),
                       Gaps.hGap4,
                       InkWell(
-                        onTap:(){
-                          Navigator.pushNamed(context, Routes.tearmsAndCondationsAuthScreenRoute);
+                        onTap: () {
+                          Navigator.pushNamed(context,
+                              Routes.tearmsAndCondationsAuthScreenRoute);
                         },
                         child: Stack(
                           alignment: Alignment.centerLeft,
