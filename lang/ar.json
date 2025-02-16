@@ -190,7 +190,6 @@
   "video_call": "مكالمة فيديو",
   "home": "الرئيسية",
   "my_bookings": "حجوزاتى",
-  "notifications": "الإشعارات",
   "my_account": "حسابى",
   "no_clinics_found": "لا يوجد عيادات",
   "add_clinic": "أضف عيادة",
@@ -514,11 +513,9 @@
   "send": "ارسال",
   "message_us": "او راسلنا",
   "whats_app": "واتساب",
-  "about_app": "عن التطبيق",
   "rank_app": "تقييم التطبيق",
   "language": "اللغة",
   "change_mode": "تغيير الوضع",
-  "logout": "تسجيل الخروج",
   "how_we": "من نحن",
   "sure_message": "رسالة تأكيد",
   "message_quation": "هل أنت متأكد من حذف حسابك ؟",
@@ -801,7 +798,12 @@
   "tapBarItemCommunicationGuide": "دليل التواصل",
   "tapBarItemMyAccount": "حسابي",
   "link_other_accounts": "ربط حسابات اخري",
-  "communication_channels":"ربط قنوات تواصل",
-  "":""
-
+  "communication_channels": "ربط قنوات تواصل",
+  "---------- profile screen ---------------": "",
+  "editMyProfile": "تعديل الملف الشخصي",
+  "myAccounts": "حساباتي",
+  "notifications": "الإشعارات",
+  "about_app": "عن التطبيق",
+  "logout": "تسجيل الخروج",
+  "": ""
 }

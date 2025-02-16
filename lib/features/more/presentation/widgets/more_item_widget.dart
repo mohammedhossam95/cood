@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '/config/locale/app_localizations.dart';
 import '/core/utils/values/text_styles.dart';
@@ -23,21 +22,37 @@ class MoreItemWidget extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(12.r),
+        padding: EdgeInsets.all(15.r),
         decoration: BoxDecoration(
-          color: const Color(0xffF4E5FF),
+          boxShadow: [
+            BoxShadow(
+                color: colors.main.withValues(alpha: .1),
+                offset: Offset(0, 5),
+                blurRadius: 5),
+          ],
+          color: colors.baseColor,
           borderRadius: BorderRadius.all(Radius.circular(12.r)),
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SvgPicture.asset(
-              icon,
-              color: colors.main,
-              height: 24.h,
-              width: 24.w,
+            Row(
+              children: [
+                Image.asset(
+                  icon,
+                  color: colors.main,
+                  height: 30.h,
+                  width: 30.w,
+                ),
+                Gaps.hGap10,
+                Text(title.tr,
+                    style: TextStyles.semiBold14(color: colors.main)),
+              ],
             ),
-            Gaps.hGap10,
-            Text(title.tr, style: TextStyles.regular14(color: colors.main)),
+            Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: 25.r,
+            ),
           ],
         ),
       ),

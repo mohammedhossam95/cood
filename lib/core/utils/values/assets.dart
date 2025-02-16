@@ -39,4 +39,8 @@ class ImgAssets {
 
   static const String orderCheckDone = 'assets/images/check_done_order.png';
   static const String cancelIcon = 'assets/images/close_icon.png';
+  static const String editMyProfileIcon = 'assets/images/edit_my_account.png';
+  static const String myAccountsIcons = 'assets/images/my_accounts.png';
+  static const String myNotificationsIcon = 'assets/images/notification.png';
+  static const String myInfoIcon = 'assets/images/Info.png';
 }
