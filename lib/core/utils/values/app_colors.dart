@@ -27,6 +27,8 @@ class MyColors {
   static const Color snapShatItemColor = Color(0xFFFFFFD5);
   static const Color socialGreen = Color(0xFF0DBB41);
   static const Color socialyellow = Color(0xFFFFFC01);
+  static const Color arrowBackGrey = Color(0xFFD9D9D9);
+
 
 //---------------
   static const Color blackColor = Colors.black;
