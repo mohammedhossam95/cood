@@ -41,10 +41,8 @@ class CommunicationDetailsItem extends StatelessWidget {
                 topRight: Radius.circular(20.r),
                 bottomLeft: Radius.circular(19.r),
               ),
+              image: DecorationImage(image: AssetImage('assets/images/detail item.png',),fit: BoxFit.cover,)
             ),
-            // child: Image.asset(
-            //   'assets/images/detail item.png',fit: BoxFit.cover,),
-              
           ),
           //---------name & email
           SizedBox(
