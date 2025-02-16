@@ -32,6 +32,7 @@ import '../../features/auth/presentation/screen/splash_screen.dart';
 import '../../features/auth/presentation/screen/success_otp_screen.dart';
 import '../../features/auth/presentation/screen/tearms_condations_screen.dart';
 import '../../features/auth/presentation/screen/verification_reset_password_screen.dart';
+import '../../features/profile/presentation/screens/settings_screen.dart';
 import '../../features/tabbar/presentation/screens/main_page.dart';
 import '../../injection_container.dart';
 
@@ -81,8 +82,6 @@ class Routes {
   static const String walletHistoryScreenRoute = '/walletHistoryScreenRoute';
   static const String bankAccountsScreenRoute = '/BankAccountsScreen';
   static const String addBankAccountScreenRoute = '/AddBankAccountScreen';
-
-  static const String settingsRoute = '/SettingsScreen';
   static const String hospitalInvitationsRoute = '/HospitalInvitationsScreen';
   static const String hospitalInvitationDetailsRoute =
       '/HospitalInvitationDetailsScreen';
@@ -151,6 +150,7 @@ class Routes {
       '/TearmsAndCondationsAuthScreenScreen';
   static const String successOtpScreenRoute = '/SuccessOtpScreenScreen';
   static const String failedOtpScreenRoute = '/FailedOtpScreenScreen';
+  static const String settingScreenRoute = '/SettingsScreen';
 }
 
 class AppRoutes {
@@ -188,6 +188,11 @@ class AppRoutes {
         return MaterialPageRoute(
           settings: routeSettings,
           builder: (BuildContext context) => const MobileScreen(),
+        );
+      case Routes.settingScreenRoute:
+        return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (BuildContext context) => const SettingsScreen(),
         );
       case Routes.contactUsRoute:
         return MaterialPageRoute(

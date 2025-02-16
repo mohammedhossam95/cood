@@ -15,6 +15,7 @@ import '/features/home/domain/entities/plans_status_entity.dart';
 import '/features/home/presentation/cubit/get_plans_status_cubit/get_plans_status_cubit.dart';
 import '/features/home/presentation/widgets/cities_list.dart';
 import '/injection_container.dart';
+import '../../../../config/routes/app_routes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -86,6 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Gaps.vGap20,
                 //----------1
                 // const HomeAppBar(), //no touch
                 Padding(
@@ -135,13 +137,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         icon: Icon(
                           Icons.notifications,
                           color: colors.main,
+                          size: 30.r,
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, Routes.settingScreenRoute);
+                        },
                         icon: Icon(
                           Icons.settings,
                           color: colors.main,
+                          size: 30.r,
                         ),
                       ),
                     ],
@@ -199,7 +206,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(25.r),
                     boxShadow: [
                       BoxShadow(
-                        color: MyColors.body.withOpacity(0.5), // Shadow color
+                        color:
+                            MyColors.body.withValues(alpha: .5), // Shadow color
                         spreadRadius: 2.r, // Spread radius
                         blurRadius: 10.r, // Blur radius
                         offset: Offset(0, 3), // Offset in x and y directions
@@ -276,7 +284,8 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 15.h),
           decoration: BoxDecoration(
-            color: isSelected ? colors.main : colors.main.withOpacity(0.12),
+            color:
+                isSelected ? colors.main : colors.main.withValues(alpha: .12),
             borderRadius: BorderRadius.circular(8.r),
           ),
           child: Center(
