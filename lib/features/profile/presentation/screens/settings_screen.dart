@@ -1,4 +1,5 @@
 import 'package:cood/config/locale/app_localizations.dart';
+import 'package:cood/config/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -105,7 +106,9 @@ class SettingsScreen extends StatelessWidget {
               ),
               Gaps.vGap8,
               MoreItemWidget(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.editProfileScreenRoute);
+                },
                 icon: ImgAssets.editMyProfileIcon,
                 title: 'editMyProfile',
               ),

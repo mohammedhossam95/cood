@@ -800,5 +800,12 @@
   "notifications": "Notifications",
   "about_app": "About the App",
   "logout": "Log Out",
+  "---------- edit profile screen ---------------": "",
+  "changePassword": "Change Password",
+  "saveChanges": "Save Changes",
+  "--------- chane password screen -------------": "",
+  "currentPassword": "Current Password",
+  "newPassword": "New Password",
+  "confirmNewPassword": "Confirm New Password",
   "": ""
 }

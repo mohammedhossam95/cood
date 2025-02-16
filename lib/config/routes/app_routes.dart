@@ -32,6 +32,7 @@ import '../../features/auth/presentation/screen/splash_screen.dart';
 import '../../features/auth/presentation/screen/success_otp_screen.dart';
 import '../../features/auth/presentation/screen/tearms_condations_screen.dart';
 import '../../features/auth/presentation/screen/verification_reset_password_screen.dart';
+import '../../features/profile/presentation/screens/change_password_screen.dart';
 import '../../features/profile/presentation/screens/settings_screen.dart';
 import '../../features/tabbar/presentation/screens/main_page.dart';
 import '../../injection_container.dart';
@@ -151,6 +152,7 @@ class Routes {
   static const String successOtpScreenRoute = '/SuccessOtpScreenScreen';
   static const String failedOtpScreenRoute = '/FailedOtpScreenScreen';
   static const String settingScreenRoute = '/SettingsScreen';
+  static const String changePasswordRoute = '/changePasswordScreen';
 }
 
 class AppRoutes {
@@ -193,6 +195,11 @@ class AppRoutes {
         return MaterialPageRoute(
           settings: routeSettings,
           builder: (BuildContext context) => const SettingsScreen(),
+        );
+      case Routes.changePasswordRoute:
+        return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (BuildContext context) => const ChangePasswordScreen(),
         );
       case Routes.contactUsRoute:
         return MaterialPageRoute(

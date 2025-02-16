@@ -442,8 +442,6 @@
   "resend_code": "إعادة ارسال الرمز",
   "change_password": "ادخل رقم الهاتف لإستعادة كلمة المرور",
   "rechange_password": "إعادة تعيين كلمة المرور",
-  "new_password": "كلمة المرور الجديدة",
-  "confirm_new_password": "تأكيد كلمة المرور الجديدة",
   "success_change_password": "مرحباً لقد تم تغيير كلمة المرور بنجاح!",
   "relogIn": "يمكنك الآن تسجيل الدخول إلى حسابك باستخدام كلمة المرور الجديدة",
   "confirm_button": "تأكيد",
@@ -805,5 +803,12 @@
   "notifications": "الإشعارات",
   "about_app": "عن التطبيق",
   "logout": "تسجيل الخروج",
+  "---------- edit profile screen ---------------": "",
+  "changePassword": "تغيير كلمة المرور",
+  "saveChanges": "حفظ التعديلات",
+  "---------- chane password screen ---------------": "",
+  "currentPassword": "كلمة المرور الحالية",
+  "newPassword": "كلمة المرور الجديدة",
+  "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
   "": ""
 }

@@ -11,9 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '/config/routes/app_routes.dart';
-import '/core/utils/constants.dart';
 import '/core/widgets/gaps.dart';
-import '/features/more/presentation/widgets/language_setting_widget.dart';
 import '/features/more/presentation/widgets/more_item_widget.dart';
 import '../../../../core/utils/values/assets.dart';
 
@@ -104,10 +102,7 @@ class _MoreScreenState extends State<MoreScreen> {
             Gaps.vGap30,
             MoreItemWidget(
               onTap: () {
-                Constants.buildCustomShowModel(
-                  context: context,
-                  child: const LanguageSettingWidget(),
-                );
+                Navigator.pushNamed(context, Routes.editProfileScreenRoute);
               },
               icon: ImgAssets.editMyProfileIcon,
               title: 'editMyProfile',
