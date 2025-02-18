@@ -74,55 +74,55 @@ class _ReservationScreenState extends State<ReservationScreen> {
       'الالعاب',
       'assets/images/PS Controller.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       'البيع والشراء',
       'assets/images/Sell Stock.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       'الصحه والقلب',
       'assets/images/Caduceus.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       'الترفيه',
       'assets/images/Retro TV.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       'الفن والموسيقي',
       'assets/images/Music.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       'الشعر والكتب',
       'assets/images/Open Book.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       ' ريادة الاعمال',
       'assets/images/Business.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       '  تصاميم الجرافيك',
       'assets/images/Photo Editor.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       '  الاهل والطفال',
       'assets/images/Full Family.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       '  التعليم',
       'assets/images/Mortarboard.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       '  الحيوانات',
       'assets/images/Elephant.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       '  العقارات',
       'assets/images/Building.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       ' الأفلام والمسلسلات ',
       'assets/images/Film Reel.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       ' التقنية',
       'assets/images/Electronics.png',
     ),
@@ -154,99 +154,112 @@ class _ReservationScreenState extends State<ReservationScreen> {
       'كوميدي  ',
       'assets/images/Comedy.png',
     ),
-    
   ];
 //------------------------------
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 10.h),
-      //----------------- this condition should be (userType == UserType.approved)
-      child: (userType == UserType.user)
-          ? BlocBuilder<ReservationCubit, ReservationState>(
-              builder: (context, state) {
-                if (state is ReservationLoading) {
-                  return const Center(
-                    child: MyProgrees(),
-                  );
-                  //----------------- this condition should be (state is ReservationSuccerss)
-                } else if (isUserApproaved) {
-                  //  List<GetReservation> communicationList = [];
-                  //state.response.data as List<GetReservation>;
-                  return communicationList.isEmpty
-                      ? const NoReservations()
-                      : Padding(
-                          padding: EdgeInsets.all(10.0.w),
-                          child: Column(
-                            children: [
-                              MyTextFormField(
-                                controller: searchController,
-                                focusNode: FocusNode(),
-                                hintText: "search".tr,
-                                suffixIcon: IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.search,
-                                    color: MyColors.main,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 20.h),
-                                  decoration: BoxDecoration(
-                                    color: MyColors.white,
-                                    borderRadius: BorderRadius.circular(25.r),
-                                  ),
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.vertical,
-                                    shrinkWrap: true,
-                                    itemCount: communicationList.length,
-                                    itemBuilder: (context, index) =>
-                                        CommunicationGuideItem(
-                                            item: communicationList[index]),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                } else if (state is ReservationFailure) {
-                  if (state.errorMessage == AppStrings.unAuthorizedFailure) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'confirem_login'.tr,
-                            style: TextStyles.bold20(),
-                          ),
-                          Gaps.vGap15,
-                          MyDefaultButton(
-                            width: ScreenUtil.defaultSize.width,
-                            color: colors.main,
-                            btnText: 'login',
-                            onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                Routes.loginScreenRoute,
-                                (route) => false),
-                          ),
-                        ],
-                      ),
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.only(top: 10.h),
+        //----------------- this condition should be (userType == UserType.approved)
+        child: (userType == UserType.user)
+            ? BlocBuilder<ReservationCubit, ReservationState>(
+                builder: (context, state) {
+                  if (state is ReservationLoading) {
+                    return const Center(
+                      child: MyProgrees(),
                     );
+                    //----------------- this condition should be (state is ReservationSuccerss)
+                  } else if (isUserApproaved) {
+                    //  List<GetReservation> communicationList = [];
+                    //state.response.data as List<GetReservation>;
+                    return communicationList.isEmpty
+                        ? const NoReservations()
+                        : Padding(
+                            padding: EdgeInsets.all(10.0.w),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'reservations'.tr,
+                                      style:
+                                          TextStyles.bold32(color: colors.main),
+                                    ),
+                                  ],
+                                ),
+                                Gaps.vGap20,
+                                MyTextFormField(
+                                  controller: searchController,
+                                  focusNode: FocusNode(),
+                                  hintText: "search".tr,
+                                  suffixIcon: IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.search,
+                                      color: MyColors.main,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 20.h),
+                                    decoration: BoxDecoration(
+                                      color: MyColors.white,
+                                      borderRadius: BorderRadius.circular(25.r),
+                                    ),
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      itemCount: communicationList.length,
+                                      itemBuilder: (context, index) =>
+                                          CommunicationGuideItem(
+                                              item: communicationList[index]),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                  } else if (state is ReservationFailure) {
+                    if (state.errorMessage == AppStrings.unAuthorizedFailure) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'confirem_login'.tr,
+                              style: TextStyles.bold20(),
+                            ),
+                            Gaps.vGap15,
+                            MyDefaultButton(
+                              width: ScreenUtil.defaultSize.width,
+                              color: colors.main,
+                              btnText: 'login',
+                              onPressed: () =>
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      Routes.loginScreenRoute,
+                                      (route) => false),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return ErrorText(
+                        text: state.errorMessage,
+                        width: ScreenUtil().screenWidth * 0.3,
+                      );
+                    }
                   } else {
-                    return ErrorText(
-                      text: state.errorMessage,
-                      width: ScreenUtil().screenWidth * 0.3,
-                    );
+                    return const SizedBox();
                   }
-                } else {
-                  return const SizedBox();
-                }
-              },
-            )
-          : const GuestWidget(),
+                },
+              )
+            : const GuestWidget(),
+      ),
     );
   }
 }

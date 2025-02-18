@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Gaps.vGap20,
+                Gaps.vGap30,
                 //----------1
                 // const HomeAppBar(), //no touch
                 Padding(
@@ -96,8 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Center(
                         child: Container(
-                          width: 50.w,
-                          height: 50.w,
+                          width: 60.w,
+                          height: 60.h,
                           decoration: BoxDecoration(
                             color: colors.main,
                             border: Border.all(
@@ -123,21 +123,24 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Text(
                               'فهد سليمان',
-                              style: TextStyles.regular15(),
+                              style: TextStyles.bold14(color: colors.main),
                             ),
                             Text(
                               '359698845',
-                              style: TextStyles.regular12(),
+                              style: TextStyles.bold14(color: colors.main),
                             ),
                           ],
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, Routes.notificationsScreenRoute);
+                        },
                         icon: Icon(
                           Icons.notifications,
                           color: colors.main,
-                          size: 30.r,
+                          size: 36.r,
                         ),
                       ),
                       IconButton(
@@ -148,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         icon: Icon(
                           Icons.settings,
                           color: colors.main,
-                          size: 30.r,
+                          size: 36.r,
                         ),
                       ),
                     ],
@@ -174,15 +177,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 plansStatus.daily!
-                                    ? _buildDurationOption('daily', 0)
+                                    ? _buildDurationOption('myAccounts', 0)
                                     : const SizedBox.shrink(),
                                 Gaps.hGap10,
                                 plansStatus.weekly!
-                                    ? _buildDurationOption('weekly', 1)
+                                    ? _buildDurationOption('myPhotos', 1)
                                     : const SizedBox.shrink(),
                                 Gaps.hGap10,
                                 plansStatus.monthly!
-                                    ? _buildDurationOption('monthly', 2)
+                                    ? _buildDurationOption('myFriends', 2)
                                     : const SizedBox.shrink(),
                               ],
                             );
@@ -193,29 +196,28 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
                         },
                       ),
-                      Gaps.vGap12,
+                      Gaps.vGap30,
                     ],
                   ),
                 ),
                 //--------3
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10.0.w),
-                  height: 420.h,
-                  decoration: BoxDecoration(
-                    color: MyColors.upBackGround,
-                    borderRadius: BorderRadius.circular(25.r),
-                    boxShadow: [
-                      BoxShadow(
-                        color:
-                            MyColors.body.withValues(alpha: .5), // Shadow color
-                        spreadRadius: 2.r, // Spread radius
-                        blurRadius: 10.r, // Blur radius
-                        offset: Offset(0, 3), // Offset in x and y directions
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(10.0.h),
+                Center(
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 16.h, horizontal: 10.w),
+                    decoration: BoxDecoration(
+                      color: MyColors.upBackGround,
+                      borderRadius: BorderRadius.circular(25.r),
+                      boxShadow: [
+                        BoxShadow(
+                          color: MyColors.body
+                              .withValues(alpha: .5), // Shadow color
+                          spreadRadius: 2.r, // Spread radius
+                          blurRadius: 10.r, // Blur radius
+                          offset: Offset(0, 3), // Offset in x and y directions
+                        ),
+                      ],
+                    ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: List.generate(
@@ -229,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                Gaps.vGap12,
+                Gaps.vGap20,
                 //-----------------4
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -273,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             selectedDurationIndex = index;
             if (index == 0) {
-              carParams = carParams.copyWith(plan: 'DAILY');
+              carParams = carParams.copyWith(plan: 'myAccounts');
             } else if (index == 1) {
               carParams = carParams.copyWith(plan: 'WEEKLY');
             } else if (index == 2) {
@@ -284,15 +286,14 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 15.h),
           decoration: BoxDecoration(
-            color:
-                isSelected ? colors.main : colors.main.withValues(alpha: .12),
-            borderRadius: BorderRadius.circular(8.r),
+            border: Border.all(color: colors.main, width: 1.5.r),
+            color: isSelected ? colors.main : colors.main.withValues(alpha: .4),
+            borderRadius: BorderRadius.circular(15.r),
           ),
           child: Center(
             child: Text(
               text.tr,
-              style: TextStyles.regular14(
-                  color: isSelected ? Colors.white : colors.main),
+              style: TextStyles.bold14(color: colors.baseColor),
             ),
           ),
         ),
@@ -329,21 +330,21 @@ class _HomeScreenState extends State<HomeScreen> {
             ));
   }
 
-  Widget _buildCheckboxOption(
-      String text, bool isSelected, Function(bool?) onChanged) {
-    return Row(
-      children: [
-        Checkbox(
-            value: isSelected,
-            onChanged: onChanged,
-            checkColor: Colors.white,
-            fillColor: WidgetStateProperty.all<Color>(
-                isSelected ? colors.main : colors.upBackGround)),
-        Text(
-          text.tr,
-          style: TextStyles.regular14(color: colors.main),
-        ),
-      ],
-    );
-  }
+  // Widget _buildCheckboxOption(
+  //     String text, bool isSelected, Function(bool?) onChanged) {
+  //   return Row(
+  //     children: [
+  //       Checkbox(
+  //           value: isSelected,
+  //           onChanged: onChanged,
+  //           checkColor: Colors.white,
+  //           fillColor: WidgetStateProperty.all<Color>(
+  //               isSelected ? colors.main : colors.upBackGround)),
+  //       Text(
+  //         text.tr,
+  //         style: TextStyles.regular14(color: colors.main),
+  //       ),
+  //     ],
+  //   );
+  // }
 }

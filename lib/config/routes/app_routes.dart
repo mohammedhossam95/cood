@@ -32,6 +32,7 @@ import '../../features/auth/presentation/screen/splash_screen.dart';
 import '../../features/auth/presentation/screen/success_otp_screen.dart';
 import '../../features/auth/presentation/screen/tearms_condations_screen.dart';
 import '../../features/auth/presentation/screen/verification_reset_password_screen.dart';
+import '../../features/notification/presentation/screen/notification_screen.dart';
 import '../../features/profile/presentation/screens/change_password_screen.dart';
 import '../../features/profile/presentation/screens/settings_screen.dart';
 import '../../features/tabbar/presentation/screens/main_page.dart';
@@ -201,6 +202,10 @@ class AppRoutes {
           settings: routeSettings,
           builder: (BuildContext context) => const ChangePasswordScreen(),
         );
+      case Routes.notificationsScreenRoute:
+        return MaterialPageRoute(
+            settings: routeSettings,
+            builder: (BuildContext context) => NotificationScreen());
       case Routes.contactUsRoute:
         return MaterialPageRoute(
           settings: routeSettings,

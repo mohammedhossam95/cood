@@ -795,6 +795,8 @@
   "---------- home screen ---------------": "",
   "tapBarItemCommunicationGuide": "دليل التواصل",
   "tapBarItemMyAccount": "حسابي",
+  "myPhotos": "الصور",
+  "myFriends": "الاصدقاء",
   "link_other_accounts": "ربط حسابات اخري",
   "communication_channels": "ربط قنوات تواصل",
   "---------- profile screen ---------------": "",
@@ -810,5 +812,8 @@
   "currentPassword": "كلمة المرور الحالية",
   "newPassword": "كلمة المرور الجديدة",
   "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
+  "---------- notification screen ---------------": "",
+  "readableNotification": "مقروء",
+  "illegibleNotification": "غير مقروء",
   "": ""
 }

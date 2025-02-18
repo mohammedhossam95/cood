@@ -792,6 +792,8 @@
   "---------- home screen ---------------": "",
   "tapBarItemCommunicationGuide": "Communication Guide",
   "tapBarItemMyAccount": "My Account",
+  "myPhotos": "Photos",
+  "myFriends": "Friends",
   "link_other_accounts": " Link other accounts ",
   "communication_channels": " Communication channels",
   "---------- profile screen ---------------": "",
@@ -807,5 +809,8 @@
   "currentPassword": "Current Password",
   "newPassword": "New Password",
   "confirmNewPassword": "Confirm New Password",
+  "--------- notification screen --------------": "",
+  "readableNotification": "Readable",
+  "illegibleNotification": "Unreadable",
   "": ""
 }
