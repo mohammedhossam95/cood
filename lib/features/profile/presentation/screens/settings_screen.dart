@@ -114,7 +114,9 @@ class SettingsScreen extends StatelessWidget {
               ),
               Gaps.vGap12,
               MoreItemWidget(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.notificationsScreenRoute);
+                },
                 icon: ImgAssets.myNotificationsIcon,
                 title: 'notifications',
               ),
