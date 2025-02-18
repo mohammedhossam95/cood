@@ -45,4 +45,5 @@ class ImgAssets {
   static const String myInfoIcon = 'assets/images/Info.png';
   static const String editProfileImage = 'assets/images/edit_photo.png';
   static const String changePasswordImage = 'assets/images/change_password.png';
+  static const String aboutAppImage = 'assets/images/about_app_image.png';
 }

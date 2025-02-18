@@ -16,7 +16,6 @@ import '/features/cars/presentation/screens/sorting_sreen.dart';
 import '/features/home/presentation/screens/date_range.dart';
 import '/features/more/presentation/screens/contact_us_screen.dart';
 import '/features/more/presentation/screens/privacy_policy_screen.dart';
-import '/features/more/presentation/screens/terms_and_conditions.dart';
 import '/features/profile/presentation/screens/edit_profile_screen.dart';
 import '/features/profile/presentation/screens/profile_screen.dart';
 import '../../core/utils/app_strings.dart';
@@ -32,6 +31,7 @@ import '../../features/auth/presentation/screen/splash_screen.dart';
 import '../../features/auth/presentation/screen/success_otp_screen.dart';
 import '../../features/auth/presentation/screen/tearms_condations_screen.dart';
 import '../../features/auth/presentation/screen/verification_reset_password_screen.dart';
+import '../../features/more/presentation/screens/about_app_screen.dart';
 import '../../features/notification/presentation/screen/notification_screen.dart';
 import '../../features/profile/presentation/screens/change_password_screen.dart';
 import '../../features/profile/presentation/screens/settings_screen.dart';
@@ -135,7 +135,7 @@ class Routes {
   static const String viewAllWashersRoutes = '/ViewAllWashersScreen';
   static const String newAddAddressRoute = '/NewAddAddressScreen';
   static const String contactUsRoute = '/ContactUsScreen';
-  static const String termsAndConditionsRoute = '/TermsAndConditionsScreen';
+  static const String aboutAppRoute = '/AboutAppScreen';
   static const String newDelegateOrderDetailsRoute =
       '/NewDelegateOrderDetailsScreen';
 
@@ -217,10 +217,10 @@ class AppRoutes {
           builder: (BuildContext context) => const TearmsCondationsScreen(),
         );
 
-      case Routes.termsAndConditionsRoute:
+      case Routes.aboutAppRoute:
         return MaterialPageRoute(
           settings: routeSettings,
-          builder: (BuildContext context) => const TermsAndConditions(),
+          builder: (BuildContext context) => const AboutAppScreen(),
         );
       case Routes.privacyPolicyRoute:
         return MaterialPageRoute(

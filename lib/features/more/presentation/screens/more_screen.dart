@@ -126,7 +126,7 @@ class _MoreScreenState extends State<MoreScreen> {
             Gaps.vGap12,
             MoreItemWidget(
               onTap: () {
-                Navigator.pushNamed(context, Routes.termsAndConditionsRoute);
+                Navigator.pushNamed(context, Routes.aboutAppRoute);
               },
               icon: ImgAssets.myInfoIcon,
               title: 'about_app',
