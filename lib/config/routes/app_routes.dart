@@ -17,7 +17,6 @@ import '/features/cars/presentation/screens/sorting_sreen.dart';
 import '/features/home/presentation/screens/date_range.dart';
 import '/features/more/presentation/screens/contact_us_screen.dart';
 import '/features/more/presentation/screens/privacy_policy_screen.dart';
-import '/features/more/presentation/screens/terms_and_conditions.dart';
 import '/features/profile/presentation/screens/edit_profile_screen.dart';
 import '/features/profile/presentation/screens/profile_screen.dart';
 import '../../core/utils/app_strings.dart';
@@ -33,6 +32,10 @@ import '../../features/auth/presentation/screen/splash_screen.dart';
 import '../../features/auth/presentation/screen/success_otp_screen.dart';
 import '../../features/auth/presentation/screen/tearms_condations_screen.dart';
 import '../../features/auth/presentation/screen/verification_reset_password_screen.dart';
+import '../../features/more/presentation/screens/about_app_screen.dart';
+import '../../features/notification/presentation/screen/notification_screen.dart';
+import '../../features/profile/presentation/screens/change_password_screen.dart';
+import '../../features/profile/presentation/screens/settings_screen.dart';
 import '../../features/tabbar/presentation/screens/main_page.dart';
 import '../../injection_container.dart';
 
@@ -82,8 +85,6 @@ class Routes {
   static const String walletHistoryScreenRoute = '/walletHistoryScreenRoute';
   static const String bankAccountsScreenRoute = '/BankAccountsScreen';
   static const String addBankAccountScreenRoute = '/AddBankAccountScreen';
-
-  static const String settingsRoute = '/SettingsScreen';
   static const String hospitalInvitationsRoute = '/HospitalInvitationsScreen';
   static const String hospitalInvitationDetailsRoute =
       '/HospitalInvitationDetailsScreen';
@@ -135,7 +136,7 @@ class Routes {
   static const String viewAllWashersRoutes = '/ViewAllWashersScreen';
   static const String newAddAddressRoute = '/NewAddAddressScreen';
   static const String contactUsRoute = '/ContactUsScreen';
-  static const String termsAndConditionsRoute = '/TermsAndConditionsScreen';
+  static const String aboutAppRoute = '/AboutAppScreen';
   static const String newDelegateOrderDetailsRoute =
       '/NewDelegateOrderDetailsScreen';
 
@@ -152,10 +153,12 @@ class Routes {
       '/TearmsAndCondationsAuthScreenScreen';
   static const String successOtpScreenRoute = '/SuccessOtpScreenScreen';
   static const String failedOtpScreenRoute = '/FailedOtpScreenScreen';
+  static const String settingScreenRoute = '/SettingsScreen';
+  static const String changePasswordRoute = '/changePasswordScreen';
+
 //---------------------added by ali 
   static const String communicationItemDetails = '/CommunicationItemDetails';
 
-  
 }
 
 class AppRoutes {
@@ -194,6 +197,20 @@ class AppRoutes {
           settings: routeSettings,
           builder: (BuildContext context) => const MobileScreen(),
         );
+      case Routes.settingScreenRoute:
+        return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (BuildContext context) => const SettingsScreen(),
+        );
+      case Routes.changePasswordRoute:
+        return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (BuildContext context) => const ChangePasswordScreen(),
+        );
+      case Routes.notificationsScreenRoute:
+        return MaterialPageRoute(
+            settings: routeSettings,
+            builder: (BuildContext context) => NotificationScreen());
       case Routes.contactUsRoute:
         return MaterialPageRoute(
           settings: routeSettings,
@@ -205,10 +222,10 @@ class AppRoutes {
           builder: (BuildContext context) => const TearmsCondationsScreen(),
         );
 
-      case Routes.termsAndConditionsRoute:
+      case Routes.aboutAppRoute:
         return MaterialPageRoute(
           settings: routeSettings,
-          builder: (BuildContext context) => const TermsAndConditions(),
+          builder: (BuildContext context) => const AboutAppScreen(),
         );
       case Routes.privacyPolicyRoute:
         return MaterialPageRoute(

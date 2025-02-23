@@ -37,5 +37,4 @@ class SvgAssets {
   static const String minus = 'assets/icons/minus.svg';
   static const String clock = 'assets/icons/clock.svg';
   static const String calenderIcon = 'assets/icons/calender_icon.svg';
-
 }

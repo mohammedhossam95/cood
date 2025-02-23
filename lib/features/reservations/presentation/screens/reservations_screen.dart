@@ -159,99 +159,108 @@ class _ReservationScreenState extends State<ReservationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 10.h),
-      //----------------- this condition should be (userType == UserType.approved)
-      child: (userType == UserType.user)
-          ? BlocBuilder<ReservationCubit, ReservationState>(
-              builder: (context, state) {
-                if (state is ReservationLoading) {
-                  return const Center(
-                    child: MyProgrees(),
-                  );
-                  //----------------- this condition should be (state is ReservationSuccerss)
-                } else if (isUserApproaved) {
-                  //  List<GetReservation> communicationList = [];
-                  //state.response.data as List<GetReservation>;
-                  return communicationList.isEmpty
-                      ? const NoReservations()
-                      : Padding(
-                          padding: EdgeInsets.all(10.0.w),
-                          child: Column(
-                            children: [
-                              MyTextFormField(
-                                controller: searchController,
-                                focusNode: FocusNode(),
-                                hintText: "search".tr,
-                                suffixIcon: IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.search,
-                                    color: MyColors.main,
-                                  ),
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.only(top: 10.h),
+        //----------------- this condition should be (userType == UserType.approved)
+        child: (userType == UserType.user)
+            ? BlocBuilder<ReservationCubit, ReservationState>(
+                builder: (context, state) {
+                  if (state is ReservationLoading) {
+                    return const Center(
+                      child: MyProgrees(),
+                    );
+                    //----------------- this condition should be (state is ReservationSuccerss)
+                  } else if (isUserApproaved) {
+                    //  List<GetReservation> communicationList = [];
+                    //state.response.data as List<GetReservation>;
+                    return communicationList.isEmpty
+                        ? const NoReservations()
+                        : Padding(
+                            padding: EdgeInsets.all(10.0.w),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'reservations'.tr,
+                                      style:
+                                          TextStyles.bold32(color: colors.main),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 20.h),
-                                  decoration: BoxDecoration(
-                                    color: MyColors.white,
-                                    borderRadius: BorderRadius.circular(25.r),
-                                  ),
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.vertical,
-                                    shrinkWrap: true,
-                                    itemCount: communicationList.length,
-                                    itemBuilder: (context, index) =>
-                                        GestureDetector(
-                                      onTap: () {
-                                        Navigator.pushNamed(context,
-                                            Routes.communicationItemDetails);
-                                      },
-                                      child: CommunicationGuideItem(
-                                          item: communicationList[index]),
+                                Gaps.vGap20,
+                                MyTextFormField(
+                                  controller: searchController,
+                                  focusNode: FocusNode(),
+                                  hintText: "search".tr,
+                                  suffixIcon: IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.search,
+                                      color: MyColors.main,
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
-                } else if (state is ReservationFailure) {
-                  if (state.errorMessage == AppStrings.unAuthorizedFailure) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'confirem_login'.tr,
-                            style: TextStyles.bold20(),
-                          ),
-                          Gaps.vGap15,
-                          MyDefaultButton(
-                            width: ScreenUtil.defaultSize.width,
-                            color: colors.main,
-                            btnText: 'login',
-                            onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                Routes.loginScreenRoute,
-                                (route) => false),
-                          ),
-                        ],
-                      ),
-                    );
+                                Expanded(
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 20.h),
+                                    decoration: BoxDecoration(
+                                      color: MyColors.white,
+                                      borderRadius: BorderRadius.circular(25.r),
+                                    ),
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      itemCount: communicationList.length,
+                                      itemBuilder: (context, index) =>
+                                          CommunicationGuideItem(
+                                              item: communicationList[index]),
+
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                  } else if (state is ReservationFailure) {
+                    if (state.errorMessage == AppStrings.unAuthorizedFailure) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'confirem_login'.tr,
+                              style: TextStyles.bold20(),
+                            ),
+                            Gaps.vGap15,
+                            MyDefaultButton(
+                              width: ScreenUtil.defaultSize.width,
+                              color: colors.main,
+                              btnText: 'login',
+                              onPressed: () =>
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      Routes.loginScreenRoute,
+                                      (route) => false),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return ErrorText(
+                        text: state.errorMessage,
+                        width: ScreenUtil().screenWidth * 0.3,
+                      );
+                    }
                   } else {
-                    return ErrorText(
-                      text: state.errorMessage,
-                      width: ScreenUtil().screenWidth * 0.3,
-                    );
+                    return const SizedBox();
                   }
-                } else {
-                  return const SizedBox();
-                }
-              },
-            )
-          : const GuestWidget(),
+                },
+              )
+            : const GuestWidget(),
+      ),
     );
   }
 }
