@@ -19,12 +19,7 @@ class _SuccessChangePasswordScreenState
     extends State<SuccessChangePasswordScreen> {
   @override
   void initState() {
-    Future.delayed(
-      Duration(seconds: 2),
-      () {
-         Navigator.pushNamed(context, Routes.mainPageRoute);
-      },
-    );
+    Navigator.pushNamed(context, Routes.mainPageRoute);
     super.initState();
   }
 

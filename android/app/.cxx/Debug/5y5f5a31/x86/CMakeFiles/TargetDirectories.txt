@@ -1,0 +1,2 @@
+/Users/a1softech/Downloads/1-MyProject/cood/android/app/.cxx/Debug/5y5f5a31/x86/CMakeFiles/edit_cache.dir
+/Users/a1softech/Downloads/1-MyProject/cood/android/app/.cxx/Debug/5y5f5a31/x86/CMakeFiles/rebuild_cache.dir

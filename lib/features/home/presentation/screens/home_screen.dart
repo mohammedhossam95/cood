@@ -87,9 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Gaps.vGap30,
+                Gaps.vGap16,
                 //----------1
-                // const HomeAppBar(), //no touch
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Row(
@@ -159,12 +158,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 //----------2
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 12.0, horizontal: 20),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 20.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Gaps.vGap12,
+                      Gaps.vGap8,
                       BlocBuilder<GetPlansStatusCubit, GetPlansStatusState>(
                         builder: (context, state) {
                           if (state is GetPlansStatusLoading) {
@@ -196,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
                         },
                       ),
-                      Gaps.vGap30,
+                      Gaps.vGap8,
                     ],
                   ),
                 ),

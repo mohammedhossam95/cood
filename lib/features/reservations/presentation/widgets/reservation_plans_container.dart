@@ -67,8 +67,9 @@ class _ReservationPlansContainerState extends State<ReservationPlansContainer> {
                                               .read<ReservationCubit>()
                                               .selectedIndex ==
                                           index
-                                      ? colors.main.withOpacity(0.2)
-                                      : colors.unselected.withOpacity(0.1),
+                                      ? colors.main.withValues(alpha: .2)
+                                      : colors.unselected
+                                          .withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(15.r),
                                   border: Border.all(
                                     // color: colors.main,
@@ -148,7 +149,8 @@ class _ReservationPlansContainerState extends State<ReservationPlansContainer> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15.r),
                                   border: Border.all(
-                                      color: colors.textColor.withOpacity(0.6)),
+                                      color: colors.textColor
+                                          .withValues(alpha: 0.6)),
                                   color: colors.upBackGround),
                               child: Text(planTitle[index].tr),
                             ),

@@ -14,11 +14,11 @@ Future<void> main() async {
   await ServiceLocator.init();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.light,
-      statusBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: Color(0xff297AFF),
       systemNavigationBarIconBrightness: Brightness.light,
-      systemNavigationBarColor: Color(0xffF0F8FF),
-      statusBarColor: Color(0xffF0F8FF),
+      statusBarColor: Color(0xff297AFF),
+      statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.dark,
     ),
   );
   // SystemChrome.setPreferredOrientations([

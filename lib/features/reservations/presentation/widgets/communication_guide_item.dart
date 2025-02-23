@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CommunicationGuideItem extends StatelessWidget {
-  final   ComuniGuideItemEntity item;
-  const CommunicationGuideItem({required this.item,super.key});
+  final ComuniGuideItemEntity item;
+  const CommunicationGuideItem({required this.item, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,35 +21,35 @@ class CommunicationGuideItem extends StatelessWidget {
         ),
       ),
       margin: EdgeInsets.all(10.h),
-      width: 348.w,
       height: 80.h,
       child: Row(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           //----social icon
           Container(
-            width: 70.w,
+            width: 80.w,
             height: double.infinity,
             decoration: BoxDecoration(
               color: MyColors.main,
-              borderRadius: (AppLocalizations.of(context)!.isArLocale)?BorderRadius.only(
-                topLeft: Radius.circular(20.r),
-                topRight: Radius.circular(19.r),
-                bottomRight: Radius.circular(19.r),
-              ):BorderRadius.only(
-                topLeft: Radius.circular(19.r),
-                topRight: Radius.circular(20.r),
-                bottomLeft: Radius.circular(19.r),
-              ),
+              borderRadius: (AppLocalizations.of(context)!.isArLocale)
+                  ? BorderRadius.only(
+                      topLeft: Radius.circular(20.r),
+                      topRight: Radius.circular(19.r),
+                      bottomRight: Radius.circular(19.r),
+                    )
+                  : BorderRadius.only(
+                      topLeft: Radius.circular(19.r),
+                      topRight: Radius.circular(20.r),
+                      bottomLeft: Radius.circular(19.r),
+                    ),
             ),
-            child: Image.asset(
-                item.image!),
+            child: Image.asset(item.image!),
           ),
           Gaps.hGap20,
           //---------name & email
 
           Text(
-            item.title!,
+            item.title ?? '',
             style: TextStyles.bold14(),
             //maxLines: 2,
           ),

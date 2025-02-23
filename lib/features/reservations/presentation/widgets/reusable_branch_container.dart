@@ -30,7 +30,7 @@ class ReusableBranchContainer extends StatelessWidget {
               child: Text(
                 branch,
                 style: TextStyles.regular12(
-                    color: colors.textColor.withOpacity(0.5)),
+                    color: colors.textColor.withValues(alpha: 0.5)),
               ),
             ),
           ],
@@ -45,7 +45,7 @@ class ReusableBranchContainer extends StatelessWidget {
               child: Text(
                 date + time,
                 style: TextStyles.regular12(
-                    color: colors.textColor.withOpacity(0.5)),
+                    color: colors.textColor.withValues(alpha: 0.5)),
               ),
             ),
           ],

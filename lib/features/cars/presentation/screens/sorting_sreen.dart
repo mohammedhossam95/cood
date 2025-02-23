@@ -194,7 +194,8 @@ class _SortingScreenState extends State<SortingScreen> {
                                               width: 1.0,
                                             ),
                                             color: isSelected
-                                                ? colors.main.withOpacity(0.1)
+                                                ? colors.main
+                                                    .withValues(alpha: 0.1)
                                                 : colors.upBackGround,
                                           ),
                                           child: Column(
@@ -322,7 +323,8 @@ class _SortingScreenState extends State<SortingScreen> {
                                               width: 1.0,
                                             ),
                                             color: isSelected
-                                                ? colors.main.withOpacity(0.1)
+                                                ? colors.main
+                                                    .withValues(alpha: 0.1)
                                                 : colors.upBackGround,
                                           ),
                                           child: Column(

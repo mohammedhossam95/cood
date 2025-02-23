@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/utils/values/strings.dart';
+import '../../../../core/utils/values/svg_manager.dart';
 import '../../../../core/utils/values/text_styles.dart';
 import '../../../../injection_container.dart';
-import '../../../../core/utils/values/svg_manager.dart';
 
 class SelectGender extends StatefulWidget {
   final String currentGender;
@@ -82,12 +82,14 @@ class _SelectGenderState extends State<SelectGender> {
       height: 56.h,
       padding: EdgeInsets.all(8.r),
       decoration: BoxDecoration(
-        color: isSelected ? colors.main.withOpacity(0.08) : colors.upBackGround,
+        color: isSelected
+            ? colors.main.withValues(alpha: 0.08)
+            : colors.upBackGround,
         border: Border.all(
           width: 1,
           color: isSelected
-              ? colors.main.withOpacity(0.5)
-              : colors.body.withOpacity(0.25),
+              ? colors.main.withValues(alpha: 0.5)
+              : colors.body.withValues(alpha: 0.25),
         ),
         borderRadius: BorderRadius.circular(8.r),
       ),

@@ -54,7 +54,7 @@ class AwesomePlaceSearch {
     showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
-      barrierColor: Colors.grey.withOpacity(.7),
+      barrierColor: Colors.grey.withValues(alpha: .7),
       backgroundColor: Colors.transparent,
       useSafeArea: false,
       builder: (context) {
@@ -110,7 +110,7 @@ class AwesomePlaceSearch {
                 width: 100,
                 height: 10,
                 decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(.3),
+                  color: Colors.grey.withValues(alpha: .3),
                   borderRadius: BorderRadius.circular(50),
                 ),
               ),

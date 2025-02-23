@@ -19,7 +19,7 @@ class ReservationContainer extends StatelessWidget {
       ),
       decoration: BoxDecoration(
           color: colors.upBackGround,
-          border: Border.all(color: colors.textColor.withOpacity(0.5)),
+          border: Border.all(color: colors.textColor.withValues(alpha: 0.5)),
           borderRadius: BorderRadius.circular(15.r)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

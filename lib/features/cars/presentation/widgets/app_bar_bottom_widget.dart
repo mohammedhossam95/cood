@@ -81,7 +81,7 @@ class _AppBarBottomWidgetState extends State<AppBarBottomWidget> {
             InkWell(
               onTap: () {
                 showDialog(
-                  barrierColor: Colors.black.withOpacity(.4),
+                  barrierColor: Colors.black.withValues(alpha: .4),
                   context: context,
                   builder: (context) {
                     return Stack(

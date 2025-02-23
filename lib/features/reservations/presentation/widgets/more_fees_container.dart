@@ -42,8 +42,9 @@ class MoreFeesContainer extends StatelessWidget {
               color: (check) ? colors.main : null,
               border: Border.all(
                 width: 2,
-                color:
-                    (check) ? colors.main : colors.textColor.withOpacity(0.5),
+                color: (check)
+                    ? colors.main
+                    : colors.textColor.withValues(alpha: 0.5),
               ),
               borderRadius: BorderRadius.circular(8),
             ),
@@ -60,7 +61,7 @@ class MoreFeesContainer extends StatelessWidget {
           Text(
             title,
             style: TextStyles.bold14(
-              color: colors.textColor.withOpacity(0.5),
+              color: colors.textColor.withValues(alpha: 0.5),
             ),
           ),
           Padding(
@@ -68,7 +69,7 @@ class MoreFeesContainer extends StatelessWidget {
             child: Text(
               "$fees ${'reyal'.tr}",
               style: TextStyles.bold14(
-                color: colors.textColor.withOpacity(0.5),
+                color: colors.textColor.withValues(alpha: 0.5),
               ),
             ),
           ),

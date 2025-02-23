@@ -3,6 +3,9 @@ class SvgAssets {
   static const String notFound = 'assets/icons/notFound.svg';
 
   static const String user = 'assets/icons/user.svg';
+  static const String bookmarkTab = 'assets/icons/Bookmark_tab.svg';
+  static const String homeTab = 'assets/icons/home_tab.svg';
+  static const String userTab = 'assets/icons/user_tab.svg';
 
   static const String bell = 'assets/icons/bell.svg';
 

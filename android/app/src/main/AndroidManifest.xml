@@ -3,6 +3,7 @@
         android:label="cood"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
+        android:enableOnBackInvokedCallback="true"
         android:roundIcon="@mipmap/ic_launcher_round">
         <activity
             android:name=".MainActivity"

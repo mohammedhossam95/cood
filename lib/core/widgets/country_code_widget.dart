@@ -42,7 +42,7 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         decoration: BoxDecoration(
             border: Border.all(
-              color: colors.buttonColor.withOpacity(.5),
+              color: colors.buttonColor.withValues(alpha: .5),
             ),
             borderRadius: BorderRadius.circular(12.r)),
         child: Row(

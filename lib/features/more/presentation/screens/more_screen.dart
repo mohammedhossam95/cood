@@ -28,39 +28,11 @@ class _MoreScreenState extends State<MoreScreen> {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.all(25.r),
-        child: Column(
+        child: ListView(
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'tapBarItemMyAccount'.tr,
-                        style: TextStyles.bold32(color: colors.main),
-                      ),
-                    ],
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    height: 40.h,
-                    width: 40.w,
-                    margin: EdgeInsets.only(top: 20.h),
-                    decoration: BoxDecoration(
-                      color: colors.textColor.withValues(alpha: .3),
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    child: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                    ),
-                  ),
-                ),
-              ],
+            Text(
+              'tapBarItemMyAccount'.tr,
+              style: TextStyles.bold32(color: colors.main),
             ),
             Gaps.vGap20,
             Center(
@@ -89,15 +61,18 @@ class _MoreScreenState extends State<MoreScreen> {
             Gaps.vGap10,
             Text(
               'فهد سليمان',
+              textAlign: TextAlign.center,
               style: TextStyles.bold20(color: colors.main),
             ),
             Text(
               '+966 55 555 5555',
-              style: TextStyles.bold20(color: colors.main),
+              textAlign: TextAlign.center,
+              style: TextStyles.medium18(color: colors.main),
             ),
             Text(
               '12345675555',
-              style: TextStyles.bold20(color: colors.main),
+              textAlign: TextAlign.center,
+              style: TextStyles.medium18(color: colors.main),
             ),
             Gaps.vGap30,
             MoreItemWidget(
@@ -138,7 +113,8 @@ class _MoreScreenState extends State<MoreScreen> {
               color: colors.baseColor,
               textColor: colors.errorColor,
               borderColor: colors.baseColor,
-            )
+            ),
+            Gaps.vGap40,
           ],
         ),
       ),
