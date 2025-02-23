@@ -74,55 +74,55 @@ class _ReservationScreenState extends State<ReservationScreen> {
       'الالعاب',
       'assets/images/PS Controller.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       'البيع والشراء',
       'assets/images/Sell Stock.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       'الصحه والقلب',
       'assets/images/Caduceus.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       'الترفيه',
       'assets/images/Retro TV.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       'الفن والموسيقي',
       'assets/images/Music.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       'الشعر والكتب',
       'assets/images/Open Book.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       ' ريادة الاعمال',
       'assets/images/Business.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       '  تصاميم الجرافيك',
       'assets/images/Photo Editor.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       '  الاهل والطفال',
       'assets/images/Full Family.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       '  التعليم',
       'assets/images/Mortarboard.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       '  الحيوانات',
       'assets/images/Elephant.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       '  العقارات',
       'assets/images/Building.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       ' الأفلام والمسلسلات ',
       'assets/images/Film Reel.png',
     ),
-      ComuniGuideItemEntity(
+    ComuniGuideItemEntity(
       ' التقنية',
       'assets/images/Electronics.png',
     ),
@@ -154,7 +154,6 @@ class _ReservationScreenState extends State<ReservationScreen> {
       'كوميدي  ',
       'assets/images/Comedy.png',
     ),
-    
   ];
 //------------------------------
 
@@ -204,8 +203,14 @@ class _ReservationScreenState extends State<ReservationScreen> {
                                     shrinkWrap: true,
                                     itemCount: communicationList.length,
                                     itemBuilder: (context, index) =>
-                                        CommunicationGuideItem(
-                                            item: communicationList[index]),
+                                        GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushNamed(context,
+                                            Routes.communicationItemDetails);
+                                      },
+                                      child: CommunicationGuideItem(
+                                          item: communicationList[index]),
+                                    ),
                                   ),
                                 ),
                               ),
