@@ -1,3 +1,4 @@
+import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/utils/values/text_styles.dart';
 import 'package:cood/core/widgets/gaps.dart';
@@ -39,10 +40,14 @@ class SocialContainerItem extends StatelessWidget {
             height: double.infinity,
             decoration: BoxDecoration(
               color: socialPhotoColors,
-              borderRadius: BorderRadius.only(
+              borderRadius:(AppLocalizations.of(context)!.isArLocale)?BorderRadius.only(
                 topLeft: Radius.circular(20.r),
+                topRight: Radius.circular(19.r),
+                bottomRight: Radius.circular(19.r),
+              ):BorderRadius.only(
+                topLeft: Radius.circular(19.r),
                 topRight: Radius.circular(20.r),
-                bottomRight: Radius.circular(20.r),
+                bottomLeft: Radius.circular(19.r),
               ),
             ),
             child: Image.asset(entityModel.image!),

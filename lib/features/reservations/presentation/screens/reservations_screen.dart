@@ -217,6 +217,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                                       itemBuilder: (context, index) =>
                                           CommunicationGuideItem(
                                               item: communicationList[index]),
+
                                     ),
                                   ),
                                 ),
