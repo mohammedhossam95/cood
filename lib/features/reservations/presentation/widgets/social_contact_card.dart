@@ -2,6 +2,7 @@
 
 import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
+import 'package:cood/core/widgets/gaps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,7 +20,10 @@ class _ContactCardState extends State<ContactCard> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
+
         Container(
+          height: isExpanded ? 220 : 80,
+          width: 280.w,
           decoration: BoxDecoration(
             color: MyColors.backGround,
             borderRadius: AppLocalizations.of(context)!.isArLocale
@@ -32,10 +36,8 @@ class _ContactCardState extends State<ContactCard> {
                     bottomRight: Radius.circular(20.0.r),
                   ),
           ),
-          height: isExpanded ? 250 : 80,
-          width: 280,
           margin: EdgeInsets.only(
-            top: 8.0.h,
+            top: 10.0.h,
             right: AppLocalizations.of(context)!.isArLocale ? 70.0.w : 0.0,
             left: AppLocalizations.of(context)!.isArLocale ? 0.0 : 70.0.w,
           ),
@@ -124,7 +126,7 @@ class _ContactCardState extends State<ContactCard> {
                           ),
                         ],
                       ),
-                       SizedBox(height: 8.0.h),
+                       Gaps.vGap12,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -177,13 +179,14 @@ class _ContactCardState extends State<ContactCard> {
             ],
           ),
         ),
+        //---------this container to decorate image the angel between image ang bigger container
         Positioned(
           right: AppLocalizations.of(context)!.isArLocale ? 40.0.w : null,
           left: AppLocalizations.of(context)!.isArLocale ? null : 40.0.w,
-          top: 8.0.h,
+          top: 10.0.h,//the same the bigger container margin
           child: Container(
             width: 30.w,
-            height: 80.h,
+            height: 70.h,
             decoration: BoxDecoration(
               color: MyColors.backGround,
             ),
