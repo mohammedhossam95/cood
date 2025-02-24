@@ -3,11 +3,13 @@
 import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/widgets/gaps.dart';
+import 'package:cood/features/reservations/domain/entity/contacts_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ContactCard extends StatefulWidget {
-  const ContactCard({Key? key}) : super(key: key);
+  final ContactEntity contacts;
+  const ContactCard({Key? key,required this.contacts}) : super(key: key);
 
   @override
   State<ContactCard> createState() => _ContactCardState();
@@ -15,14 +17,13 @@ class ContactCard extends StatefulWidget {
 
 class _ContactCardState extends State<ContactCard> {
   bool isExpanded = false;
-
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
 
         Container(
-          height: isExpanded ? 220 : 80,
+          height: isExpanded ? 220.0.h : 80.0.h,
           width: 280.w,
           decoration: BoxDecoration(
             color: MyColors.backGround,
@@ -30,25 +31,27 @@ class _ContactCardState extends State<ContactCard> {
                 ? BorderRadius.only(
                     topLeft: Radius.circular(20.0.r),
                     bottomLeft: Radius.circular(20.0.r),
+                    bottomRight: (isExpanded)?Radius.circular(20.0.r):Radius.circular(0.0.r),
                   )
                 : BorderRadius.only(
                     topRight: Radius.circular(20.0.r),
                     bottomRight: Radius.circular(20.0.r),
+                    bottomLeft: (isExpanded)?Radius.circular(0.0.r):Radius.circular(20.0.r),
                   ),
           ),
           margin: EdgeInsets.only(
             top: 10.0.h,
-            right: AppLocalizations.of(context)!.isArLocale ? 70.0.w : 0.0,
-            left: AppLocalizations.of(context)!.isArLocale ? 0.0 : 70.0.w,
+            right: AppLocalizations.of(context)!.isArLocale ? 70.0.w : 0.0.w,
+            left: AppLocalizations.of(context)!.isArLocale ? 0.0.w : 70.0.w,
           ),
           child: Column(
             children: [
               ListTile(
                 contentPadding:
                     EdgeInsets.only(left: 20.w, right: 20.0.w, top: 8.0.h),
-                title: Text('علي لطفي',
+                title: Text('${widget.contacts.name}',
                     style: const TextStyle(fontWeight: FontWeight.bold)),
-                subtitle: Text('02555222222'),
+                subtitle: Text('${widget.contacts.phone}'),
                 trailing: isExpanded
                     ? SizedBox()
                     : IconButton(
@@ -185,8 +188,8 @@ class _ContactCardState extends State<ContactCard> {
           left: AppLocalizations.of(context)!.isArLocale ? null : 40.0.w,
           top: 10.0.h,//the same the bigger container margin
           child: Container(
-            width: 30.w,
-            height: 70.h,
+            width: 35.w,
+            height: 80.h,
             decoration: BoxDecoration(
               color: MyColors.backGround,
             ),
@@ -201,7 +204,7 @@ class _ContactCardState extends State<ContactCard> {
             height: 80.h,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/detail item.png'),
+                image: AssetImage('${widget.contacts.profileImage}'),
                 fit: BoxFit.cover,
               ),
               borderRadius: (AppLocalizations.of(context)!.isArLocale)
