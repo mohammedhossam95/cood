@@ -32,7 +32,7 @@ class _ContactCardState extends State<ContactCard> {
                     bottomRight: Radius.circular(20.0.r),
                   ),
           ),
-          height: isExpanded ? 200 : 80,
+          height: isExpanded ? 250 : 80,
           width: 280,
           margin: EdgeInsets.only(
             top: 8.0.h,
@@ -65,45 +65,109 @@ class _ContactCardState extends State<ContactCard> {
               ),
               if (isExpanded)
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 8.0),
+                  padding:  EdgeInsets.symmetric(
+                      horizontal: 16.0.w, vertical: 8.0.h),
                   child: Column(
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: const [
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          //------------------------1 snapchat
                           CircleAvatar(
-                            backgroundColor: MyColors.errorColor,
+                            radius: 25.0.r,
+                            backgroundColor: MyColors.socialyellow,
+                            child: Image.asset(
+                              'assets/images/snapchat.png',
+                              height: 30.0.h,
+                            ),
+                          ), //------------------------2 tiktok
+                          CircleAvatar(
+                            radius: 25.0.r,
+                            backgroundColor: MyColors.black,
+                            child: Image.asset(
+                              'assets/images/tiktok.png',
+                              height: 30.0.h,
+                            ),
+                          ), //------------------------3  insta
+                          Container(
+                            height: 50.h,
+                            width: 50.0.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape
+                                  .circle, // Circle shape for Instagram-style avatars
+                              gradient: LinearGradient(
+                                colors: [
+                                  MyColors.pink,
+                                  MyColors.purple,
+                                  MyColors.orange,
+                                  MyColors.yellow,
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                            ),
+                            child: Image.asset('assets/images/Instagram.png'),
+                          ),
+
+                          //------------------------4
+                          Container(
+                            width: 60.0.w,
+                            height: 40.0.h,
+                            decoration: BoxDecoration(
+                              color: MyColors.errorColor,
+                              borderRadius: BorderRadius.circular(15.0.r),
+                            ),
                             child: IconButton(
                               icon: Icon(Icons.delete, color: Colors.white),
                               onPressed: null,
                             ),
                           ),
-                          Icon(Icons.facebook, color: Colors.pink, size: 30),
-                          Icon(Icons.tiktok, color: Colors.black, size: 30),
-                          Icon(Icons.snapchat, color: Colors.yellow, size: 30),
                         ],
                       ),
-                      const SizedBox(height: 8.0),
+                       SizedBox(height: 8.0.h),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Icon(Icons.facebook,
-                              color: Colors.blue, size: 30),
-                          const Icon(Icons.facebook,
-                              color: Colors.green, size: 30),
-                          IconButton(
-                            icon: Icon(
-                              size: 40.0.h,
-                              isExpanded
-                                  ? Icons.keyboard_arrow_up
-                                  : Icons.keyboard_arrow_down,
+                          //-------------5 whatsApp
+                          CircleAvatar(
+                            radius: 25.0.r,
+                            backgroundColor: MyColors.socialGreen,
+                            child: Image.asset(
+                              'assets/images/Whatsapp 1.png',
+                              height: 30.0.h,
                             ),
-                            onPressed: () {
-                              setState(() {
-                                isExpanded = !isExpanded;
-                              });
-                            },
+                          ),
+                          //---------------6 facbook
+                          CircleAvatar(
+                            radius: 25.0.r,
+                            backgroundColor: MyColors.main,
+                            child: Image.asset(
+                              'assets/images/facbook.png',
+                              height: 30.0.h,
+                            ),
+                          ),
+                          //--------------------------7 imo
+                          CircleAvatar(
+                            radius: 25.0.r,
+                            backgroundImage: AssetImage('assets/images/imo.png'),
+                          ),
+                          //-------------------------8 dropdwon button
+                          SizedBox(
+                            height: 50.0.h,
+                            width: 50.0.w,
+                            child: IconButton(
+                              icon: Icon(
+                                size: 50.0.h,
+                                isExpanded
+                                    ? Icons.keyboard_arrow_up
+                                    : Icons.keyboard_arrow_down,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  isExpanded = !isExpanded;
+                                });
+                              },
+                            ),
                           ),
                         ],
                       ),

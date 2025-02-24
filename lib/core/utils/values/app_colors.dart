@@ -29,7 +29,11 @@ class MyColors {
   static const Color socialyellow = Color(0xFFFFFC01);
   static const Color arrowBackGrey = Color(0xFFD9D9D9);
 
-
+//---------insta colors
+ static const Color pink = Color(0xFFE1306C); // Instagram Pink
+  static const Color orange = Color(0xFFF77737); // Instagram Orange
+  static const Color yellow = Color(0xFFFFDC80); // Instagram Yellow
+  static const Color purple = Color(0xFFC13584); // Instagram Purple
 //---------------
   static const Color blackColor = Colors.black;
 

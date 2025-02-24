@@ -71,7 +71,7 @@ class _CommunicationItemDetailsState extends State<CommunicationItemDetails> {
                     topRight: Radius.circular(35.r),
                 ),
               ),
-              child: ListView.builder(itemBuilder: (context,index)=>ContactCard(),itemCount:2 ,),
+              child: ListView.builder(itemBuilder: (context,index)=>ContactCard(),itemCount:10 ,),
             ),
           )
         ],
