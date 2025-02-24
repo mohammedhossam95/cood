@@ -1,9 +1,12 @@
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/utils/values/text_styles.dart';
 import 'package:cood/core/widgets/back_button.dart';
-import 'package:cood/features/reservations/presentation/widgets/communication_details_item.dart';
+import 'package:cood/features/reservations/presentation/widgets/social_contact_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+
+//main page for communication details
 
 class CommunicationItemDetails extends StatefulWidget {
   const CommunicationItemDetails({super.key});
@@ -57,8 +60,10 @@ class _CommunicationItemDetailsState extends State<CommunicationItemDetails> {
             ),
           ),
           Expanded(
+            //------------------this need to be custom and change photo to extract out the container built in row
             child: Container(
               margin: EdgeInsets.only(top: 15.h),
+              padding: EdgeInsets.symmetric(horizontal: 15.0),
               decoration: BoxDecoration(
                 color: MyColors.white,
                 borderRadius: BorderRadius.only(
@@ -66,7 +71,7 @@ class _CommunicationItemDetailsState extends State<CommunicationItemDetails> {
                     topRight: Radius.circular(35.r),
                 ),
               ),
-              child: ListView.builder(itemBuilder: (context,index)=>CommunicationDetailsItem(),itemCount:10 ,),
+              child: ListView.builder(itemBuilder: (context,index)=>ContactCard(),itemCount:2 ,),
             ),
           )
         ],
