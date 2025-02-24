@@ -215,9 +215,13 @@ class _ReservationScreenState extends State<ReservationScreen> {
                                       shrinkWrap: true,
                                       itemCount: communicationList.length,
                                       itemBuilder: (context, index) =>
-                                          CommunicationGuideItem(
-                                              item: communicationList[index]),
-
+                                          GestureDetector(
+                                        onTap: () {
+                                          Navigator.pushNamed(context, Routes.communicationItemDetails);
+                                        },
+                                        child: CommunicationGuideItem(
+                                            item: communicationList[index]),
+                                      ),
                                     ),
                                   ),
                                 ),

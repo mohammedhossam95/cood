@@ -155,7 +155,6 @@ class Routes {
   static const String failedOtpScreenRoute = '/FailedOtpScreenScreen';
   static const String settingScreenRoute = '/SettingsScreen';
   static const String changePasswordRoute = '/changePasswordScreen';
-
 //---------------------added by ali 
   static const String communicationItemDetails = '/CommunicationItemDetails';
 
