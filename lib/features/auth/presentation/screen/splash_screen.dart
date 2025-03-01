@@ -61,16 +61,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _goNext(UserCycle userCycle) {
     if (userCycle == UserCycle.firstOpen) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        Routes.onBoardingRoute,
-        (route) => false,
-      );
+      Navigator.pushReplacementNamed(context, Routes.loginScreenRoute);
     } else if (userCycle == UserCycle.login) {
       Navigator.pushReplacementNamed(context, Routes.loginScreenRoute);
     } else if (userCycle == UserCycle.auth) {
-      Navigator.pushReplacementNamed(context, Routes.mainPageRoute);
-    } else if (userCycle == UserCycle.guest) {
       Navigator.pushReplacementNamed(context, Routes.mainPageRoute);
     }
   }

@@ -14,7 +14,6 @@ enum UserCycle {
   firstOpen, //WelcomeScreen
   login,
   auth,
-  guest,
 }
 
 enum UserType {

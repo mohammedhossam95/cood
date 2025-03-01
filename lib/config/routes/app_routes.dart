@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '/core/params/car_params.dart';
 import '/features/auth/presentation/screen/mobile_screen.dart';
-import '/features/auth/presentation/screen/on_boarding_screen.dart';
 import '/features/auth/presentation/screen/otp_screen.dart';
 import '/features/auth/presentation/screen/register/new_user_register_screen.dart';
 import '/features/auth/presentation/screen/register/washer_second_register_screen.dart';
@@ -90,7 +89,6 @@ class Routes {
       '/HospitalInvitationDetailsScreen';
   static const String otpAuthRoute = '/OtpAuthScreen';
   static const String successChangePassRoute = '/SuccessChangePassScreen';
-  static const String onBoardingRoute = '/OnBoardingScreen';
   static const String notificationsScreenRoute = '/NotificationsScreen';
   static const String cartScreenRoute = '/CartScreen';
   static const String laundryDetailsScreenRoute = '/LaundryDetailsScreen';
@@ -155,9 +153,8 @@ class Routes {
   static const String failedOtpScreenRoute = '/FailedOtpScreenScreen';
   static const String settingScreenRoute = '/SettingsScreen';
   static const String changePasswordRoute = '/changePasswordScreen';
-//---------------------added by ali 
+//---------------------added by ali
   static const String communicationItemDetails = '/CommunicationItemDetails';
-
 }
 
 class AppRoutes {
@@ -324,11 +321,6 @@ class AppRoutes {
           settings: routeSettings,
           builder: (BuildContext context) =>
               const SuccessChangePasswordScreen(),
-        );
-      case Routes.onBoardingRoute:
-        return MaterialPageRoute(
-          settings: routeSettings,
-          builder: (BuildContext context) => const OnBoardingScreen(),
         );
 
       case Routes.newUserRegisterRoute:
