@@ -168,8 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               //--------3
               //ToDo---------------------------- here switch index(frinds, photoes or accounts)
-               //getCurrentWidget(1),
-               MySocialPhotos(),
+               getCurrentTapBarWidget(selectedDurationIndex),
             ],
           ),
         ],
@@ -178,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   /// Returns the widget corresponding to the given index.
-  Widget getCurrentWidget(int index) {
+  Widget getCurrentTapBarWidget(int index) {
     // This function is called in _buildDurationOption to assign the appropriate widget based on the index.
     switch (index) {
       case 0:

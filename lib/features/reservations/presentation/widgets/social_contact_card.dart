@@ -8,9 +8,11 @@ import 'package:cood/features/reservations/domain/entity/contacts_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// ignore: must_be_immutable
 class ContactCard extends StatefulWidget {
   final ContactEntity contacts;
-  const ContactCard({Key? key, required this.contacts}) : super(key: key);
+  bool isPhoneAppear;
+  ContactCard({super.key, required this.contacts, this.isPhoneAppear = false});
 
   @override
   State<ContactCard> createState() => _ContactCardState();
@@ -32,10 +34,10 @@ class _ContactCardState extends State<ContactCard> {
           child: Container(
             margin: EdgeInsets.only(
               top: 10.0.h,
-              right: (isArabic) ? 80.0.w :0.0.w,
+              right: (isArabic) ? 80.0.w : 0.0.w,
               left: (isArabic) ? 0.0.w : 80.0.w,
             ),
-            height: isExpanded ? 200.0.h : 65.0.h,
+            height: isExpanded ? 180.0.h : 65.0.h,
             width: 280.w,
             decoration: BoxDecoration(
               color: MyColors.backGround,
@@ -57,30 +59,47 @@ class _ContactCardState extends State<ContactCard> {
             ),
             child: Column(
               children: [
-                ListTile(
-                  contentPadding: EdgeInsets.only(
-                      left: (isArabic) ? 0.0.w : 20.0.w,
-                      right: (isArabic) ? 20.0.w : 0.0.w,
-                      top: 8.0.h),
-                  title: Text('${widget.contacts.name}',
-                      style: TextStyles.bold12(),),
-                  //subtitle: Text('${widget.contacts.phone}',style: TextStyles.bold12(),),
-                  trailing: isExpanded
-                      ? SizedBox()
-                      : IconButton(
-                          icon: Icon(
-                            size: 40.0.h,
-                            isExpanded
-                                ? Icons.keyboard_arrow_up
-                                : Icons.keyboard_arrow_down,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: isArabic ? 0.0.w : 20.0.w,
+                        right: isArabic ? 20.0.w : 0.0.w,
+                        top: 8.0.h,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${widget.contacts.name}',
+                            style: TextStyles.bold12(),
                           ),
-                          onPressed: () {
-                            setState(() {
-                              isExpanded = !isExpanded;
-                            });
-                          },
-                        ),
+                          if (widget.isPhoneAppear)
+                            Text(
+                              '${widget.contacts.phone}',
+                              style: TextStyles.bold12(),
+                            ),
+                        ],
+                      ),
+                    ),
+                    (isExpanded)?SizedBox():IconButton(
+                      icon: Icon(
+                        isExpanded
+                            ? Icons.keyboard_arrow_up
+                            : Icons.keyboard_arrow_down,
+                        size: 40.0.h,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          isExpanded = !isExpanded;
+                        });
+                      },
+                    ),
+                  ],
                 ),
+                Gaps.vGap10,
                 if (isExpanded)
                   Padding(
                     padding: EdgeInsets.symmetric(

@@ -3,57 +3,47 @@
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
-import 'package:cood/features/home/domain/entities/social_entity.dart';
-import 'package:cood/features/home/presentation/widgets/myAccounts/social_accounts.dart';
+import 'package:cood/features/reservations/domain/entity/contacts_entity.dart';
+import 'package:cood/features/reservations/presentation/widgets/social_contact_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MySocialFriends extends StatelessWidget {
    MySocialFriends({super.key});
-    List<Color> socialPhotoColors = [
-    MyColors.main,
-    MyColors.socialGreen,
-    MyColors.black,
-    MyColors.socialYellow,
-    MyColors.black,
-    MyColors.socialYellow,
+  final List<ContactEntity> contacts = [
+    ContactEntity(
+        name: "عبدالله جمال",
+        phone: "359698820",
+        profileImage: 'assets/images/person.png'),
+    ContactEntity(
+        name: "أحمد المحمدي",
+        phone: "359698845",
+        profileImage: 'assets/images/person.png'),
+    ContactEntity(
+        name: "عبدالله جمال",
+        phone: "359698820",
+        profileImage: 'assets/images/person.png'),
+    ContactEntity(
+        name: "أحمد المحمدي",
+        phone: "359698845",
+        profileImage: 'assets/images/person.png'),
+    ContactEntity(
+        name: "عبدالله جمال",
+        phone: "359698820",
+        profileImage: 'assets/images/person.png'),
+    ContactEntity(
+        name: "أحمد المحمدي",
+        phone: "359698845",
+        profileImage: 'assets/images/person.png'),
+    ContactEntity(
+        name: "عبدالله جمال",
+        phone: "359698820",
+        profileImage: 'assets/images/person.png'),
+    ContactEntity(
+        name: "أحمد المحمدي",
+        phone: "359698845",
+        profileImage: 'assets/images/person.png'),
   ];
-  List<Color> socialBacgroundColors = [
-    MyColors.facbookItemColor,
-    MyColors.whatsAppItemColor,
-    MyColors.tikokItemColor,
-    MyColors.snapShatItemColor,
-    MyColors.tikokItemColor,
-    MyColors.snapShatItemColor,
-  ];
-
-  List<SocialEntity> sociaAccounts = [
-    SocialEntity(
-        name: 'Andrew Tate',
-        email: 'Andrewtate25235@hotmail.com',
-        image: 'assets/images/facbook.png'),
-    SocialEntity(
-        name: 'Andrew Tate',
-        email: '+966599697364',
-        image: 'assets/images/Whatsapp 1.png'),
-    SocialEntity(
-        name: '@AndrewTate',
-        email: 'Andrewtate@hotmail.com',
-        image: 'assets/images/tiktok.png'),
-    SocialEntity(
-        name: '@AndrewTate',
-        email: 'Andrewtate@hotmail.com',
-        image: 'assets/images/snapchat.png'),
-    SocialEntity(
-        name: '@AndrewTate',
-        email: 'Andrewtate@hotmail.com',
-        image: 'assets/images/snapchat.png'),
-    SocialEntity(
-        name: '@AndrewTate',
-        email: 'Andrewtate@hotmail.com',
-        image: 'assets/images/snapchat.png'),        
-  ];
-
   @override
   Widget build(BuildContext context) {
   return  Expanded(
@@ -74,38 +64,27 @@ class MySocialFriends extends StatelessWidget {
                   ),
                 ],
               ),
-              child: SocialAccounts(
-                socialAccounts: sociaAccounts,
-                socialBackgroundColors: socialBacgroundColors,
-                socialPhotoColors: socialPhotoColors,
-              ),
+              child: ListView.builder(
+                  itemBuilder: (context, index) =>
+                      ContactCard(contacts: contacts[index],isPhoneAppear: true,),
+                  itemCount: contacts.length,
+                ),
             ),
           ),
           Gaps.vGap20,
               //-----------------4
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: Container(
+                   Container(
+                    width: 207.0.h,
                       margin: EdgeInsets.all(10.h),
                       child: MyDefaultButton(
                         onPressed: () {},
                         height: 50.h,
-                        btnText: "link_other_accounts",
+                        btnText: "add_friend",
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(10.h),
-                      child: MyDefaultButton(
-                        onPressed: () {},
-                        height: 50.h,
-                        btnText: "communication_channels",
-                      ),
-                    ),
-                  ),
                 ],
               ),
         ],
