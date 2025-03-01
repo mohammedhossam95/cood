@@ -1,6 +1,8 @@
-import 'package:cood/core/utils/values/app_colors.dart';
-import 'package:cood/features/home/domain/entities/social_entity.dart';
-import 'package:cood/features/home/presentation/widgets/social_container_item.dart';
+
+import 'package:cood/features/home/presentation/widgets/myAccounts/my_accounts.dart';
+
+import 'package:cood/features/home/presentation/widgets/myPhotos/my_photos.dart';
+import 'package:cood/features/home/presentation/widgets/my_friends/my_friends.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +12,6 @@ import '/core/params/car_params.dart';
 import '/core/utils/log_utils.dart';
 import '/core/utils/values/text_styles.dart';
 import '/core/widgets/gaps.dart';
-import '/core/widgets/my_default_button.dart';
 import '/features/home/domain/entities/plans_status_entity.dart';
 import '/features/home/presentation/cubit/get_plans_status_cubit/get_plans_status_cubit.dart';
 import '/features/home/presentation/widgets/cities_list.dart';
@@ -37,38 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
   int? cityId;
   CarParams result = const CarParams();
   CarParams carParams = const CarParams();
-  //-------------------------------------------ali
-  List<Color> socialPhotoColors = [
-    MyColors.main,
-    MyColors.socialGreen,
-    MyColors.black,
-    MyColors.socialYellow,
-  ];
-  List<Color> socialBacgroundColors = [
-    MyColors.facbookItemColor,
-    MyColors.whatsAppItemColor,
-    MyColors.tikokItemColor,
-    MyColors.snapShatItemColor,
-  ];
-
-  List<SocialEntity> sociaEntityModel = [
-    SocialEntity(
-        name: 'Andrew Tate',
-        email: 'Andrewtate25235@hotmail.com',
-        image: 'assets/images/facbook.png'),
-    SocialEntity(
-        name: 'Andrew Tate',
-        email: '+966599697364',
-        image: 'assets/images/Whatsapp 1.png'),
-    SocialEntity(
-        name: '@AndrewTate',
-        email: 'Andrewtate@hotmail.com',
-        image: 'assets/images/tiktok.png'),
-    SocialEntity(
-        name: '@AndrewTate',
-        email: 'Andrewtate@hotmail.com',
-        image: 'assets/images/snapchat.png'),
-  ];
 
   @override
   void initState() {
@@ -83,186 +52,150 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Stack(
         children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Gaps.vGap16,
-                //----------1
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
-                    children: [
-                      Center(
-                        child: Container(
-                          width: 60.w,
-                          height: 60.h,
-                          decoration: BoxDecoration(
-                            color: colors.main,
-                            border: Border.all(
-                              color: colors.main,
-                            ),
-                            borderRadius: BorderRadius.circular(10.r),
-                          ),
-                          clipBehavior: Clip.antiAlias,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10.r),
-                            child: Image.asset(
-                              "assets/images/user.jpeg",
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Gaps.hGap10,
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'فهد سليمان',
-                              style: TextStyles.bold14(color: colors.main),
-                            ),
-                            Text(
-                              '359698845',
-                              style: TextStyles.bold14(color: colors.main),
-                            ),
-                          ],
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pushNamed(
-                              context, Routes.notificationsScreenRoute);
-                        },
-                        icon: Icon(
-                          Icons.notifications,
-                          color: colors.main,
-                          size: 36.r,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pushNamed(
-                              context, Routes.settingScreenRoute);
-                        },
-                        icon: Icon(
-                          Icons.settings,
-                          color: colors.main,
-                          size: 36.r,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                //----------2
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 20.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Gaps.vGap8,
-                      BlocBuilder<GetPlansStatusCubit, GetPlansStatusState>(
-                        builder: (context, state) {
-                          if (state is GetPlansStatusLoading) {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          } else if (state is GetPlansStatusSuccess) {
-                            PlansStatusEntity plansStatus =
-                                state.response.data as PlansStatusEntity;
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                plansStatus.daily!
-                                    ? _buildDurationOption('myAccounts', 0)
-                                    : const SizedBox.shrink(),
-                                Gaps.hGap10,
-                                plansStatus.weekly!
-                                    ? _buildDurationOption('myPhotos', 1)
-                                    : const SizedBox.shrink(),
-                                Gaps.hGap10,
-                                plansStatus.monthly!
-                                    ? _buildDurationOption('myFriends', 2)
-                                    : const SizedBox.shrink(),
-                              ],
-                            );
-                          } else if (state is GetPlansStatusError) {
-                            return Center(child: Text(state.message));
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        },
-                      ),
-                      Gaps.vGap8,
-                    ],
-                  ),
-                ),
-                //--------3
-                Center(
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 16.h, horizontal: 10.w),
-                    decoration: BoxDecoration(
-                      color: MyColors.upBackGround,
-                      borderRadius: BorderRadius.circular(25.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: MyColors.body
-                              .withValues(alpha: .5), // Shadow color
-                          spreadRadius: 2.r, // Spread radius
-                          blurRadius: 10.r, // Blur radius
-                          offset: Offset(0, 3), // Offset in x and y directions
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: List.generate(
-                        sociaEntityModel.length,
-                        (index) => SocialContainerItem(
-                          entityModel: sociaEntityModel[index],
-                          socialPhotoColors: socialPhotoColors[index],
-                          socialBackgroundColors: socialBacgroundColors[index],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Gaps.vGap20,
-                //-----------------4
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Gaps.vGap16,
+              //----------1
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
                   children: [
-                    Expanded(
+                    Center(
                       child: Container(
-                        margin: EdgeInsets.all(10.h),
-                        child: MyDefaultButton(
-                          onPressed: () {},
-                          height: 50.h,
-                          btnText: "link_other_accounts",
+                        width: 60.w,
+                        height: 60.h,
+                        decoration: BoxDecoration(
+                          color: colors.main,
+                          border: Border.all(
+                            color: colors.main,
+                          ),
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.r),
+                          child: Image.asset(
+                            "assets/images/user.jpeg",
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
+                    Gaps.hGap10,
                     Expanded(
-                      child: Container(
-                        margin: EdgeInsets.all(10.h),
-                        child: MyDefaultButton(
-                          onPressed: () {},
-                          height: 50.h,
-                          btnText: "communication_channels",
-                        ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'فهد سليمان',
+                            style: TextStyles.bold14(color: colors.main),
+                          ),
+                          Text(
+                            '359698845',
+                            style: TextStyles.bold14(color: colors.main),
+                          ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, Routes.notificationsScreenRoute);
+                      },
+                      icon: Icon(
+                        Icons.notifications,
+                        color: colors.main,
+                        size: 36.r,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, Routes.settingScreenRoute);
+                      },
+                      icon: Icon(
+                        Icons.settings,
+                        color: colors.main,
+                        size: 36.r,
                       ),
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+              //----------2
+              Padding(
+                padding:
+                    EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 20.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Gaps.vGap8,
+                    BlocBuilder<GetPlansStatusCubit, GetPlansStatusState>(
+                      builder: (context, state) {
+                        if (state is GetPlansStatusLoading) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else if (state is GetPlansStatusSuccess) {
+                          PlansStatusEntity plansStatus =
+                              state.response.data as PlansStatusEntity;
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              plansStatus.daily!
+                                  ? _buildDurationOption('myAccounts', 0)
+                                  : const SizedBox.shrink(),
+                              Gaps.hGap10,
+                              plansStatus.weekly!
+                                  ? _buildDurationOption('myPhotos', 1)
+                                  : const SizedBox.shrink(),
+                              Gaps.hGap10,
+                              plansStatus.monthly!
+                                  ? _buildDurationOption('myFriends', 2)
+                                  : const SizedBox.shrink(),
+                            ],
+                          );
+                        } else if (state is GetPlansStatusError) {
+                          return Center(child: Text(state.message));
+                        } else {
+                          return const SizedBox.shrink();
+                        }
+                      },
+                    ),
+                    Gaps.vGap8,
+                  ],
+                ),
+              ),
+              //--------3
+              //ToDo---------------------------- here switch index(frinds, photoes or accounts)
+               //getCurrentWidget(1),
+               MySocialPhotos(),
+            ],
           ),
         ],
       ),
     );
+  }
+
+  /// Returns the widget corresponding to the given index.
+  Widget getCurrentWidget(int index) {
+    // This function is called in _buildDurationOption to assign the appropriate widget based on the index.
+    switch (index) {
+      case 0:
+        return MySocialAccounts();
+      case 1:
+        return MySocialPhotos();
+      case 2:
+        return MySocialFriends();
+      default:
+        // Handle unexpected indices with a default widget.
+        return Center(
+          child: Text(
+            'Invalid Option',
+            style: TextStyle(fontSize: 16, color: Colors.red),
+          ),
+        );
+    }
   }
 
   _buildDurationOption(String text, int index) {

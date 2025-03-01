@@ -87,7 +87,7 @@ class _CommunicationItemDetailsState extends State<CommunicationItemDetails> {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
-                      padding: EdgeInsets.only(bottom: 20.h), // Optional padding
+                      padding: EdgeInsets.only(bottom: 10.0.h), // Optional padding
                       child: Text(
                         'السيارات',
                         style: TextStyles.bold32().copyWith(
