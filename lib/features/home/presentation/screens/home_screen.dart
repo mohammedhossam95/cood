@@ -167,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               //--------3
-              //ToDo---------------------------- here switch index(frinds, photoes or accounts)
+              //---- here switch index(frinds, photoes or accounts)
                getCurrentTapBarWidget(selectedDurationIndex),
             ],
           ),

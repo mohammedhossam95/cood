@@ -10,16 +10,16 @@ class MySocialPhotos extends StatelessWidget {
   MySocialPhotos({super.key});
   List<String> gridImages = [
     'assets/images/gridImage.png',
+    'assets/images/gridImage3.png',
+    'assets/images/gridImage2.png',
     'assets/images/gridImage.png',
+    'assets/images/gridImage3.png',
+    'assets/images/gridImage2.png',
     'assets/images/gridImage.png',
+    'assets/images/gridImage3.png',
+    'assets/images/gridImage2.png',
     'assets/images/gridImage.png',
-    'assets/images/gridImage.png',
-    'assets/images/gridImage.png',
-    'assets/images/gridImage.png',
-    'assets/images/gridImage.png',
-    'assets/images/gridImage.png',
-    'assets/images/gridImage.png',
-    'assets/images/gridImage.png',
+    'assets/images/gridImage3.png',
   ];
 
   @override
@@ -88,10 +88,12 @@ class MySocialPhotos extends StatelessWidget {
                 child: Container(
                   margin: EdgeInsets.all(10.h),
                   child: MyDefaultButton(
-                    svgAsset: 'assets/images/Camera.svg',
+                    textColor: MyColors.backGround,
+                    
                     onPressed: () {},
                     height: 50.h,
-                    btnText: 'pic_A_Photo',
+                    btnText: 'addPhoto',
+                    svgAsset: 'assets/images/Camera.svg',
                   ),
                 ),
               ),

@@ -99,7 +99,7 @@ class _ContactCardState extends State<ContactCard> {
                     ),
                   ],
                 ),
-                Gaps.vGap10,
+                (widget.isPhoneAppear)?Gaps.vGap2:Gaps.vGap15,
                 if (isExpanded)
                   Padding(
                     padding: EdgeInsets.symmetric(

@@ -82,7 +82,8 @@ class MySocialFriends extends StatelessWidget {
                       child: MyDefaultButton(
                         onPressed: () {},
                         height: 50.h,
-                        btnText: "add_friend",
+                        btnText: "addFriend",
+                        
                       ),
                     ),
                 ],
