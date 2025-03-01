@@ -23,7 +23,7 @@ class SocialContainerItem extends StatelessWidget {
         color: socialBackgroundColors,
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(
-          color: (socialPhotoColors == MyColors.socialyellow)
+          color: (socialPhotoColors == MyColors.socialYellow)
               ? MyColors.black
               : socialPhotoColors,
         ),
@@ -74,7 +74,7 @@ class SocialContainerItem extends StatelessWidget {
           //------menue
           Image.asset(
             'assets/images/Menu.png',
-            color: (socialPhotoColors == MyColors.socialyellow)
+            color: (socialPhotoColors == MyColors.socialYellow)
                 ? MyColors.black
                 : socialPhotoColors,
           ),

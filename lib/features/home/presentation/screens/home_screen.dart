@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     MyColors.main,
     MyColors.socialGreen,
     MyColors.black,
-    MyColors.socialyellow,
+    MyColors.socialYellow,
   ];
   List<Color> socialBacgroundColors = [
     MyColors.facbookItemColor,

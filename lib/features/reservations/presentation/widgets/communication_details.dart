@@ -1,3 +1,4 @@
+import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/utils/values/text_styles.dart';
 import 'package:cood/core/widgets/back_button.dart';
@@ -21,97 +22,104 @@ class _CommunicationItemDetailsState extends State<CommunicationItemDetails> {
     ContactEntity(
         name: "عبدالله جمال",
         phone: "359698820",
-        profileImage: 'assets/images/detail item.png'),
+        profileImage: 'assets/images/person.png'),
     ContactEntity(
         name: "أحمد المحمدي",
         phone: "359698845",
-        profileImage: 'assets/images/detail item.png'),
+        profileImage: 'assets/images/person.png'),
     ContactEntity(
         name: "عبدالله جمال",
         phone: "359698820",
-        profileImage: 'assets/images/detail item.png'),
+        profileImage: 'assets/images/person.png'),
     ContactEntity(
         name: "أحمد المحمدي",
         phone: "359698845",
-        profileImage: 'assets/images/detail item.png'),
+        profileImage: 'assets/images/person.png'),
     ContactEntity(
         name: "عبدالله جمال",
         phone: "359698820",
-        profileImage: 'assets/images/detail item.png'),
+        profileImage: 'assets/images/person.png'),
     ContactEntity(
         name: "أحمد المحمدي",
         phone: "359698845",
-        profileImage: 'assets/images/detail item.png'),
+        profileImage: 'assets/images/person.png'),
     ContactEntity(
         name: "عبدالله جمال",
         phone: "359698820",
-        profileImage: 'assets/images/detail item.png'),
+        profileImage: 'assets/images/person.png'),
     ContactEntity(
         name: "أحمد المحمدي",
         phone: "359698845",
-        profileImage: 'assets/images/detail item.png'),
+        profileImage: 'assets/images/person.png'),
   ];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: MyColors.backGround,
-      body: Column(
-        children: [
-          Container(
-            height: 300.h,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/car2.png'),
-                fit: BoxFit.fill,
+    bool isArabic = AppLocalizations.of(context)!.isArLocale;
+
+    return SafeArea(
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        backgroundColor: MyColors.backGround,
+        body: Column(
+          children: [
+            Container(
+              height: 221.h,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/car2.png',),
+                  fit: BoxFit.fill,
+                ),
               ),
-            ),
-            child: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        top: 50.0.h,
-                        left: 30.0.w), // Adjust padding for placement
+              child: Stack(
+                children: [
+                  (isArabic)?
+                  Positioned(
+                    top: 15.0.h,
+                    right: 15.0.h,
+                    child: CustomBackButton(),
+                  ):Positioned(
+                    top: 15.0.h,
+                    left: 15.0.h,
                     child: CustomBackButton(),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 20.h), // Optional padding
-                    child: Text(
-                      'السيارات',
-                      style: TextStyles.bold32().copyWith(
-                        color: MyColors.white,
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 20.h), // Optional padding
+                      child: Text(
+                        'السيارات',
+                        style: TextStyles.bold32().copyWith(
+                          color: MyColors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            //------------------this need to be custom and change photo to extract out the container built in row
-            child: Container(
-              margin: EdgeInsets.only(top: 15.h),
-              padding: EdgeInsets.symmetric(horizontal: 15.0),
-              decoration: BoxDecoration(
-                color: MyColors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(35.r),
-                  topRight: Radius.circular(35.r),
-                ),
-              ),
-              child: ListView.builder(
-                itemBuilder: (context, index) => ContactCard(contacts: contacts[index]),
-                itemCount: contacts.length,
+                ],
               ),
             ),
-          )
-        ],
+            Expanded(
+              //------------------this need to be custom and change photo to extract out the container built in row
+              child: Container(
+                margin: EdgeInsets.only(top: 15.h),
+                padding: EdgeInsets.symmetric(horizontal: 15.0),
+                decoration: BoxDecoration(
+                  color: MyColors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(35.r),
+                    topRight: Radius.circular(35.r),
+                  ),
+                ),
+                child: ListView.builder(
+                  itemBuilder: (context, index) =>
+                      ContactCard(contacts: contacts[index]),
+                  itemCount: contacts.length,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
