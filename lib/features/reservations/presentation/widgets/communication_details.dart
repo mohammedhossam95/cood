@@ -7,8 +7,6 @@ import 'package:cood/features/reservations/presentation/widgets/social_contact_c
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-//main page for communication details
-
 class CommunicationItemDetails extends StatefulWidget {
   const CommunicationItemDetails({super.key});
 
@@ -19,39 +17,30 @@ class CommunicationItemDetails extends StatefulWidget {
 
 class _CommunicationItemDetailsState extends State<CommunicationItemDetails> {
   final List<ContactEntity> contacts = [
-    ContactEntity(
-        name: "عبدالله جمال",
-        phone: "359698820",
-        profileImage: 'assets/images/person.png'),
-    ContactEntity(
-        name: "أحمد المحمدي",
-        phone: "359698845",
-        profileImage: 'assets/images/person.png'),
-    ContactEntity(
-        name: "عبدالله جمال",
-        phone: "359698820",
-        profileImage: 'assets/images/person.png'),
-    ContactEntity(
-        name: "أحمد المحمدي",
-        phone: "359698845",
-        profileImage: 'assets/images/person.png'),
-    ContactEntity(
-        name: "عبدالله جمال",
-        phone: "359698820",
-        profileImage: 'assets/images/person.png'),
-    ContactEntity(
-        name: "أحمد المحمدي",
-        phone: "359698845",
-        profileImage: 'assets/images/person.png'),
-    ContactEntity(
-        name: "عبدالله جمال",
-        phone: "359698820",
-        profileImage: 'assets/images/person.png'),
-    ContactEntity(
-        name: "أحمد المحمدي",
-        phone: "359698845",
-        profileImage: 'assets/images/person.png'),
+    // Your list of contacts
   ];
+
+  // Scroll controller to track scroll position
+  final ScrollController _scrollController = ScrollController();
+  bool _isSliverAppBarPinned = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Listen to scroll events
+    _scrollController.addListener(() {
+      setState(() {
+        // Check if the scroll offset is greater than the expanded height of the SliverAppBar
+        _isSliverAppBarPinned = _scrollController.offset > (221.h - kToolbarHeight);
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose(); // Dispose the scroll controller
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,65 +48,93 @@ class _CommunicationItemDetailsState extends State<CommunicationItemDetails> {
 
     return SafeArea(
       child: Scaffold(
-        extendBodyBehindAppBar: true,
-        backgroundColor: MyColors.backGround,
-        body: Column(
-          children: [
-            Container(
-              height: 221.h,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/car2.png',),
-                  fit: BoxFit.fill,
-                ),
-              ),
-              child: Stack(
-                children: [
-                  (isArabic)?
-                  Positioned(
-                    top: 15.0.h,
-                    right: 15.0.h,
-                    child: CustomBackButton(),
-                  ):Positioned(
-                    top: 15.0.h,
-                    left: 15.0.h,
-                    child: CustomBackButton(),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: 10.0.h), // Optional padding
-                      child: Text(
-                        'السيارات',
-                        style: TextStyles.bold32().copyWith(
-                          color: MyColors.white,
-                        ),
+        body: CustomScrollView(
+          controller: _scrollController,
+          slivers: <Widget>[
+            SliverAppBar(
+              backgroundColor: MyColors.main,
+              expandedHeight: 221.h,
+              pinned: true,
+              automaticallyImplyLeading: false,
+              title: _isSliverAppBarPinned
+                  ? Text(
+                      'السيارات', // Title to show when pinned
+                      style: TextStyles.bold20().copyWith(
+                        color: MyColors.white,
                       ),
+                    )
+                  : null, // No title when expanded
+              centerTitle: true, // Center the title
+              flexibleSpace: FlexibleSpaceBar(
+                background: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/car2.png'),
+                      fit: BoxFit.fill,
                     ),
                   ),
-                ],
-              ),
-            ),
-            Expanded(
-              //------------------this need to be custom and change photo to extract out the container built in row
-              child: Container(
-                margin: EdgeInsets.only(top: 15.h),
-                padding: EdgeInsets.symmetric(horizontal: 15.0),
-                decoration: BoxDecoration(
-                  color: MyColors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(35.r),
-                    topRight: Radius.circular(35.r),
+                  child: Stack(
+                    children: [
+                      if (isArabic)
+                        Positioned(
+                          top: 15.0.h,
+                          right: 15.0.h,
+                          child: CustomBackButton(),
+                        )
+                      else
+                        Positioned(
+                          top: 15.0.h,
+                          left: 15.0.h,
+                          child: CustomBackButton(),
+                        ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: EdgeInsets.only(bottom: 10.0.h),
+                          child: Text(
+                            'السيارات',
+                            style: TextStyles.bold32().copyWith(
+                              color: MyColors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                child: ListView.builder(
-                  itemBuilder: (context, index) =>
-                      ContactCard(contacts: contacts[index]),
-                  itemCount: contacts.length,
+              ),
+            ),
+            // Rounded top container
+            SliverToBoxAdapter(
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(35.r),
+                  topRight: Radius.circular(35.r),
+                ),
+                child: Container(
+                  margin: EdgeInsets.only(top: 10.h),
+                  //padding: EdgeInsets.symmetric(horizontal: 12.0.w),
+                  color: MyColors.white, // Background color
+                  child: Column(
+                    children: [
+                      // Add your content here
+                      SizedBox(height: 20.h), // Example spacing
+                      Text(
+                        'This is a rounded container',
+                        style: TextStyles.bold16(),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            )
+            ),
+            // List of contacts
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => ContactCard(contacts: contacts[index]),
+                childCount: contacts.length,
+              ),
+            ),
           ],
         ),
       ),
