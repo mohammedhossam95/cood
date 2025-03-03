@@ -17,7 +17,54 @@ class CommunicationItemDetails extends StatefulWidget {
 
 class _CommunicationItemDetailsState extends State<CommunicationItemDetails> {
   final List<ContactEntity> contacts = [
-    // Your list of contacts
+    ContactEntity(
+        name: "عبدالله جمال",
+        phone: "359698820",
+        profileImage: 'assets/images/person.png'),
+    ContactEntity(
+        name: "أحمد المحمدي",
+        phone: "359698845",
+        profileImage: 'assets/images/person.png'),
+    ContactEntity(
+        name: "عبدالله جمال",
+        phone: "359698820",
+        profileImage: 'assets/images/person.png'),
+    ContactEntity(
+        name: "أحمد المحمدي",
+        phone: "359698845",
+        profileImage: 'assets/images/person.png'),
+    ContactEntity(
+        name: "عبدالله جمال",
+        phone: "359698820",
+        profileImage: 'assets/images/person.png'),
+    ContactEntity(
+        name: "أحمد المحمدي",
+        phone: "359698845",
+        profileImage: 'assets/images/person.png'),
+    ContactEntity(
+        name: "عبدالله جمال",
+        phone: "359698820",
+        profileImage: 'assets/images/person.png'),
+    ContactEntity(
+        name: "أحمد المحمدي",
+        phone: "359698845",
+        profileImage: 'assets/images/person.png'),
+    ContactEntity(
+        name: "عبدالله جمال",
+        phone: "359698820",
+        profileImage: 'assets/images/person.png'),
+    ContactEntity(
+        name: "أحمد المحمدي",
+        phone: "359698845",
+        profileImage: 'assets/images/person.png'),    
+    ContactEntity(
+        name: "عبدالله جمال",
+        phone: "359698820",
+        profileImage: 'assets/images/person.png'),
+    ContactEntity(
+        name: "أحمد المحمدي",
+        phone: "359698845",
+        profileImage: 'assets/images/person.png'),
   ];
 
   // Scroll controller to track scroll position
@@ -48,6 +95,7 @@ class _CommunicationItemDetailsState extends State<CommunicationItemDetails> {
 
     return SafeArea(
       child: Scaffold(
+        //backgroundColor: MyColors.arrowBackGrey,
         body: CustomScrollView(
           controller: _scrollController,
           slivers: <Widget>[
@@ -104,30 +152,10 @@ class _CommunicationItemDetailsState extends State<CommunicationItemDetails> {
                 ),
               ),
             ),
+            
             // Rounded top container
-            SliverToBoxAdapter(
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(35.r),
-                  topRight: Radius.circular(35.r),
-                ),
-                child: Container(
-                  margin: EdgeInsets.only(top: 10.h),
-                  //padding: EdgeInsets.symmetric(horizontal: 12.0.w),
-                  color: MyColors.white, // Background color
-                  child: Column(
-                    children: [
-                      // Add your content here
-                      SizedBox(height: 20.h), // Example spacing
-                      Text(
-                        'This is a rounded container',
-                        style: TextStyles.bold16(),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+          
+            
             // List of contacts
             SliverList(
               delegate: SliverChildBuilderDelegate(
