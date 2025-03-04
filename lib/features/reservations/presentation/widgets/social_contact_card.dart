@@ -5,6 +5,7 @@ import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/utils/values/text_styles.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/features/reservations/domain/entity/contacts_entity.dart';
+import 'package:cood/features/reservations/presentation/widgets/social_contact_card_custom_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -32,13 +33,19 @@ class _ContactCardState extends State<ContactCard> {
             });
           },
           child: Container(
-            margin: EdgeInsets.only(
-              top: 10.0.h,
-              right: (isArabic) ? 80.0.w : 0.0.w,
-              left: (isArabic) ? 0.0.w : 80.0.w,
-            ),
+            margin: (isArabic)
+                ? EdgeInsets.only(
+                    top: 10.0.h,
+                    right: 80.0.w,
+                    left: 20.0.w,
+                  )
+                : EdgeInsets.only(
+                    top: 10.0.h,
+                    right: 20.0.w,
+                    left: 80.0.w,
+                  ),
             height: isExpanded ? 180.0.h : 65.0.h,
-            width: 280.w,
+            width: double.infinity,
             decoration: BoxDecoration(
               color: MyColors.backGround,
               borderRadius: (isArabic)
@@ -61,7 +68,7 @@ class _ContactCardState extends State<ContactCard> {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
@@ -84,22 +91,24 @@ class _ContactCardState extends State<ContactCard> {
                         ],
                       ),
                     ),
-                    (isExpanded)?SizedBox():IconButton(
-                      icon: Icon(
-                        isExpanded
-                            ? Icons.keyboard_arrow_up
-                            : Icons.keyboard_arrow_down,
-                        size: 40.0.h,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isExpanded = !isExpanded;
-                        });
-                      },
-                    ),
+                    //-------dropDown part
+                    (isExpanded)
+                        ? SizedBox()
+                        : IconButton(
+                            icon: Icon(
+                              Icons.keyboard_arrow_down,
+                              size: 50.0.h,
+                              color: MyColors.buttonColor,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isExpanded = !isExpanded;
+                              });
+                            },
+                          ),
                   ],
                 ),
-                (widget.isPhoneAppear)?Gaps.vGap2:Gaps.vGap15,
+                (widget.isPhoneAppear) ? Gaps.vGap2 : Gaps.vGap15,
                 if (isExpanded)
                   Padding(
                     padding: EdgeInsets.symmetric(
@@ -110,22 +119,16 @@ class _ContactCardState extends State<ContactCard> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             //------------------------1 snapchat
-                            CircleAvatar(
-                              radius: 21.5.r,
+                            SocailCircleIcon(//Todo---dont write hardcode
+                              imagePath: 'assets/images/snapchat.png',
                               backgroundColor: MyColors.socialYellow,
-                              child: Image.asset(
-                                'assets/images/snapchat.png',
-                                height: 30.0.h,
-                              ),
-                            ), //------------------------2 tiktok
-                            CircleAvatar(
-                              radius: 21.5.r,
+                            ),
+                            //------------------------2 tiktok
+                            SocailCircleIcon(
+                              imagePath: 'assets/images/tiktok.png',
                               backgroundColor: MyColors.black,
-                              child: Image.asset(
-                                'assets/images/tiktok.png',
-                                height: 30.0.h,
-                              ),
-                            ), //------------------------3  insta
+                            ),
+                            //------------------------3  insta
                             Container(
                               height: 43.h,
                               width: 43.0.w,
@@ -166,29 +169,23 @@ class _ContactCardState extends State<ContactCard> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             //-------------5 whatsApp
-                            CircleAvatar(
-                              radius: 21.5.r,
+                            SocailCircleIcon(
+                              imagePath: 'assets/images/Whatsapp 1.png',
+                              iconHeight: 21.5.h,
                               backgroundColor: MyColors.socialGreen,
-                              child: Image.asset(
-                                'assets/images/Whatsapp 1.png',
-                                height: 21.5.h,
-                              ),
                             ),
                             //---------------6 facbook
-                            CircleAvatar(
-                              radius: 21.5.r,
-                              backgroundColor: MyColors.main,
-                              child: Image.asset(
-                                'assets/images/facbook.png',
-                                height: 21.5.h,
-                              ),
+                            SocailCircleIcon(
+                              imagePath: 'assets/images/facbook.png',
+                              iconHeight: 21.5.h,
                             ),
                             //--------------------------7 imo
-                            CircleAvatar(
-                              radius: 21.5.r,
-                              backgroundImage:
-                                  AssetImage('assets/images/imo.png'),
+                            SocailCircleIcon(
+                              haveBacgroundImage: true,
+                              havechildImage: false,
+                              bacgroundImage: 'assets/images/imo.png',
                             ),
+
                             //-------------------------8 dropdwon button
                             SizedBox(
                               height: 50.0.h,
