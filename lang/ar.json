@@ -817,5 +817,6 @@
   "---------- notification screen ---------------": "",
   "readableNotification": "مقروء",
   "illegibleNotification": "غير مقروء",
-  "": ""
+  "noResult": "لا توجد نتائج",
+  "searchByCodeNumber": " ابحث باستخدام رقم الكود"
 }

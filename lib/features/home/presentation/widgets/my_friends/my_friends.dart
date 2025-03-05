@@ -3,13 +3,21 @@
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
+import 'package:cood/core/widgets/show_dialog.dart';
+import 'package:cood/features/home/presentation/widgets/my_friends/add_friend_dialog.dart';
 import 'package:cood/features/reservations/domain/entity/contacts_entity.dart';
 import 'package:cood/features/reservations/presentation/widgets/social_contact_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class MySocialFriends extends StatelessWidget {
-   MySocialFriends({super.key});
+class MySocialFriends extends StatefulWidget {
+  const MySocialFriends({super.key});
+
+  @override
+  State<MySocialFriends> createState() => _MySocialFriendsState();
+}
+
+class _MySocialFriendsState extends State<MySocialFriends> {
   final List<ContactEntity> contacts = [
     ContactEntity(
         name: "عبدالله جمال",
@@ -44,9 +52,10 @@ class MySocialFriends extends StatelessWidget {
         phone: "359698845",
         profileImage: 'assets/images/person.png'),
   ];
+
   @override
   Widget build(BuildContext context) {
-  return  Expanded(
+    return Expanded(
       child: Column(
         children: [
           Expanded(
@@ -65,29 +74,35 @@ class MySocialFriends extends StatelessWidget {
                 ],
               ),
               child: ListView.builder(
-                  itemBuilder: (context, index) =>
-                      ContactCard(contacts: contacts[index],isPhoneAppear: true,),
-                  itemCount: contacts.length,
+                itemBuilder: (context, index) => ContactCard(
+                  contacts: contacts[index],
+                  isPhoneAppear: true,
                 ),
+                itemCount: contacts.length,
+              ),
             ),
           ),
           Gaps.vGap20,
-              //-----------------4
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                   Container(
-                    width: 207.0.h,
-                      margin: EdgeInsets.all(10.h),
-                      child: MyDefaultButton(
-                        onPressed: () {},
-                        height: 50.h,
-                        btnText: "addFriend",
-                        
-                      ),
-                    ),
-                ],
+          //-----------------4
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 207.0.h,
+                margin: EdgeInsets.all(10.h),
+                child: MyDefaultButton(
+                  onPressed: () {
+                    showAppDialog(
+                      context:context,
+                      child:AddFriendDialog(),
+                    );
+                  },
+                  height: 50.h,
+                  btnText: "addFriend",
+                ),
               ),
+            ],
+          ),
         ],
       ),
     );
