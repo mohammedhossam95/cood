@@ -9,7 +9,7 @@ class SocailCircleIcon extends StatelessWidget {
   final double radius;
   final Color backgroundColor;
   final double iconHeight;
-  final String imagePath;
+  final String backgroundImage;
   final String bacgroundImage;
   const SocailCircleIcon({
     super.key,
@@ -19,7 +19,7 @@ class SocailCircleIcon extends StatelessWidget {
     this.backgroundColor = MyColors.main,
     this.iconHeight = 30.0,
     this.bacgroundImage = 'assets/images/imo.png',
-    this.imagePath = 'assets/images/imo.png',
+    this.backgroundImage = 'assets/images/imo.png',
   });
 
   @override
@@ -30,52 +30,73 @@ class SocailCircleIcon extends StatelessWidget {
       backgroundImage: (haveBacgroundImage) ? AssetImage(bacgroundImage) : null,
       child: (havechildImage)
           ? Image.asset(
-              imagePath,
+              backgroundImage,
               height: iconHeight.h,
             )
           : null,
     );
   }
 }
-//------------------------- custom Icon widget
 
+//------------------------- custom Icon widget
 class CustomIconWidget extends StatelessWidget {
   final double width;
   final double height;
+  final double radius;
   final BoxShape shape;
   final Gradient? gradient;
-  final String? imagePath;
+  final String? backgroundImage;
   final VoidCallback? onPressed;
   final Color? backgroundColor;
+  final String? childImagePath; // Updated name for clarity
+
   const CustomIconWidget({
-    Key? key,
-    required this.width,
-    required this.height,
-    required this.shape,
+    super.key,
+     this.width=43.0,
+     this.height=43.0,
+     this.shape=BoxShape.circle,
+    this.radius=15.0,
     this.gradient,
-    this.imagePath,
+    this.backgroundImage,
     this.onPressed,
     this.backgroundColor,
-  }) : super(key: key);
+    this.childImagePath, // Use this to pass the image path
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onPressed,
       child: Container(
-        width: width,
-        height: height,
+        width: width.w,
+        height: height.h,
         decoration: BoxDecoration(
+          borderRadius: (shape == BoxShape.rectangle)
+              ? BorderRadius.circular(radius.r)
+              : null,
           color: backgroundColor,
           shape: shape,
           gradient: gradient,
-          image: imagePath != null
+          image: backgroundImage != null
               ? DecorationImage(
-                  image: AssetImage(imagePath!),
+                  image: AssetImage(backgroundImage!),
                   fit: BoxFit.cover,
                 )
               : null,
         ),
+        child: childImagePath != null
+            ? Center(
+                // Centers and sizes the image
+                child: SizedBox(
+                  width: width * 0.7.w, // Adjust as needed
+                  height: height * 0.7.h,
+                  child: Image.asset(
+                    childImagePath!,
+                    fit: BoxFit.contain, // Ensures the image scales properly
+                  ),
+                ),
+              )
+            : null,
       ),
     );
   }

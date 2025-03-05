@@ -2,6 +2,7 @@
 
 import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
+import 'package:cood/core/utils/values/assets.dart';
 import 'package:cood/core/utils/values/text_styles.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/features/reservations/domain/entity/contacts_entity.dart';
@@ -98,7 +99,7 @@ class _ContactCardState extends State<ContactCard> {
                             icon: Icon(
                               Icons.keyboard_arrow_down,
                               size: 50.0.h,
-                              color: MyColors.buttonColor,
+                              color: MyColors.highlight,
                             ),
                             onPressed: () {
                               setState(() {
@@ -119,48 +120,49 @@ class _ContactCardState extends State<ContactCard> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             //------------------------1 snapchat
-                            SocailCircleIcon(//Todo---dont write hardcode
-                              imagePath: 'assets/images/snapchat.png',
+                            CustomIconWidget(
+                              shape: BoxShape.circle,
                               backgroundColor: MyColors.socialYellow,
-                            ),
-                            //------------------------2 tiktok
-                            SocailCircleIcon(
-                              imagePath: 'assets/images/tiktok.png',
-                              backgroundColor: MyColors.black,
-                            ),
-                            //------------------------3  insta
-                            Container(
-                              height: 43.h,
-                              width: 43.0.w,
-                              decoration: BoxDecoration(
-                                shape: BoxShape
-                                    .circle, // Circle shape for Instagram-style avatars
-                                gradient: LinearGradient(
-                                  colors: [
-                                    MyColors.pink,
-                                    MyColors.purple,
-                                    MyColors.orange,
-                                    MyColors.yellow,
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ),
-                              ),
-                              child: Image.asset('assets/images/Instagram.png'),
+                              childImagePath: ImgAssets.snapChatImg,
+                              onPressed: () {},
                             ),
 
-                            //------------------------4
-                            Container(
-                              width: 60.w,
+                            //------------------------2 tiktok
+                            CustomIconWidget(
+                              shape: BoxShape.circle,
+                              backgroundColor: MyColors.black,
+                              childImagePath: ImgAssets.tiktokImg,
+                              onPressed: () {
+                              },
+                            ),
+
+                            //------------------------3  insta
+                            CustomIconWidget(
+                              shape: BoxShape.circle,
+                              backgroundColor: MyColors.black,
+                              childImagePath: ImgAssets.instaImg,
+                              gradient: LinearGradient(
+                                colors: [
+                                  MyColors.pink,
+                                  MyColors.purple,
+                                  MyColors.orange,
+                                  MyColors.yellow,
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              onPressed: () {},
+                            ),
+
+                            //------------------------4 delete
+                            CustomIconWidget(
+                              width: 60.0.w,
                               height: 40.0.h,
-                              decoration: BoxDecoration(
-                                color: MyColors.errorColor,
-                                borderRadius: BorderRadius.circular(15.0.r),
-                              ),
-                              child: IconButton(
-                                icon: Icon(Icons.delete, color: Colors.white),
-                                onPressed: null,
-                              ),
+                              shape: BoxShape.rectangle,
+                              radius: 15.0.r,
+                              backgroundColor: MyColors.errorColor,
+                              childImagePath: ImgAssets.trashImg,
+                              onPressed: () {},
                             ),
                           ],
                         ),
@@ -169,21 +171,24 @@ class _ContactCardState extends State<ContactCard> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             //-------------5 whatsApp
-                            SocailCircleIcon(
-                              imagePath: 'assets/images/Whatsapp 1.png',
-                              iconHeight: 21.5.h,
+                            CustomIconWidget(
                               backgroundColor: MyColors.socialGreen,
+                              childImagePath: ImgAssets.whatsAppImg,
+                              onPressed: () {},
                             ),
+
                             //---------------6 facbook
-                            SocailCircleIcon(
-                              imagePath: 'assets/images/facbook.png',
-                              iconHeight: 21.5.h,
+                            CustomIconWidget(
+                              backgroundColor: MyColors.main,
+                              childImagePath: ImgAssets.facbookImg,
+                              onPressed: () {},
                             ),
+
                             //--------------------------7 imo
-                            SocailCircleIcon(
-                              haveBacgroundImage: true,
-                              havechildImage: false,
-                              bacgroundImage: 'assets/images/imo.png',
+                            CustomIconWidget(
+                              backgroundColor: MyColors.main,
+                              backgroundImage: ImgAssets.imoImg,
+                              onPressed: () {},
                             ),
 
                             //-------------------------8 dropdwon button
@@ -191,12 +196,8 @@ class _ContactCardState extends State<ContactCard> {
                               height: 50.0.h,
                               width: 50.0.w,
                               child: IconButton(
-                                icon: Icon(
-                                  size: 50.0.h,
-                                  isExpanded
-                                      ? Icons.keyboard_arrow_up
-                                      : Icons.keyboard_arrow_down,
-                                ),
+                                icon:
+                                    Icon(size: 50.0.h, Icons.keyboard_arrow_up),
                                 onPressed: () {
                                   setState(() {
                                     isExpanded = !isExpanded;

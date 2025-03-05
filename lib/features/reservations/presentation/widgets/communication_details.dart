@@ -2,7 +2,6 @@ import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/utils/values/text_styles.dart';
 import 'package:cood/core/widgets/back_button.dart';
-import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/features/reservations/domain/entity/contacts_entity.dart';
 import 'package:cood/features/reservations/presentation/widgets/social_contact_card.dart';
 import 'package:flutter/material.dart';
