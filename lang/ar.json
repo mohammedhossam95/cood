@@ -799,6 +799,8 @@
   "myFriends": "الاصدقاء",
   "link_other_accounts": "ربط حسابات اخري",
   "communication_channels": "ربط قنوات تواصل",
+  "addPhoto":"اضافة صورة",
+  "addFriend":"اضافة صديق",
   "---------- profile screen ---------------": "",
   "editMyProfile": "تعديل الملف الشخصي",
   "myAccounts": "حساباتي",
@@ -815,5 +817,6 @@
   "---------- notification screen ---------------": "",
   "readableNotification": "مقروء",
   "illegibleNotification": "غير مقروء",
-  "": ""
+  "noResult": "لا توجد نتائج",
+  "searchByCodeNumber": " ابحث باستخدام رقم الكود"
 }

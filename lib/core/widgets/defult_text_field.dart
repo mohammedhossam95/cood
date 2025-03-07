@@ -41,7 +41,7 @@ class MyTextFormField extends StatelessWidget {
   const MyTextFormField({
     super.key,
     required this.controller,
-    required this.focusNode,
+     this.focusNode,
     this.validatorType,
     this.validator,
     required this.hintText,

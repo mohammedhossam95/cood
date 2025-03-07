@@ -796,6 +796,8 @@
   "myFriends": "Friends",
   "link_other_accounts": " Link other accounts ",
   "communication_channels": " Communication channels",
+  "addPhoto":"pic A Photo",
+  "addFriend":"Add Friend",
   "---------- profile screen ---------------": "",
   "editMyProfile": "Edit Profile",
   "myAccounts": "My Accounts",
@@ -812,5 +814,6 @@
   "--------- notification screen --------------": "",
   "readableNotification": "Readable",
   "illegibleNotification": "Unreadable",
-  "":""
+  "noResult": "No Result Found",
+  "searchByCodeNumber": "search by code number "
 }

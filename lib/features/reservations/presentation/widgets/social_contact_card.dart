@@ -2,14 +2,19 @@
 
 import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
+import 'package:cood/core/utils/values/assets.dart';
+import 'package:cood/core/utils/values/text_styles.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/features/reservations/domain/entity/contacts_entity.dart';
+import 'package:cood/features/reservations/presentation/widgets/social_contact_card_custom_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// ignore: must_be_immutable
 class ContactCard extends StatefulWidget {
   final ContactEntity contacts;
-  const ContactCard({Key? key,required this.contacts}) : super(key: key);
+  bool isPhoneAppear;
+  ContactCard({super.key, required this.contacts, this.isPhoneAppear = false});
 
   @override
   State<ContactCard> createState() => _ContactCardState();
@@ -19,87 +24,123 @@ class _ContactCardState extends State<ContactCard> {
   bool isExpanded = false;
   @override
   Widget build(BuildContext context) {
+    bool isArabic = AppLocalizations.of(context)!.isArLocale;
     return Stack(
       children: [
-
-        Container(
-          height: isExpanded ? 220.0.h : 80.0.h,
-          width: 280.w,
-          decoration: BoxDecoration(
-            color: MyColors.backGround,
-            borderRadius: AppLocalizations.of(context)!.isArLocale
-                ? BorderRadius.only(
-                    topLeft: Radius.circular(20.0.r),
-                    bottomLeft: Radius.circular(20.0.r),
-                    bottomRight: (isExpanded)?Radius.circular(20.0.r):Radius.circular(0.0.r),
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              isExpanded = !isExpanded;
+            });
+          },
+          child: Container(
+            margin: (isArabic)
+                ? EdgeInsets.only(
+                    top: 10.0.h,
+                    right: 80.0.w,
+                    left: 20.0.w,
                   )
-                : BorderRadius.only(
-                    topRight: Radius.circular(20.0.r),
-                    bottomRight: Radius.circular(20.0.r),
-                    bottomLeft: (isExpanded)?Radius.circular(0.0.r):Radius.circular(20.0.r),
+                : EdgeInsets.only(
+                    top: 10.0.h,
+                    right: 20.0.w,
+                    left: 80.0.w,
                   ),
-          ),
-          margin: EdgeInsets.only(
-            top: 10.0.h,
-            right: AppLocalizations.of(context)!.isArLocale ? 70.0.w : 0.0.w,
-            left: AppLocalizations.of(context)!.isArLocale ? 0.0.w : 70.0.w,
-          ),
-          child: Column(
-            children: [
-              ListTile(
-                contentPadding:
-                    EdgeInsets.only(left: 20.w, right: 20.0.w, top: 8.0.h),
-                title: Text('${widget.contacts.name}',
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
-                subtitle: Text('${widget.contacts.phone}'),
-                trailing: isExpanded
-                    ? SizedBox()
-                    : IconButton(
-                        icon: Icon(
-                          size: 40.0.h,
-                          isExpanded
-                              ? Icons.keyboard_arrow_up
-                              : Icons.keyboard_arrow_down,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            isExpanded = !isExpanded;
-                          });
-                        },
+            height: isExpanded ? 180.0.h : 65.0.h,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: MyColors.backGround,
+              borderRadius: (isArabic)
+                  ? BorderRadius.only(
+                      topLeft: Radius.circular(20.0.r),
+                      bottomLeft: Radius.circular(20.0.r),
+                      bottomRight: (isExpanded)
+                          ? Radius.circular(20.0.r)
+                          : Radius.circular(0.0.r),
+                    )
+                  : BorderRadius.only(
+                      topRight: Radius.circular(20.0.r),
+                      bottomRight: Radius.circular(20.0.r),
+                      bottomLeft: (isExpanded)
+                          ? Radius.circular(0.0.r)
+                          : Radius.circular(20.0.r),
+                    ),
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: isArabic ? 0.0.w : 20.0.w,
+                        right: isArabic ? 20.0.w : 0.0.w,
+                        top: 8.0.h,
                       ),
-              ),
-              if (isExpanded)
-                Padding(
-                  padding:  EdgeInsets.symmetric(
-                      horizontal: 16.0.w, vertical: 8.0.h),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          //------------------------1 snapchat
-                          CircleAvatar(
-                            radius: 25.0.r,
-                            backgroundColor: MyColors.socialyellow,
-                            child: Image.asset(
-                              'assets/images/snapchat.png',
-                              height: 30.0.h,
+                          Text(
+                            '${widget.contacts.name}',
+                            style: TextStyles.bold12(),
+                          ),
+                          if (widget.isPhoneAppear)
+                            Text(
+                              '${widget.contacts.phone}',
+                              style: TextStyles.bold12(),
                             ),
-                          ), //------------------------2 tiktok
-                          CircleAvatar(
-                            radius: 25.0.r,
-                            backgroundColor: MyColors.black,
-                            child: Image.asset(
-                              'assets/images/tiktok.png',
-                              height: 30.0.h,
+                        ],
+                      ),
+                    ),
+                    //-------dropDown part
+                    (isExpanded)
+                        ? SizedBox()
+                        : IconButton(
+                            icon: Icon(
+                              Icons.keyboard_arrow_down,
+                              size: 50.0.h,
+                              color: MyColors.highlight,
                             ),
-                          ), //------------------------3  insta
-                          Container(
-                            height: 50.h,
-                            width: 50.0.w,
-                            decoration: BoxDecoration(
-                              shape: BoxShape
-                                  .circle, // Circle shape for Instagram-style avatars
+                            onPressed: () {
+                              setState(() {
+                                isExpanded = !isExpanded;
+                              });
+                            },
+                          ),
+                  ],
+                ),
+                (widget.isPhoneAppear) ? Gaps.vGap2 : Gaps.vGap15,
+                if (isExpanded)
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 16.0.w, vertical: 8.0.h),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            //------------------------1 snapchat
+                            CustomIconWidget(
+                              shape: BoxShape.circle,
+                              backgroundColor: MyColors.socialYellow,
+                              childImagePath: ImgAssets.snapChatImg,
+                              onPressed: () {},
+                            ),
+
+                            //------------------------2 tiktok
+                            CustomIconWidget(
+                              shape: BoxShape.circle,
+                              backgroundColor: MyColors.black,
+                              childImagePath: ImgAssets.tiktokImg,
+                              onPressed: () {
+                              },
+                            ),
+
+                            //------------------------3  insta
+                            CustomIconWidget(
+                              shape: BoxShape.circle,
+                              backgroundColor: MyColors.black,
+                              childImagePath: ImgAssets.instaImg,
                               gradient: LinearGradient(
                                 colors: [
                                   MyColors.pink,
@@ -110,104 +151,95 @@ class _ContactCardState extends State<ContactCard> {
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                               ),
+                              onPressed: () {},
                             ),
-                            child: Image.asset('assets/images/Instagram.png'),
-                          ),
 
-                          //------------------------4
-                          Container(
-                            width: 60.0.w,
-                            height: 40.0.h,
-                            decoration: BoxDecoration(
-                              color: MyColors.errorColor,
-                              borderRadius: BorderRadius.circular(15.0.r),
+                            //------------------------4 delete
+                            CustomIconWidget(
+                              width: 60.0.w,
+                              height: 40.0.h,
+                              shape: BoxShape.rectangle,
+                              radius: 15.0.r,
+                              backgroundColor: MyColors.errorColor,
+                              childImagePath: ImgAssets.trashImg,
+                              onPressed: () {},
                             ),
-                            child: IconButton(
-                              icon: Icon(Icons.delete, color: Colors.white),
-                              onPressed: null,
+                          ],
+                        ),
+                        Gaps.vGap8,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            //-------------5 whatsApp
+                            CustomIconWidget(
+                              backgroundColor: MyColors.socialGreen,
+                              childImagePath: ImgAssets.whatsAppImg,
+                              onPressed: () {},
                             ),
-                          ),
-                        ],
-                      ),
-                       Gaps.vGap12,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          //-------------5 whatsApp
-                          CircleAvatar(
-                            radius: 25.0.r,
-                            backgroundColor: MyColors.socialGreen,
-                            child: Image.asset(
-                              'assets/images/Whatsapp 1.png',
-                              height: 30.0.h,
+
+                            //---------------6 facbook
+                            CustomIconWidget(
+                              backgroundColor: MyColors.main,
+                              childImagePath: ImgAssets.facbookImg,
+                              onPressed: () {},
                             ),
-                          ),
-                          //---------------6 facbook
-                          CircleAvatar(
-                            radius: 25.0.r,
-                            backgroundColor: MyColors.main,
-                            child: Image.asset(
-                              'assets/images/facbook.png',
-                              height: 30.0.h,
+
+                            //--------------------------7 imo
+                            CustomIconWidget(
+                              backgroundColor: MyColors.main,
+                              backgroundImage: ImgAssets.imoImg,
+                              onPressed: () {},
                             ),
-                          ),
-                          //--------------------------7 imo
-                          CircleAvatar(
-                            radius: 25.0.r,
-                            backgroundImage: AssetImage('assets/images/imo.png'),
-                          ),
-                          //-------------------------8 dropdwon button
-                          SizedBox(
-                            height: 50.0.h,
-                            width: 50.0.w,
-                            child: IconButton(
-                              icon: Icon(
-                                size: 50.0.h,
-                                isExpanded
-                                    ? Icons.keyboard_arrow_up
-                                    : Icons.keyboard_arrow_down,
+
+                            //-------------------------8 dropdwon button
+                            SizedBox(
+                              height: 50.0.h,
+                              width: 50.0.w,
+                              child: IconButton(
+                                icon:
+                                    Icon(size: 50.0.h, Icons.keyboard_arrow_up),
+                                onPressed: () {
+                                  setState(() {
+                                    isExpanded = !isExpanded;
+                                  });
+                                },
                               ),
-                              onPressed: () {
-                                setState(() {
-                                  isExpanded = !isExpanded;
-                                });
-                              },
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         ),
         //---------this container to decorate image the angel between image ang bigger container
         Positioned(
-          right: AppLocalizations.of(context)!.isArLocale ? 40.0.w : null,
-          left: AppLocalizations.of(context)!.isArLocale ? null : 40.0.w,
-          top: 10.0.h,//the same the bigger container margin
+          right: (isArabic) ? 45.0.w : null,
+          left: (isArabic) ? null : 45.0.w,
+          top: 10.0.h, //the same the bigger container margin
           child: Container(
             width: 35.w,
-            height: 80.h,
+            height: 35.h,
             decoration: BoxDecoration(
               color: MyColors.backGround,
             ),
           ),
         ),
         Positioned(
-          right: AppLocalizations.of(context)!.isArLocale ? 0.0.w : null,
-          left: AppLocalizations.of(context)!.isArLocale ? null : 0.0.w,
-          top: 8.0.h,
+          right: (isArabic) ? 17.0.w : null,
+          left: (isArabic) ? null : 17.0.w,
+          top: 10.0.h,
           child: Container(
-            width: 70.w,
-            height: 80.h,
+            width: 65.w,
+            height: 65.h,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('${widget.contacts.profileImage}'),
                 fit: BoxFit.cover,
               ),
-              borderRadius: (AppLocalizations.of(context)!.isArLocale)
+              borderRadius: (isArabic)
                   ? BorderRadius.only(
                       topLeft: Radius.circular(20.r),
                       topRight: Radius.circular(19.r),

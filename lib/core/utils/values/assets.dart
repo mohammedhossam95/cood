@@ -46,4 +46,13 @@ class ImgAssets {
   static const String editProfileImage = 'assets/images/edit_photo.png';
   static const String changePasswordImage = 'assets/images/change_password.png';
   static const String aboutAppImage = 'assets/images/about_app_image.png';
+  //----------------------ali (social Icons)
+    static const String snapChatImg = 'assets/images/snapchat.png';
+    static const String tiktokImg = 'assets/images/tiktok.png';
+    static const String instaImg = 'assets/images/Instagram.png';
+    static const String trashImg = 'assets/images/Trash.png';
+    static const String whatsAppImg = 'assets/images/Whatsapp 1.png';
+    static const String facbookImg = 'assets/images/facbook.png';
+    static const String imoImg = 'assets/images/imo.png';
+
 }

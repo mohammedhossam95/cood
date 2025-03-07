@@ -8,11 +8,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SocialContainerItem extends StatelessWidget {
   const SocialContainerItem(
-      {required this.entityModel,
+      {
+        required this.socialAccount,
        this.socialPhotoColors=MyColors.main,
       this.socialBackgroundColors = MyColors.lightTextColor,
       super.key});
-  final SocialEntity entityModel;
+  final SocialEntity socialAccount;
   final Color socialPhotoColors;
   final Color socialBackgroundColors;
 
@@ -23,7 +24,7 @@ class SocialContainerItem extends StatelessWidget {
         color: socialBackgroundColors,
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(
-          color: (socialPhotoColors == MyColors.socialyellow)
+          color: (socialPhotoColors == MyColors.socialYellow)
               ? MyColors.black
               : socialPhotoColors,
         ),
@@ -50,7 +51,7 @@ class SocialContainerItem extends StatelessWidget {
                 bottomLeft: Radius.circular(19.r),
               ),
             ),
-            child: Image.asset(entityModel.image!),
+            child: Image.asset(socialAccount.image!),
           ),
           //---------name & email
           SizedBox(
@@ -60,12 +61,12 @@ class SocialContainerItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  entityModel.name!,
+                  socialAccount.name!,
                   style: TextStyles.bold14(),
                   maxLines: 2,
                 ),
                 Text(
-                  entityModel.email!,
+                  socialAccount.email!,
                   style: TextStyles.bold14(),
                 ),
               ],
@@ -74,7 +75,7 @@ class SocialContainerItem extends StatelessWidget {
           //------menue
           Image.asset(
             'assets/images/Menu.png',
-            color: (socialPhotoColors == MyColors.socialyellow)
+            color: (socialPhotoColors == MyColors.socialYellow)
                 ? MyColors.black
                 : socialPhotoColors,
           ),
