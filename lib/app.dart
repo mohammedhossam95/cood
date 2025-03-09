@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cood/features/categories/categories_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +8,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '/features/cars/cars_injection.dart';
 import '/features/home/home_injection.dart';
 import '/features/profile/profile_injection.dart';
-import '/features/reservations/reservation_injection.dart';
 import '/features/tabbar/tabbar_injection.dart';
 import 'config/locale/app_localizations_setup.dart';
 import 'config/routes/app_routes.dart';
@@ -30,7 +30,8 @@ class App extends StatelessWidget {
         ...bottomNavBlocs,
         ...carsBlocs,
         ...homeBlocs,
-        ...reservationBlocs,
+        // Define reservationBlocs or remove this line if not needed
+        ...categoriesBlocs,
         ...profileBlocs,
       ],
       child: BlocBuilder<LocaleCubit, LocaleState>(

@@ -1,18 +1,19 @@
+import 'package:cood/features/cars/domain/entities/car_entity.dart';
+
 import '/core/base_classes/base_list_response.dart';
-import '/features/cars/domain/entities/category_entity.dart';
 
 class CarCategoriesRespModel extends BaseListResponse {
   const CarCategoriesRespModel({
     super.data,
     super.message,
-    super.statusCode,
+    super.status,
   });
 
   factory CarCategoriesRespModel.fromJson(Map<String, dynamic> json) {
     return CarCategoriesRespModel(
       message: json['message'],
-      statusCode: json['status_code'],
-      data: (json['details'] == null ? [] : json['details'] as List<dynamic>?)
+      status: json['status'],
+      data: (json['re'] == null ? [] : json['details'] as List<dynamic>?)
           ?.map((category) => CarCategoryModel.fromJson(category))
           .toList(),
     );

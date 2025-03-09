@@ -4,14 +4,14 @@ import '/features/cars/domain/entities/additional_entity.dart';
 class AdditionalResponseModel extends BaseListResponse {
   const AdditionalResponseModel({
     super.message,
-    super.statusCode,
+    super.status,
     super.data,
   });
 
   factory AdditionalResponseModel.fromJson(Map<String, dynamic> json) {
     return AdditionalResponseModel(
       message: json['message'],
-      statusCode: json['status_code'],
+      status: json['status'],
       data: json['details'] != null
           ? (json['details'] as List<dynamic>)
               .map((detail) => AdditionalModel.fromJson(detail))

@@ -9,6 +9,7 @@ class BaseListResponse extends Equatable {
     this.pagination,
     this.value,
     this.key,
+    this.status,
     this.statusCode,
   });
   final String? value;
@@ -18,6 +19,7 @@ class BaseListResponse extends Equatable {
   final bool? success;
   final Pagination? pagination;
   final int? statusCode;
+  final String? status;
 
   @override
   List<Object?> get props => [
@@ -27,6 +29,7 @@ class BaseListResponse extends Equatable {
         pagination,
         value,
         key,
+        status,
         statusCode,
       ];
 }

@@ -3,11 +3,11 @@ import '/features/cars/domain/entities/branch_entity.dart';
 import '/features/home/data/models/city_resp_model.dart';
 
 class BranchesRespModel extends BaseListResponse {
-  const BranchesRespModel({super.data, super.statusCode, super.message});
+  const BranchesRespModel({super.data, super.status, super.message});
 
   factory BranchesRespModel.fromJson(Map<String, dynamic> json) {
     return BranchesRespModel(
-      statusCode: json["status_code"],
+      status: json["status_code"],
       message: json["message"],
       data: json["details"] == null
           ? []

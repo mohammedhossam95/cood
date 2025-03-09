@@ -1,3 +1,6 @@
+import 'package:cood/features/categories/presentation/cubit/categories_cubit/categories_cubit.dart';
+import 'package:cood/features/categories/presentation/cubit/categories_cubit/categories_state.dart';
+import 'package:cood/features/categories/presentation/cubit/reserve_cubit/reserve_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,7 +15,6 @@ import '/core/widgets/gaps.dart';
 import '/core/widgets/loading_view.dart';
 import '/core/widgets/my_default_button.dart';
 import '/features/cars/domain/entities/car_entity.dart';
-import '/features/reservations/presentation/cubit/reserve_cubit/reserve_cubit.dart';
 import '/features/tabbar/presentation/cubit/bottom_nav_bar_cubit/bottom_nav_bar_cubit.dart';
 import '/injection_container.dart';
 
@@ -165,7 +167,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ),
               Gaps.vGap16,
-              BlocConsumer<ReserveCubit, ReserveState>(
+              BlocConsumer<CategoriesCubit, CategoriesState>(
                 listener: (context, reserveState) {
                   if (reserveState is ReserveSuccess) {
                     CustomAlert().showAlertDialog(
@@ -198,7 +200,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         SizedBox(
                           width: double.infinity,
                           child: Text(
-                            reserveState.message,
+                            'reserveState.message',
                             textAlign: TextAlign.center,
                             style: TextStyles.regular12(color: Colors.red),
                           ),
