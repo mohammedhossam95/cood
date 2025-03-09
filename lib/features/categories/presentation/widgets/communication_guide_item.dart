@@ -1,8 +1,10 @@
 import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/utils/values/text_styles.dart';
+import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/features/categories/domain/entity/category_entity.dart';
+import 'package:cood/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,7 +20,7 @@ class CommunicationGuideItem extends StatelessWidget {
         color: MyColors.backGround,
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(
-          color: MyColors.main,
+          color: colors.main,
         ),
       ),
       margin: EdgeInsets.all(10.h),
@@ -45,13 +47,17 @@ class CommunicationGuideItem extends StatelessWidget {
                     ),
             ),
             child: Center(
-            child: Image.network(item.icon,width: 50.0.w,height: 50.0.h,),
+            child: DiffImage(
+              image: item.icon??'',
+              width: 50.0.w,
+              height: 50.0.h,
+            ),
           ),),
           Gaps.hGap20,
           //---------name & email
 
           Text(
-            (isArabic)?item.nameAr : item.nameEn ,
+            (isArabic)?item.nameAr??'' : item.nameEn??'' ,
             
             style: TextStyles.bold14(),
             //maxLines: 2,

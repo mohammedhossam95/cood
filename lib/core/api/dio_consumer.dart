@@ -93,12 +93,13 @@ class DioConsumerImpl implements DioConsumer {
   Future<void> _handleAccessTokenHeader() async { 
    final String? accessToken = await secureStorage.getAccessToken();
     final String? coodAccessToken ="Bearer 3|tiLlHT6fseS3KLa5yiDLur94T6HCibEw2opQ4NYS27f0ce1d";
+        final String? coodToken ="3|tiLlHT6fseS3KLa5yiDLur94T6HCibEw2opQ4NYS27f0ce1d";
     print("Access Token========: $accessToken");
     if (coodAccessToken != null && coodAccessToken.isNotEmpty) {
       //----------this for Jzl tabbar
       client.options.headers[HttpHeaders.authorizationHeader] =
-          'Bearer $accessToken';
-      //--------------this cood    
+          'Bearer $coodToken';
+      //--------------this cood  accessToken  
       client.options.headers['Authorization'] = coodAccessToken;
     } else {
       client.options.headers.remove(HttpHeaders.authorizationHeader);

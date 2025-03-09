@@ -46,11 +46,11 @@ class CategoriesRespModel extends BaseListResponse {
 
 class CategoryModel extends CategoryEntity {
   const CategoryModel({
-    required super.id,
-    required super.nameAr,
-    required super.nameEn,
-    required super.image,
-    required super.icon,
+     super.id,
+     super.nameAr,
+     super.nameEn,
+     super.image,
+     super.icon,
   });
 
   // Map JSON to `CategoryModel`
