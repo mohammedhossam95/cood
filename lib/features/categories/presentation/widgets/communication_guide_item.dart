@@ -43,12 +43,9 @@ class CommunicationGuideItem extends StatelessWidget {
                       topRight: Radius.circular(20.r),
                       bottomLeft: Radius.circular(19.r),
                     ),
-                    image: DecorationImage(
-                      image: NetworkImage(item.icon,),
-                      fit: BoxFit.cover,
             ),
-
-            //child: Image.network(item.image,),//------- ToDo  from list shod be icon comes from api and network image
+            child: Center(
+            child: Image.network(item.icon,width: 50.0.w,height: 50.0.h,),
           ),),
           Gaps.hGap20,
           //---------name & email
