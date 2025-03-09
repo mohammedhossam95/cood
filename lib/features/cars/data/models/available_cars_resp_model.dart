@@ -6,7 +6,7 @@ class AvailableCarsRespModel extends BaseListResponse {
   const AvailableCarsRespModel({
     super.data,
     super.message,
-    super.statusCode,
+    super.status,
   });
 
   factory AvailableCarsRespModel.fromJson(Map<String, dynamic>? json) {
@@ -115,7 +115,7 @@ class CarModel extends CarEntity {
   }
 }
 
-class CategoryModel extends CategoryEntity {
+class CategoryModel extends CarCategoryEntity {
   const CategoryModel({
     super.id,
     super.nameEn,

@@ -1,4 +1,4 @@
-import 'package:cood/features/reservations/presentation/widgets/communication_details.dart';
+import 'package:cood/features/categories/presentation/widgets/communication_details.dart';
 import 'package:flutter/material.dart';
 
 import '/core/params/car_params.dart';

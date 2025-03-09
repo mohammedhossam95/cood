@@ -1,3 +1,4 @@
+import 'package:cood/features/categories/categories_injection.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -7,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '/features/cars/cars_injection.dart';
 import '/features/home/home_injection.dart';
 import '/features/profile/profile_injection.dart';
-import '/features/reservations/reservation_injection.dart';
 import '/features/tabbar/tabbar_injection.dart';
 import 'config/locale/app_localizations.dart';
 import 'core/api/app_interceptors.dart';
@@ -31,7 +31,7 @@ abstract class ServiceLocator {
     await initTabbarFeatureInjection();
     await initCarsFeatureInjection();
     await initHomeFeatureInjection();
-    await initReservationInjection();
+    await initCategoriesInjection();
     await initProfileFeatureInjection();
 
     /// Core

@@ -5,7 +5,7 @@ class BranchRespModel extends BaseListResponse {
   const BranchRespModel({
     super.data,
     super.message,
-    super.statusCode,
+    super.status,
   });
 
   factory BranchRespModel.fromJson(Map<String, dynamic>? json) {

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cood/features/categories/presentation/cubit/check_reserve_status/check_reserve_status_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +28,6 @@ import '/features/cars/presentation/cubit/get_free_additional_cubit/get_free_add
 import '/features/cars/presentation/screens/payment_screen.dart';
 import '/features/cars/presentation/widgets/branches_list.dart';
 import '/injection_container.dart';
-import '../../../reservations/presentation/cubit/check_reserve_status/check_reserve_status_cubit.dart';
 import '../cubit/get_additional_cubit/get_additional_cubit.dart';
 
 class CarDetailsArgs {

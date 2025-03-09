@@ -19,7 +19,7 @@ class CarEntity extends Equatable {
   final double? saveThreeMonth;
   final double? saveSixMonth;
   final double? saveNineMonth;
-  final CategoryEntity? category;
+  final CarCategoryEntity? category;
   final double? finalPrice;
   final double? offerPrice;
   final int? numberOfCars;
@@ -135,14 +135,14 @@ class City extends Equatable {
   List<Object?> get props => [id, nameEn, nameAr, deleted];
 }
 
-class CategoryEntity extends Equatable {
+class CarCategoryEntity extends Equatable {
   final int? id;
   final String? nameEn;
   final String? nameAr;
   final String? imagePath;
   final bool? deleted;
 
-  const CategoryEntity({
+  const CarCategoryEntity({
     this.id,
     this.nameEn,
     this.nameAr,

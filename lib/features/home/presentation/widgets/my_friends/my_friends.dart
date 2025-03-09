@@ -4,9 +4,9 @@ import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
 import 'package:cood/core/widgets/show_dialog.dart';
+import 'package:cood/features/categories/domain/entity/contacts_entity.dart';
+import 'package:cood/features/categories/presentation/widgets/social_contact_card.dart';
 import 'package:cood/features/home/presentation/widgets/my_friends/add_friend_dialog.dart';
-import 'package:cood/features/reservations/domain/entity/contacts_entity.dart';
-import 'package:cood/features/reservations/presentation/widgets/social_contact_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

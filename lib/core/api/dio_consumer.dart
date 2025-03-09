@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_nullable_for_final_variable_declarations, unused_local_variable
+
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -88,12 +90,17 @@ class DioConsumerImpl implements DioConsumer {
     }
   }
 
-  Future<void> _handleAccessTokenHeader() async {
-    final String? accessToken = await secureStorage.getAccessToken();
-    if (accessToken != null && accessToken.isNotEmpty) {
+  Future<void> _handleAccessTokenHeader() async { 
+   final String? accessToken = await secureStorage.getAccessToken();
+    final String? coodAccessToken ="Bearer 3|tiLlHT6fseS3KLa5yiDLur94T6HCibEw2opQ4NYS27f0ce1d";
+        final String? coodToken ="3|tiLlHT6fseS3KLa5yiDLur94T6HCibEw2opQ4NYS27f0ce1d";
+    print("Access Token========: $accessToken");
+    if (coodAccessToken != null && coodAccessToken.isNotEmpty) {
+      //----------this for Jzl tabbar
       client.options.headers[HttpHeaders.authorizationHeader] =
-          'Bearer $accessToken';
-      client.options.headers['Authorization'] = accessToken;
+          'Bearer $coodToken';
+      //--------------this cood  accessToken  
+      client.options.headers['Authorization'] = coodAccessToken;
     } else {
       client.options.headers.remove(HttpHeaders.authorizationHeader);
     }

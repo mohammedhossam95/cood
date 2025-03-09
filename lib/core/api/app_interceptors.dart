@@ -2,10 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 class AppInterceptors extends Interceptor {
+  
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    
     // debugPrint('REQUEST[${options.method}] => PATH: ${options.path}');
     options.headers['Content-Type'] = 'application/json';
+    //options.headers['Authorization'] = 'Bearer 3|tiLlHT6fseS3KLa5yiDLur94T6HCibEw2opQ4NYS27f0ce1d';
+    
     super.onRequest(options, handler);
   }
 

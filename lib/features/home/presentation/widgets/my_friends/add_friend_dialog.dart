@@ -76,7 +76,7 @@ class _AddFriendDialogState extends State<AddFriendDialog> {
             const SizedBox(height: 10),
             if (isHasResult)
               SizedBox(
-                height: 100.h,
+                height: 150.h,
                 child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: filteredResults.length,

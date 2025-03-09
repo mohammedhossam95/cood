@@ -5,13 +5,13 @@ class BrandsRespModel extends BaseListResponse {
   const BrandsRespModel({
     super.data,
     super.message,
-    super.statusCode,
+    super.status,
   });
 
   factory BrandsRespModel.fromJson(Map<String, dynamic> json) {
     return BrandsRespModel(
       message: json['message'],
-      statusCode: json['status_code'],
+      status: json['status'],
       data: (json['details'] == null ? [] : json['details'] as List<dynamic>?)
           ?.map((category) => BrandsModel.fromJson(category))
           .toList(),

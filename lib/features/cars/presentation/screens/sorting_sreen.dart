@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cood/features/cars/domain/entities/car_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +15,6 @@ import '/core/widgets/diff_img.dart';
 import '/core/widgets/gaps.dart';
 import '/core/widgets/my_default_button.dart';
 import '/features/cars/domain/entities/car_brand_entity.dart';
-import '/features/cars/domain/entities/category_entity.dart';
 import '/features/cars/presentation/cubit/get_brands_cubit/get_brands_cubit.dart';
 import '/features/cars/presentation/cubit/get_brands_cubit/get_brands_state.dart';
 import '/features/cars/presentation/cubit/get_cars_cubit/get_cars_cubit.dart';
