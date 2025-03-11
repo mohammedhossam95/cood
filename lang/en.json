@@ -1,5 +1,5 @@
 {
-  "app_name": "JZL",
+  "app_name": "Cood",
   "------ Validator -----": "",
   "enterYourPhone": "Enter your phone",
   "enterCorrectPhone": "Enter correct phone",
@@ -22,6 +22,7 @@
   "pickLicencePhoto": "Please, pick an image for your Licence",
   "pickCorrectDays": "Please, Select Your working days.",
   "pickGeneralPhoto": "Please, pick an image for your ",
+  "accept_terms_agreement": "You should have accept terms and conditions",
   "plsSelect": "Please, select",
   "allImages": "all images",
   "noData": "No Data Available",

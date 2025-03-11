@@ -1,11 +1,12 @@
+import 'package:cood/core/params/auth_params.dart';
+import 'package:cood/features/auth/presentation/cubit/login/login_cubit.dart';
+import 'package:cood/features/auth/presentation/cubit/user_register_cubit/user_register_cubit.dart';
 import 'package:cood/features/categories/presentation/widgets/communication_details.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '/core/params/car_params.dart';
-import '/features/auth/presentation/screen/mobile_screen.dart';
 import '/features/auth/presentation/screen/otp_screen.dart';
-import '/features/auth/presentation/screen/register/new_user_register_screen.dart';
-import '/features/auth/presentation/screen/register/washer_second_register_screen.dart';
 import '/features/auth/presentation/screen/success_change_pass_screen.dart';
 import '/features/cars/presentation/screens/car_details_screen.dart';
 import '/features/cars/presentation/screens/cars_screen.dart';
@@ -14,8 +15,6 @@ import '/features/cars/presentation/screens/new_map_screen.dart';
 import '/features/cars/presentation/screens/payment_screen.dart';
 import '/features/cars/presentation/screens/sorting_sreen.dart';
 import '/features/home/presentation/screens/date_range.dart';
-import '/features/more/presentation/screens/contact_us_screen.dart';
-import '/features/more/presentation/screens/privacy_policy_screen.dart';
 import '/features/profile/presentation/screens/edit_profile_screen.dart';
 import '/features/profile/presentation/screens/profile_screen.dart';
 import '../../core/utils/app_strings.dart';
@@ -25,16 +24,16 @@ import '../../features/auth/presentation/screen/confirm_reset_password_screen.da
 import '../../features/auth/presentation/screen/failed_otp_screen.dart';
 import '../../features/auth/presentation/screen/forget_password_screen.dart';
 import '../../features/auth/presentation/screen/login_screen.dart';
-import '../../features/auth/presentation/screen/register/delivery_register_screen.dart';
-import '../../features/auth/presentation/screen/register/washer_register_screen.dart';
+import '../../features/auth/presentation/screen/register_screen.dart';
 import '../../features/auth/presentation/screen/splash_screen.dart';
 import '../../features/auth/presentation/screen/success_otp_screen.dart';
 import '../../features/auth/presentation/screen/tearms_condations_screen.dart';
 import '../../features/auth/presentation/screen/verification_reset_password_screen.dart';
-import '../../features/more/presentation/screens/about_app_screen.dart';
 import '../../features/notification/presentation/screen/notification_screen.dart';
+import '../../features/profile/presentation/screens/about_app_screen.dart';
 import '../../features/profile/presentation/screens/change_password_screen.dart';
-import '../../features/profile/presentation/screens/settings_screen.dart';
+import '../../features/profile/presentation/screens/contact_us_screen.dart';
+import '../../features/profile/presentation/screens/privacy_policy_screen.dart';
 import '../../features/tabbar/presentation/screens/main_page.dart';
 import '../../injection_container.dart';
 
@@ -42,7 +41,6 @@ class Routes {
   static const String initialRoute = '/';
   static const String landingPageRoute = '/LandingPage';
   static const String loginScreenRoute = '/LoginScreen';
-  static const String mobileScreen = '/MobileScreen';
   static const String emailLoginScreenRoute = '/EmailLoginScreen';
   static const String registerScreenRoute = '/RegisterScreen';
   static const String acceptTermeRegisterRoute = '/AcceptTermeRegisterScreen';
@@ -113,13 +111,8 @@ class Routes {
   static const String privacyPolicyRoute = '/PrivacyPolicyScreen';
   static const String aboutUsRoute = '/AboutUsScreen';
 
-  static const String newUserRegisterRoute = '/NewUserRegisterScreen';
+  static const String registerRoute = '/RegisterScreen';
 
-  static const String newDelivryRegisterRoute = '/NewDelivryRegisterScreen';
-  static const String delivryRegisterSecondRoute =
-      '/DelivryRegisterSecondScreen';
-
-  static const String newWasherRegisterRoute = '/NewWasherRegisterScreen';
   static const String newWasherRegisterSecondStepRoute =
       '/NewWasherRegisterSecondStepScreen';
   static const String newWasherRegisterTheardStepRoute =
@@ -151,11 +144,12 @@ class Routes {
       '/TearmsAndCondationsAuthScreenScreen';
   static const String successOtpScreenRoute = '/SuccessOtpScreenScreen';
   static const String failedOtpScreenRoute = '/FailedOtpScreenScreen';
-  static const String settingScreenRoute = '/SettingsScreen';
   static const String changePasswordRoute = '/changePasswordScreen';
 //---------------------added by ali
   static const String communicationItemDetails = '/CommunicationItemDetails';
 }
+
+final _sl = ServiceLocator.instance;
 
 class AppRoutes {
   static Route? onGenerateRoute(RouteSettings routeSettings) {
@@ -171,7 +165,10 @@ class AppRoutes {
       case Routes.loginScreenRoute:
         return MaterialPageRoute(
           settings: routeSettings,
-          builder: (BuildContext context) => const LoginScreen(),
+          builder: (BuildContext context) => BlocProvider(
+            create: (context) => _sl<LoginCubit>(),
+            child: const LoginScreen(),
+          ),
         );
       case Routes.forgetPasswordScreenRoute:
         return MaterialPageRoute(
@@ -188,16 +185,7 @@ class AppRoutes {
           settings: routeSettings,
           builder: (BuildContext context) => const FailedOtpScreen(),
         );
-      case Routes.mobileScreen:
-        return MaterialPageRoute(
-          settings: routeSettings,
-          builder: (BuildContext context) => const MobileScreen(),
-        );
-      case Routes.settingScreenRoute:
-        return MaterialPageRoute(
-          settings: routeSettings,
-          builder: (BuildContext context) => const SettingsScreen(),
-        );
+
       case Routes.changePasswordRoute:
         return MaterialPageRoute(
           settings: routeSettings,
@@ -228,48 +216,6 @@ class AppRoutes {
           settings: routeSettings,
           builder: (BuildContext context) => const PrivacyPolicyScreen(),
         );
-
-      // case Routes.verificationMobileScreenRoute:
-      //   return MaterialPageRoute(
-      //     settings: routeSettings,
-      //     builder: (BuildContext context) => const VerificationMobileScreen(),
-      //   );
-
-      // case Routes.verificationEmailScreenRoute:
-      //   return MaterialPageRoute(
-      //     settings: routeSettings,
-      //     builder: (BuildContext context) => const VerificationEmailScreen(),
-      //   );
-
-      // case Routes.emailLoginScreenRoute:
-      //   return MaterialPageRoute(
-      //     settings: routeSettings,
-      //     builder: (BuildContext context) => const EmailLoginScreen(),
-      //   );
-
-      // case Routes.registerScreenRoute:
-      //   return MaterialPageRoute(
-      //     settings: routeSettings,
-      //     builder: (BuildContext context) => const RegisterScreen(),
-      //   );
-
-      // case Routes.flowScreenRoute:
-      //   return MaterialPageRoute(
-      //     settings: routeSettings,
-      //     builder: (BuildContext context) => const FlowScreen(),
-      //   );
-
-      // case Routes.reviewMyDataScreenRoute:
-      //   return MaterialPageRoute(
-      //     settings: routeSettings,
-      //     builder: (BuildContext context) => const ReviewMyDataScreen(),
-      //   );
-
-      // case Routes.editMyDataScreenRoute:
-      //   return MaterialPageRoute(
-      //     settings: routeSettings,
-      //     builder: (BuildContext context) => const UpdateRegisterScreen(),
-      //   );
 
       case Routes.verificationResetPasswordScreenRoute:
         return MaterialPageRoute(
@@ -309,12 +255,12 @@ class AppRoutes {
         );
 
       case Routes.otpAuthRoute:
-        // AuthParam authParam = routeSettings.arguments as AuthParam;
+        AuthParams authParams = routeSettings.arguments as AuthParams;
         return MaterialPageRoute(
           settings: routeSettings,
           builder: (BuildContext context) => OtpAuthScreen(
-              // authParam: authParam,
-              ),
+            authParams: authParams,
+          ),
         );
       case Routes.successChangePassRoute:
         return MaterialPageRoute(
@@ -323,28 +269,15 @@ class AppRoutes {
               const SuccessChangePasswordScreen(),
         );
 
-      case Routes.newUserRegisterRoute:
+      case Routes.registerRoute:
         return MaterialPageRoute(
           settings: routeSettings,
-          builder: (BuildContext context) => NewUserRegisterScreen(),
+          builder: (BuildContext context) => BlocProvider(
+            create: (context) => _sl<UserRegisterCubit>(),
+            child: RegisterScreen(),
+          ),
         );
 
-      case Routes.newDelivryRegisterRoute:
-        return MaterialPageRoute(
-          settings: routeSettings,
-          builder: (BuildContext context) => const NewDeliveryRegisterScreen(),
-        );
-
-      case Routes.newWasherRegisterRoute:
-        return MaterialPageRoute(
-          settings: routeSettings,
-          builder: (BuildContext context) => const NewWasherRegisterScreen(),
-        );
-      case Routes.newWasherRegisterSecondStepRoute:
-        return MaterialPageRoute(
-          settings: routeSettings,
-          builder: (BuildContext context) => const WasherRegisterSecondScreen(),
-        );
       case Routes.carsScreenRoute:
         CarParams car = routeSettings.arguments as CarParams;
         return MaterialPageRoute(

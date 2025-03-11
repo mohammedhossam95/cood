@@ -50,7 +50,7 @@ abstract class Constants {
       if (img.contains(ApiConstants.baseUrl)) {
         return img;
       } else {
-        imagePath = "${ApiConstants.imgUrl}$img";
+        imagePath = "${ApiConstants.baseUrl}$img";
         return imagePath;
       }
     } else {
@@ -465,6 +465,23 @@ abstract class Constants {
   //     throw 'Could not launch ${uri.toString()}';
   //   }
   // }
+  static String getInitials(String fullName) {
+    // Split the full name into a list of words
+    List<String> words = fullName.split(' ');
+
+    // If there are at least two words, get the first character of each word
+    if (words.length >= 2) {
+      return words[0][0].toUpperCase() + words[1][0].toUpperCase();
+    }
+
+    // If there is only one word, return the first two characters capitalized
+    if (words.length == 1 && words[0].length >= 2) {
+      return words[0][0].toUpperCase() + words[0][1].toUpperCase();
+    }
+
+    // If the input doesn't meet the requirements, return an empty string
+    return '';
+  }
 }
 
 abstract class ArabicNumeric {

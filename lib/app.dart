@@ -14,7 +14,6 @@ import 'config/routes/app_routes.dart';
 import 'config/routes/navigator_observer.dart';
 import 'config/themes/app_theme.dart';
 import 'core/utils/app_strings.dart';
-import 'features/auth/auth_injection.dart';
 import 'features/language/language_injection.dart';
 import 'features/language/presentation/cubit/locale_cubit/locale_cubit.dart';
 
@@ -26,7 +25,7 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         ...languageBlocs,
-        ...authBlocs,
+
         ...bottomNavBlocs,
         ...carsBlocs,
         ...homeBlocs,

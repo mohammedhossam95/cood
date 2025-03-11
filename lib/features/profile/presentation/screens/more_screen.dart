@@ -4,7 +4,9 @@ import 'dart:io';
 
 import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/utils/values/text_styles.dart';
+import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
+import 'package:cood/features/auth/domain/entities/login_response.dart';
 import 'package:cood/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,8 +14,8 @@ import 'package:share_plus/share_plus.dart';
 
 import '/config/routes/app_routes.dart';
 import '/core/widgets/gaps.dart';
-import '/features/more/presentation/widgets/more_item_widget.dart';
 import '../../../../core/utils/values/assets.dart';
+import '../widgets/more_item_widget.dart';
 
 class MoreScreen extends StatefulWidget {
   const MoreScreen({super.key});
@@ -23,6 +25,13 @@ class MoreScreen extends StatefulWidget {
 }
 
 class _MoreScreenState extends State<MoreScreen> {
+  late User user;
+  @override
+  void initState() {
+    user = sharedPreferences.getUser() ?? User();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -48,29 +57,29 @@ class _MoreScreenState extends State<MoreScreen> {
                     borderRadius: BorderRadius.circular(10.r),
                   ),
                   clipBehavior: Clip.antiAlias,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10.r),
-                    child: Image.asset(
-                      "assets/images/user.jpeg",
-                      fit: BoxFit.cover,
-                    ),
+                  child: DiffImage(
+                    width: 100.w,
+                    height: 100.w,
+                    image: '',
+                    userName: user.name ?? '',
+                    fitType: BoxFit.cover,
                   ),
                 ),
               ),
             ),
             Gaps.vGap10,
             Text(
-              'فهد سليمان',
+              user.name ?? '',
               textAlign: TextAlign.center,
               style: TextStyles.bold20(color: colors.main),
             ),
             Text(
-              '+966 55 555 5555',
+              user.phone ?? '',
               textAlign: TextAlign.center,
               style: TextStyles.medium18(color: colors.main),
             ),
             Text(
-              '12345675555',
+              user.code ?? '',
               textAlign: TextAlign.center,
               style: TextStyles.medium18(color: colors.main),
             ),

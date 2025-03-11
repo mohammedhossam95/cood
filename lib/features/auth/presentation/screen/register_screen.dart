@@ -1,43 +1,51 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cood/config/routes/app_routes.dart';
+import 'package:cood/core/params/auth_params.dart';
+import 'package:cood/core/utils/constants.dart';
+import 'package:cood/core/widgets/loading_view.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
+import 'package:cood/features/auth/presentation/cubit/user_register_cubit/user_register_cubit.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '/config/locale/app_localizations.dart';
-import '/core/utils/enums.dart';
 import '/core/utils/values/assets.dart';
 import '/core/utils/values/text_styles.dart';
 import '/core/widgets/gaps.dart';
 import '/core/widgets/tags_text_form_field.dart';
 import '/injection_container.dart';
-import '../../../../../core/utils/validator.dart';
-import '../../widgets/country_code_widget.dart';
+import '../../../../core/utils/validator.dart';
+import '../widgets/country_code_widget.dart';
 
-class NewUserRegisterScreen extends StatefulWidget {
-  const NewUserRegisterScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<NewUserRegisterScreen> createState() => _NewUserRegisterScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _NewUserRegisterScreenState extends State<NewUserRegisterScreen> {
-  final GlobalKey<FormState> formState = GlobalKey();
+class _RegisterScreenState extends State<RegisterScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey();
   final TextEditingController userNameController = TextEditingController();
-  final TextEditingController configPasswordController =
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController confirmPasswordController =
       TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
   final FocusNode userNameFocus = FocusNode();
   final FocusNode configPasswordFocus = FocusNode();
   final FocusNode passwordFocus = FocusNode();
-  final TextEditingController phoneController = TextEditingController();
   final FocusNode phoneFocus = FocusNode();
 
   bool isSecured = true;
   bool isSecured1 = true;
+  bool checkTerms = false;
 
   // final ImagePicker _picker = ImagePicker();
   File? avatarImageFile;
@@ -61,7 +69,7 @@ class _NewUserRegisterScreenState extends State<NewUserRegisterScreen> {
       child: Scaffold(
         backgroundColor: colors.backGround,
         body: Form(
-          key: formState,
+          key: _formKey,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.w),
             child: SingleChildScrollView(
@@ -69,11 +77,8 @@ class _NewUserRegisterScreenState extends State<NewUserRegisterScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Gaps.vGap100,
-                  Gaps.vGap100,
-                  Image.asset(
-                    ImgAssets.jzlLogo,
-                  ),
-                  Gaps.vGap78,
+                  Image.asset(ImgAssets.logo),
+                  Gaps.vGap50,
                   Text(
                     'welcomphrase'.tr,
                     style: TextStyles.bold24(
@@ -91,22 +96,12 @@ class _NewUserRegisterScreenState extends State<NewUserRegisterScreen> {
                     focusNode: userNameFocus,
                     hintText: 'new_user_name'.tr,
                     textInputAction: TextInputAction.next,
-                    validatorType: ValidatorType.name,
+                    validatorType: ValidatorType.standard,
                     borderColor: colors.main,
                   ),
-                  Gaps.vGap25,
+                  Gaps.vGap16,
                   Row(
                     children: [
-                      Expanded(
-                        child: AppTextFormField(
-                          controller: configPasswordController,
-                          focusNode: configPasswordFocus,
-                          hintText: 'phone'.tr,
-                          textInputAction: TextInputAction.next,
-                          validatorType: ValidatorType.phone,
-                          borderColor: colors.main,
-                        ),
-                      ),
                       CountryCodeWidget(
                         country: selcCountry,
                         updateValue: (Country value) {
@@ -115,9 +110,20 @@ class _NewUserRegisterScreenState extends State<NewUserRegisterScreen> {
                           });
                         },
                       ),
+                      Gaps.hGap4,
+                      Expanded(
+                        child: AppTextFormField(
+                          controller: phoneController,
+                          focusNode: phoneFocus,
+                          hintText: 'phone'.tr,
+                          textInputAction: TextInputAction.next,
+                          validatorType: ValidatorType.phone,
+                          borderColor: colors.main,
+                        ),
+                      ),
                     ],
                   ),
-                  Gaps.vGap15,
+                  Gaps.vGap16,
                   AppTextFormField(
                     backgroundColor: colors.upBackGround,
                     controller: passwordController,
@@ -149,10 +155,10 @@ class _NewUserRegisterScreenState extends State<NewUserRegisterScreen> {
                             ),
                           ),
                   ),
-                  Gaps.vGap15,
+                  Gaps.vGap16,
                   AppTextFormField(
                     backgroundColor: colors.upBackGround,
-                    controller: configPasswordController,
+                    controller: confirmPasswordController,
                     focusNode: configPasswordFocus,
                     hintText: 'configPassword'.tr,
                     obscureText: isSecured,
@@ -181,12 +187,16 @@ class _NewUserRegisterScreenState extends State<NewUserRegisterScreen> {
                             ),
                           ),
                   ),
-                  Gaps.vGap8,
+                  Gaps.vGap16,
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       RichText(
                         text: TextSpan(
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pushNamed(context,
+                                  Routes.tearmsAndCondationsAuthScreenRoute);
+                            },
                           children: [
                             TextSpan(
                               text: 'accept'.tr,
@@ -207,44 +217,60 @@ class _NewUserRegisterScreenState extends State<NewUserRegisterScreen> {
                         ),
                       ),
                       Gaps.hGap4,
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context,
-                              Routes.tearmsAndCondationsAuthScreenRoute);
+                      Switch.adaptive(
+                        value: checkTerms,
+                        activeColor: colors.main,
+                        onChanged: (v) {
+                          setState(() {
+                            checkTerms = v;
+                          });
                         },
-                        child: Stack(
-                          alignment: Alignment.centerLeft,
-                          children: [
-                            Container(
-                              width: 30.w,
-                              height: 9.h,
-                              decoration: BoxDecoration(
-                                  color: colors.textColor.withValues(alpha: .3),
-                                  borderRadius: BorderRadius.circular(10.r)),
-                            ),
-                            Container(
-                              height: 25.h,
-                              width: 17.w,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: colors.textColor,
-                              ),
-                            ),
-                          ],
-                        ),
                       ),
                     ],
                   ),
                   Gaps.vGap25,
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 90.w),
-                    child: MyDefaultButton(
-                      borderColor: colors.main,
-                      onPressed: () {
-                        Navigator.pushNamed(context, Routes.otpAuthRoute);
-                      },
-                      btnText: 'createAccount',
-                    ),
+                  BlocConsumer<UserRegisterCubit, UserRegisterState>(
+                    listener: (context, state) {
+                      if (state is UserRegisterSuccess) {
+                        log(state.resp.data?.token ?? '');
+
+                        Navigator.pushNamed(
+                          context,
+                          Routes.otpAuthRoute,
+                          arguments: AuthParams(),
+                        );
+                      }
+                      if (state is UserRegisterFailure) {
+                        Constants.showSnakToast(
+                          context: context,
+                          type: 3,
+                          message: state.errorMessage,
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          (state is UserRegisterLoading)
+                              ? LoadingView(bgColor: colors.main)
+                              : MyDefaultButton(
+                                  color: colors.main,
+                                  borderColor: colors.main,
+                                  onPressed: () => onRegisterPressed(context),
+                                  btnText: 'createAccount',
+                                ),
+                          if (state is UserRegisterFailure) ...[
+                            Gaps.vGap10,
+                            Text(
+                              state.errorMessage,
+                              style: TextStyles.regular14(
+                                  color: colors.errorColor),
+                            ),
+                          ]
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),
@@ -255,91 +281,65 @@ class _NewUserRegisterScreenState extends State<NewUserRegisterScreen> {
     );
   }
 
+  onRegisterPressed(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      try {
+        String? phoneNum = await Constants.phoneParsing(
+          phone: phoneController.text,
+          countryCode: selcCountry.countryCode,
+          withCode: false,
+        );
+
+        if (phoneNum != null) {
+          register(phoneNum);
+        } else {
+          WidgetsBinding.instance.addPostFrameCallback(
+            (_) => Constants.showSnakToast(
+              type: 2,
+              context: context,
+              message: 'invalidPhoneText'.tr,
+            ),
+          );
+        }
+      } on PlatformException catch (e) {
+        debugPrint(e.toString());
+        unFocus();
+        Future.delayed(Duration.zero, () {
+          if (!context.mounted) return;
+          Constants.showSnakToast(
+            type: 2,
+            context: context,
+            message: 'invalidPhoneText'.tr,
+          );
+        });
+      }
+    }
+  }
+
+  register(String phone) {
+    if (checkTerms == true) {
+      BlocProvider.of<UserRegisterCubit>(context).fRegister(
+        params: AuthParams(
+          name: userNameController.text,
+          phone: phone,
+          password: passwordController.text,
+          passwordConfirm: passwordController.text,
+        ),
+      );
+    } else {
+      Constants.showSnakToast(
+        context: context,
+        type: 3,
+        message: "accept_terms_agreement".tr,
+      );
+    }
+  }
+
   unFocus() {
     userNameFocus.unfocus();
     configPasswordFocus.unfocus();
     passwordFocus.unfocus();
     // phoneFocus.unfocus();
-  }
-}
-
-class AmrTheFristMessageRegisterWidget extends StatelessWidget {
-  final String itemTitel;
-  final String itemSubTitel;
-
-  const AmrTheFristMessageRegisterWidget({
-    super.key,
-    required this.itemTitel,
-    required this.itemSubTitel,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      // height: 63.h,
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: Colors.blue.shade100,
-      ),
-      child: Row(
-        children: [
-          SvgPicture.asset(ImgAssets.deliveryImage),
-          Gaps.hGap16,
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                itemTitel,
-                style: TextStyles.regular16(),
-              ),
-              Text(
-                itemSubTitel,
-                style: TextStyles.regular14(),
-              )
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class AmrLinearProgressIndecatorWidget extends StatelessWidget {
-  final double linearValue;
-  final bool isCanceled;
-  final String? status;
-
-  const AmrLinearProgressIndecatorWidget({
-    super.key,
-    required this.linearValue,
-    this.isCanceled = false,
-    this.status,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return LinearProgressIndicator(
-      backgroundColor: Colors.grey[300],
-      valueColor: AlwaysStoppedAnimation<Color>(status != null
-          ? getColor(status)
-          : isCanceled
-              ? Colors.red
-              : Colors.blue),
-      value: linearValue,
-      minHeight: 10.h,
-      borderRadius: BorderRadius.all(Radius.circular(5.r)),
-    );
-  }
-
-  Color getColor(status) {
-    return status == MyOrderStatus.pending.value
-        ? Colors.yellow
-        : status == MyOrderStatus.completed.value
-            ? Colors.green
-            : status == MyOrderStatus.canceled.value ||
-                    status == MyOrderStatus.refuseDelegate.value
-                ? Colors.red
-                : Colors.orangeAccent;
   }
 }

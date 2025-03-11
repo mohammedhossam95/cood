@@ -1,5 +1,4 @@
 import 'package:cood/features/categories/presentation/cubit/categories_cubit/categories_cubit.dart';
-import 'package:cood/features/categories/presentation/cubit/categories_cubit/categories_state.dart';
 import 'package:cood/features/categories/presentation/cubit/reserve_cubit/reserve_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -144,7 +143,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 image: attribute.imagePath ?? '',
                                 height: 17.h,
                                 width: 17.w,
-                                color: colors.main,
                               ),
                               Gaps.hGap6,
                               Text(

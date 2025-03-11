@@ -13,6 +13,5 @@ abstract class CategoriesRepositry {
   Future<Either<Failure, CheckoutResponse>> getConfig(CarParams params);
   Future<Either<Failure, BaseOneResponse>> getPriceStatus(CarParams params);
   Future<Either<Failure, BaseOneResponse>> completeAPay(CarParams params);
-  Future<Either<Failure, BaseOneResponse>> getPlans();
   Future<Either<Failure, BaseListResponse>> getAdditional(int categoryId);
 }

@@ -1,10 +1,8 @@
 import 'package:cood/features/categories/data/model/checkout_resp_model.dart';
-import 'package:cood/features/categories/data/model/plans_model.dart';
 import 'package:cood/features/categories/data/model/price_status_resp_model.dart';
 import 'package:cood/features/categories/data/model/reserve_status_resp_model.dart';
 
 import '/core/params/car_params.dart';
-
 import '../../../../core/error/exceptions.dart';
 import '../../../../injection_container.dart';
 import '../model/additional_model.dart';
@@ -19,11 +17,10 @@ abstract class CategoriesRemoteDatesource {
   Future<CheckoutRespModel> getRemoteAPayCheckout(CarParams params);
   Future<PriceStatusRespModel> getRemotePriceStatus(CarParams params);
   Future<ReserveStatusRespModel> completeRemoteAPay(CarParams params);
-  Future<PlansRespModel> getPlans();
   Future<AdditionalRespModel> getAdditionalRemoteData(int categoryId);
 }
 
-class ReservationRemoteDataSourceImpl extends CategoriesRemoteDatesource {
+class CategoriesRemoteDatesourceImpl extends CategoriesRemoteDatesource {
   @override
   Future<CategoriesRespModel> getCategoriesRemoteData() async {
     String branchUrl = 'https://cood.testworks.top/api/v1/categories';
@@ -149,22 +146,6 @@ class ReservationRemoteDataSourceImpl extends CategoriesRemoteDatesource {
 
       ReserveStatusRespModel model = ReserveStatusRespModel.fromJson(response);
       return model;
-    } on ServerException {
-      rethrow;
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<PlansRespModel> getPlans() async {
-    String plansUrl = '/v2/home/plansStatus';
-    try {
-      final response = await dioConsumer.get(plansUrl);
-      if (response['status_code'] == 200) {
-        return PlansRespModel.fromJson(response);
-      }
-      throw ServerException(message: response['message'] ?? '');
     } on ServerException {
       rethrow;
     } catch (error) {

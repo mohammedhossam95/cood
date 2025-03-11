@@ -1,8 +1,9 @@
-
+import 'package:cood/core/widgets/diff_img.dart';
+import 'package:cood/features/auth/domain/entities/login_response.dart';
 import 'package:cood/features/home/presentation/widgets/myAccounts/my_accounts.dart';
-
 import 'package:cood/features/home/presentation/widgets/myPhotos/my_photos.dart';
 import 'package:cood/features/home/presentation/widgets/my_friends/my_friends.dart';
+import 'package:cood/features/tabbar/presentation/cubit/bottom_nav_bar_cubit/bottom_nav_bar_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,8 +13,6 @@ import '/core/params/car_params.dart';
 import '/core/utils/log_utils.dart';
 import '/core/utils/values/text_styles.dart';
 import '/core/widgets/gaps.dart';
-import '/features/home/domain/entities/plans_status_entity.dart';
-import '/features/home/presentation/cubit/get_plans_status_cubit/get_plans_status_cubit.dart';
 import '/features/home/presentation/widgets/cities_list.dart';
 import '/injection_container.dart';
 import '../../../../config/routes/app_routes.dart';
@@ -38,11 +37,12 @@ class _HomeScreenState extends State<HomeScreen> {
   int? cityId;
   CarParams result = const CarParams();
   CarParams carParams = const CarParams();
+  late User user;
 
   @override
   void initState() {
-    BlocProvider.of<GetPlansStatusCubit>(context).getPlansStatus();
     // BlocProvider.of<GetCitiesCubit>(context).getCities();
+    user = sharedPreferences.getUser() ?? User();
     super.initState();
   }
 
@@ -61,26 +61,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
                   children: [
-                    Center(
-                      child: Container(
-                        width: 60.w,
-                        height: 60.h,
-                        decoration: BoxDecoration(
-                          color: colors.main,
-                          border: Border.all(
-                            color: colors.main,
-                          ),
-                          borderRadius: BorderRadius.circular(10.r),
-                        ),
-                        clipBehavior: Clip.antiAlias,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.r),
-                          child: Image.asset(
-                            "assets/images/user.jpeg",
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
+                    DiffImage(
+                      hasBorder: true,
+                      width: 60.w,
+                      height: 60.w,
+                      image: "",
+                      padding: const EdgeInsets.all(2.0),
+                      userName: user.name ?? "",
                     ),
                     Gaps.hGap10,
                     Expanded(
@@ -89,11 +76,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'فهد سليمان',
+                            user.name ?? "",
                             style: TextStyles.bold14(color: colors.main),
                           ),
                           Text(
-                            '359698845',
+                            user.code ?? "",
                             style: TextStyles.bold14(color: colors.main),
                           ),
                         ],
@@ -112,7 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     IconButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, Routes.settingScreenRoute);
+                        BlocProvider.of<BottomNavBarCubit>(context)
+                            .changeCurrentScreen(index: 2);
                       },
                       icon: Icon(
                         Icons.settings,
@@ -127,48 +115,21 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding:
                     EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 20.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Gaps.vGap8,
-                    BlocBuilder<GetPlansStatusCubit, GetPlansStatusState>(
-                      builder: (context, state) {
-                        if (state is GetPlansStatusLoading) {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        } else if (state is GetPlansStatusSuccess) {
-                          PlansStatusEntity plansStatus =
-                              state.response.data as PlansStatusEntity;
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              plansStatus.daily!
-                                  ? _buildDurationOption('myAccounts', 0)
-                                  : const SizedBox.shrink(),
-                              Gaps.hGap10,
-                              plansStatus.weekly!
-                                  ? _buildDurationOption('myPhotos', 1)
-                                  : const SizedBox.shrink(),
-                              Gaps.hGap10,
-                              plansStatus.monthly!
-                                  ? _buildDurationOption('myFriends', 2)
-                                  : const SizedBox.shrink(),
-                            ],
-                          );
-                        } else if (state is GetPlansStatusError) {
-                          return Center(child: Text(state.message));
-                        } else {
-                          return const SizedBox.shrink();
-                        }
-                      },
-                    ),
-                    Gaps.vGap8,
+                    _buildDurationOption('myAccounts', 0),
+                    Gaps.hGap10,
+                    _buildDurationOption('myPhotos', 1),
+                    Gaps.hGap10,
+                    _buildDurationOption('myFriends', 2),
                   ],
                 ),
               ),
+
               //--------3
               //---- here switch index(frinds, photoes or accounts)
-               getCurrentTapBarWidget(selectedDurationIndex),
+              getCurrentTapBarWidget(selectedDurationIndex),
             ],
           ),
         ],

@@ -1,3 +1,4 @@
+import 'package:cood/core/params/auth_params.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,9 +15,7 @@ class LoginCubit extends Cubit<LoginState> {
   bool isLoading = false;
   LoginCubit(this.loginEmailUseCase) : super(LoginInitialState());
 
-  Future<void> fLoginPhone({
-    required LoginParams params,
-  }) async {
+  Future<void> fLoginPhone({required AuthParams params}) async {
     changeLoadingView();
     try {
       final Either<Failure, LoginRespModel> eitherResult =
@@ -25,15 +24,7 @@ class LoginCubit extends Cubit<LoginState> {
         emit(LoginErrorState(
             errorMessage: failure.message ?? Strings.pleaseTryAgainLater));
       }, (response) {
-        if (response.data?.userType != null) {
-          if (params.userType!.toLowerCase() ==
-              response.data?.userType!.toLowerCase()) {
-            emit(LoginSuccessState(resp: response));
-          } else {
-            emit(LoginErrorState(errorMessage: Strings.enterCorrecData));
-          }
-        }
-        // emit(LoginSuccessState(resp: response));
+        emit(LoginSuccessState(resp: response));
       });
     } catch (e) {
       emit(LoginErrorState(errorMessage: e.toString()));

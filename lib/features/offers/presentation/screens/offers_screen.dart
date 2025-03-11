@@ -144,7 +144,6 @@ class _OffersScreenState extends State<OffersScreen> {
                                                               '',
                                                       height: 15.h,
                                                       width: 15.w,
-                                                      color: colors.main,
                                                     ),
                                                     Gaps.hGap6,
                                                     Text(

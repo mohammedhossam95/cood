@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '/features/auth/data/models/login_model.dart';
 import '/features/auth/domain/entities/login_response.dart';
-import '/features/auth/domain/entities/new_entities/login_response.dart';
 import '../../utils/enums.dart';
 import '../../utils/extension.dart';
 
@@ -49,7 +48,7 @@ abstract class AppSharedPreferences {
 
   //region:: user
   User? getUser();
-  Future<bool> saveUser(LoginDetails user);
+  Future<bool> saveUser(User user);
   Future<bool> removeUser();
 
   //endregion
@@ -219,7 +218,7 @@ class AppSharedPreferencesImpl extends AppSharedPreferences {
   }
 
   @override
-  Future<bool> saveUser(LoginDetails user) =>
+  Future<bool> saveUser(User user) =>
       instance.setString(_AppSharedPreferencesKeys.user, jsonEncode(user));
 
   @override
