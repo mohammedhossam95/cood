@@ -34,6 +34,9 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
             context: context,
             favorite: <String>['EG', 'SA'],
             showPhoneCode: true,
+            countryListTheme: CountryListThemeData(
+              bottomSheetHeight: ScreenUtil().screenHeight * 0.6,
+            ),
             onSelect: (Country country) {
               setState(() {
                 selectedCountry = country;
@@ -44,12 +47,10 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
         }
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 18.h),
+        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 18.h),
         decoration: BoxDecoration(
             color: colors.upBackGround,
-            border: Border.all(
-              color: colors.dividerColor,
-            ),
+            border: Border.all(color: colors.main),
             borderRadius: BorderRadius.circular(10.r)),
         child: Row(
           children: [
@@ -58,7 +59,7 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
               style: TextStyles.medium12(color: colors.body),
               textDirection: TextDirection.rtl,
             ),
-            Gaps.hGap8,
+            Gaps.hGap4,
             Icon(Icons.keyboard_arrow_down_rounded),
           ],
         ),

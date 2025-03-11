@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_nullable_for_final_variable_declarations, unused_local_variable
-
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -40,13 +38,9 @@ abstract class DioConsumer {
 }
 
 abstract class ApiConstants {
-  static const String dev = 'https://jzl-sa.net';
-  static const String live = 'https://jzl-sa.net/api/v2';
-  static const String baseUrl = live;
-  static const String imgUrl = "$baseUrl/assets/uploads/users_avatar/";
-  static const String portal = 'portal';
-  static const String doctors = 'doctors';
-  static const String version = 'v1';
+  static const String dev = 'https://cood.testworks.top/api/v1';
+  static const String live = '';
+  static const String baseUrl = dev;
 }
 
 class DioConsumerImpl implements DioConsumer {
@@ -90,17 +84,11 @@ class DioConsumerImpl implements DioConsumer {
     }
   }
 
-  Future<void> _handleAccessTokenHeader() async { 
-   final String? accessToken = await secureStorage.getAccessToken();
-    final String? coodAccessToken ="Bearer 3|tiLlHT6fseS3KLa5yiDLur94T6HCibEw2opQ4NYS27f0ce1d";
-        final String? coodToken ="3|tiLlHT6fseS3KLa5yiDLur94T6HCibEw2opQ4NYS27f0ce1d";
-    print("Access Token========: $accessToken");
-    if (coodAccessToken != null && coodAccessToken.isNotEmpty) {
-      //----------this for Jzl tabbar
+  Future<void> _handleAccessTokenHeader() async {
+    final String? accessToken = await secureStorage.getAccessToken();
+    if (accessToken != null && accessToken.isNotEmpty) {
       client.options.headers[HttpHeaders.authorizationHeader] =
-          'Bearer $coodToken';
-      //--------------this cood  accessToken  
-      client.options.headers['Authorization'] = coodAccessToken;
+          'Bearer $accessToken';
     } else {
       client.options.headers.remove(HttpHeaders.authorizationHeader);
     }

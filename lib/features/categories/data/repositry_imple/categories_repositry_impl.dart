@@ -1,4 +1,3 @@
-
 import 'package:cood/features/categories/data/datasource/categories_remote_datesource.dart';
 import 'package:cood/features/categories/domain/entity/checkout_response.dart';
 import 'package:dartz/dartz.dart';
@@ -8,7 +7,6 @@ import '/core/base_classes/base_one_response.dart';
 import '/core/error/failures.dart';
 import '/core/params/car_params.dart';
 import '/core/utils/values/strings.dart';
-
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/utils/log_utils.dart';
 import '../../../../injection_container.dart';
@@ -106,23 +104,6 @@ class CategoriesRepositryImpl extends CategoriesRepositry {
       }
     } else {
       return const Left(NetworkFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, BaseOneResponse>> getPlans() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final response = await remoteDataSource.getPlans();
-        Log.d(response.toString());
-        return Right(response);
-      } on ServerException catch (error) {
-        Log.e(
-            '[updateRegister] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
     }
   }
 

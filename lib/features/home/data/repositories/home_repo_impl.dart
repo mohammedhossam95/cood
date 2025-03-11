@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 
 import '/core/base_classes/base_list_response.dart';
-import '/core/base_classes/base_one_response.dart';
 import '/core/error/exceptions.dart';
 import '/core/error/failures.dart';
 import '/core/params/search_params.dart';
@@ -14,21 +13,6 @@ import '/injection_container.dart';
 class HomeRepoImpl implements HomeRepo {
   final HomeRemoteDataSource remote;
   HomeRepoImpl({required this.remote});
-  @override
-  Future<Either<Failure, BaseOneResponse>> getPlanStatus() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final BaseOneResponse response = await remote.getPlansStatus();
-        return Right(response);
-      } on AppException catch (error) {
-        Log.e(
-            '[getPlanStatus] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
-    }
-  }
 
   @override
   Future<Either<Failure, BaseListResponse>> getCities(

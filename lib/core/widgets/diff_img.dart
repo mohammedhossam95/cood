@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cood/core/utils/values/svg_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '/core/utils/extension.dart';
-import '../../injection_container.dart';
-import '../utils/values/svg_manager.dart';
+import '/core/utils/constants.dart';
+import '/core/utils/values/text_styles.dart';
+import '/injection_container.dart';
 
 class DiffImage extends StatelessWidget {
   final dynamic image;
@@ -20,7 +21,9 @@ class DiffImage extends StatelessWidget {
   final Function? onUserTap;
   final BorderRadius? borderRadius;
   final bool isCircle;
-  final Color? color;
+  final String? userName;
+  final Color? userNameColor;
+  final EdgeInsetsGeometry? padding;
 
   const DiffImage({
     super.key,
@@ -36,7 +39,9 @@ class DiffImage extends StatelessWidget {
     this.hasShadow = false,
     this.borderRadius,
     this.isCircle = false,
-    this.color,
+    this.userName,
+    this.userNameColor,
+    this.padding,
   });
 
   @override
@@ -44,7 +49,7 @@ class DiffImage extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      padding: hasBorder ? EdgeInsets.all(8.w) : null,
+      padding: hasBorder ? padding ?? EdgeInsets.all(8.w) : null,
       decoration: BoxDecoration(
         borderRadius: borderRadius ?? BorderRadius.circular(radius),
         border: hasBorder ? Border.all(color: colors.borderColor) : null,
@@ -63,14 +68,16 @@ class DiffImage extends StatelessWidget {
           ? ClipRRect(
               borderRadius: borderRadius ?? BorderRadius.circular(radius),
               child: CachedNetworkImage(
-                memCacheHeight: 320.cacheSize(context),
-                memCacheWidth: 250.cacheSize(context),
-                placeholder: (context, url) => const Center(
-                  child: CircularProgressIndicator(),
+                placeholder: (context, url) => Container(
+                  padding: const EdgeInsets.all(15.0),
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 ),
                 imageUrl: image,
                 fit: fitType,
-                color: color,
+                memCacheHeight: 320.cacheSize(context),
+                memCacheWidth: 250.cacheSize(context),
                 errorWidget: (context, url, error) => Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: Container(
@@ -79,12 +86,12 @@ class DiffImage extends StatelessWidget {
                       border: Border.all(color: colors.borderColor),
                     ),
                     padding: EdgeInsets.all(16.r),
-                    // child: SvgPicture.asset(
-                    //   SvgAssets.notFound,
-                    //   fit: BoxFit.scaleDown,
-                    // colorFilter: Constants.colorFilter(Colors.black),
-                    // ),
-                    child: const Icon(Icons.image_not_supported_rounded),
+                    child: SvgPicture.asset(
+                      SvgAssets.notFound,
+                      colorFilter:
+                          ColorFilter.mode(colors.textColor, BlendMode.srcIn),
+                      fit: BoxFit.scaleDown,
+                    ),
                   ),
                 ),
               ),
@@ -93,19 +100,46 @@ class DiffImage extends StatelessWidget {
               borderRadius: borderRadius ?? BorderRadius.circular(radius),
               child: Container(
                 decoration: isCircle
-                    ? const BoxDecoration(
+                    ? BoxDecoration(
                         shape: BoxShape.circle,
+                        color: userName == null
+                            ? null
+                            : userNameColor ?? colors.main,
                       )
                     : null,
                 padding: EdgeInsets.all(
                     width != double.infinity ? (width * 0.2) : 10.r),
                 width: width * 0.6,
                 height: height * 0.6,
-                child: SvgPicture.asset(
-                  SvgAssets.notFound,
-                ),
+                color: isCircle
+                    ? null
+                    : userName == null
+                        ? null
+                        : userNameColor ?? colors.main,
+                child: userName == null
+                    ? SvgPicture.asset(
+                        SvgAssets.notFound,
+                        colorFilter:
+                            ColorFilter.mode(colors.textColor, BlendMode.srcIn),
+                      )
+                    : Center(
+                        child: Text(
+                          Constants.getInitials(userName ?? ''),
+                          style: TextStyles.bold16(
+                            color: userNameColor == null
+                                ? Colors.white
+                                : colors.main,
+                          ),
+                        ),
+                      ),
               ),
             ),
     );
+  }
+}
+
+extension ImageExtension on num {
+  int cacheSize(BuildContext context) {
+    return (this * MediaQuery.of(context).devicePixelRatio).round();
   }
 }

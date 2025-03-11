@@ -168,7 +168,6 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
                           image: attribute.imagePath ?? '',
                           height: 17.h,
                           width: 17.w,
-                          color: colors.main,
                         ),
                         Gaps.hGap6,
                         Text(

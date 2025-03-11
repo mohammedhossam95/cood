@@ -7,7 +7,6 @@ import '../../../../core/utils/values/text_styles.dart';
 import '../../../../core/widgets/gaps.dart';
 import '../../../../injection_container.dart';
 import '../cubit/categories_cubit/categories_cubit.dart';
-import '../cubit/categories_cubit/categories_state.dart';
 
 List<String> planPeriod = ['1', '3', '6', '9'];
 List<String> planTitle = [
@@ -46,9 +45,9 @@ class _ReservationPlansContainerState extends State<ReservationPlansContainer> {
             separatorBuilder: (context, index) => Gaps.hGap8,
             itemBuilder: (context, index) => GestureDetector(
               onTap: () {
-                context.read<CategoriesCubit>().total = 0;
-                context.read<CategoriesCubit>().changeSelectedIndex(
-                    index, context, widget.offers.cast<int>());
+                // context.read<CategoriesCubit>().total = 0;
+                // context.read<CategoriesCubit>().changeSelectedIndex(
+                //     index, context, widget.offers.cast<int>());
               },
               child: widget.offers[index] == 0
                   ? const SizedBox()
@@ -63,22 +62,12 @@ class _ReservationPlansContainerState extends State<ReservationPlansContainer> {
                               width: 120.w,
                               padding: EdgeInsets.symmetric(vertical: 16.h),
                               decoration: BoxDecoration(
-                                  color: context
-                                              .read<CategoriesCubit>()
-                                              .selectedIndex ==
-                                          index
-                                      ? colors.main.withValues(alpha: .2)
-                                      : colors.unselected
-                                          .withValues(alpha: 0.1),
+                                  color:
+                                      colors.unselected.withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(15.r),
                                   border: Border.all(
                                     // color: colors.main,
-                                    color: context
-                                                .read<CategoriesCubit>()
-                                                .selectedIndex ==
-                                            index
-                                        ? colors.main
-                                        : colors.dividerColor,
+                                    color: colors.dividerColor,
                                     width: 2,
                                   )),
                               child: Column(

@@ -1,7 +1,6 @@
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/widgets/defult_text_field.dart';
 import 'package:cood/features/categories/domain/entity/category_entity.dart';
-import 'package:cood/features/categories/presentation/cubit/categories_cubit/categories_state.dart';
 import 'package:cood/features/categories/presentation/widgets/communication_guide_item.dart';
 import 'package:cood/features/categories/presentation/widgets/my_progress.dart';
 import 'package:cood/features/categories/presentation/widgets/no_reservations_widget.dart';
@@ -41,129 +40,13 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 //-----------------------------------this for test----
   bool isUserApproaved = true;
   final TextEditingController searchController = TextEditingController();
-  // List<ComuniGuideItemEntity> communicationList = [
-  //   ComuniGuideItemEntity(
-  //     'اجتماعي',
-  //     'assets/images/Users.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     'الطعم والشراب',
-  //     'assets/images/Food Bar.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     'الصور الفوتوغرافيه',
-  //     'assets/images/Picture.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     'الرياضه',
-  //     'assets/images/Weightlifting.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     'السفر والسياحه',
-  //     'assets/images/World Map.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     'السيارات',
-  //     'assets/images/Car.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     'الأخبار والمجلات',
-  //     'assets/images/Newspaper.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     'الالعاب',
-  //     'assets/images/PS Controller.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     'البيع والشراء',
-  //     'assets/images/Sell Stock.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     'الصحه والقلب',
-  //     'assets/images/Caduceus.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     'الترفيه',
-  //     'assets/images/Retro TV.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     'الفن والموسيقي',
-  //     'assets/images/Music.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     'الشعر والكتب',
-  //     'assets/images/Open Book.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     ' ريادة الاعمال',
-  //     'assets/images/Business.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     '  تصاميم الجرافيك',
-  //     'assets/images/Photo Editor.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     '  الاهل والطفال',
-  //     'assets/images/Full Family.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     '  التعليم',
-  //     'assets/images/Mortarboard.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     '  الحيوانات',
-  //     'assets/images/Elephant.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     '  العقارات',
-  //     'assets/images/Building.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     ' الأفلام والمسلسلات ',
-  //     'assets/images/Film Reel.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     ' التقنية',
-  //     'assets/images/Electronics.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     'المواهب',
-  //     'assets/images/Innovation.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     ' الصيانة والصناعة ',
-  //     'assets/images/Services.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     ' القصص ',
-  //     'assets/images/Unicorn.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     ' الهدايا والأزهار',
-  //     'assets/images/Gift.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     ' اللغات ',
-  //     'assets/images/Language.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     ' الموضه والجمال ',
-  //     'assets/images/Arab.png',
-  //   ),
-  //   ComuniGuideItemEntity(
-  //     'كوميدي  ',
-  //     'assets/images/Comedy.png',
-  //   ),
-  // ];
-//------------------------------
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.only(top: 10.h),
-        //----------------- this condition should be (userType == UserType.approved)
-        child: (userType == UserType.user)
+        child: (userType == UserType.approved)
             ? BlocBuilder<CategoriesCubit, CategoriesState>(
                 builder: (context, state) {
                   if (state is CategoriesLoading) {
@@ -237,7 +120,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'confirem_login'.tr,
+                              'back_to_login'.tr,
                               style: TextStyles.bold20(),
                             ),
                             Gaps.vGap15,
@@ -257,7 +140,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     } else {
                       return ErrorText(
                         text: state.errorMessage,
-                        width: ScreenUtil().screenWidth * 0.3,
+                        width: ScreenUtil().screenWidth,
                       );
                     }
                   } else {

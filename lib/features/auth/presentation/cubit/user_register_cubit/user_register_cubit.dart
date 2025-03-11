@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:cood/core/params/auth_params.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
@@ -13,12 +14,13 @@ class UserRegisterCubit extends Cubit<UserRegisterState> {
   bool isLoading = false;
 
   UserRegisterCubit(this.userRegisterUseCase) : super(UserRegisterInitial());
-  Future<void> postUserData({required UserRegisterParams params}) async {
+  Future<void> fRegister({required AuthParams params}) async {
     changeLoadingView();
     try {
-      changeLoadingView();
       Either<Failure, UserRegisterRespModel> result =
           await userRegisterUseCase.call(params);
+      changeLoadingView();
+
       result.fold(
         (failure) =>
             emit(UserRegisterFailure(errorMessage: failure.message.toString())),

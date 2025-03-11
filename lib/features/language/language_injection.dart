@@ -1,3 +1,4 @@
+import 'package:cood/features/auth/presentation/cubit/auto_login/auto_login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,9 +29,8 @@ Future<void> initLanguageFeatureInjection() async {
       () => ChangeLangUseCase(repository: ServiceLocator.instance()));
 
   /// Repository
-  ServiceLocator.instance.registerLazySingleton<LangRepository>(() =>
-      LangRepositoryImpl(
-          langLocalDataSource: ServiceLocator.instance()));
+  ServiceLocator.instance.registerLazySingleton<LangRepository>(
+      () => LangRepositoryImpl(langLocalDataSource: ServiceLocator.instance()));
 
   /// DataSource
   ServiceLocator.instance.registerLazySingleton<LangLocalDataSource>(
@@ -47,5 +47,9 @@ List<BlocProvider<StateStreamableSource<Object?>>> get languageBlocs =>
       BlocProvider<GetLanguagesCubit>(
         create: (BuildContext context) =>
             ServiceLocator.instance<GetLanguagesCubit>(),
+      ),
+      BlocProvider<AutoLoginCubit>(
+        create: (BuildContext context) =>
+            ServiceLocator.instance<AutoLoginCubit>(),
       ),
     ];

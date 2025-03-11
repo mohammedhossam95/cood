@@ -24,7 +24,7 @@ class GuestWidget extends StatelessWidget {
             CircleAvatar(
               radius: 100.r,
               backgroundColor: colors.main,
-              child: Image.asset(ImgAssets.jzlLogo),
+              child: Image.asset(ImgAssets.logo),
             ),
             Gaps.vGap25,
             Text(

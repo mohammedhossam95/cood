@@ -1,17 +1,11 @@
+import 'package:cood/core/base_classes/base_one_response.dart';
+import 'package:cood/core/params/auth_params.dart';
+import 'package:cood/features/auth/data/models/new_models/register_model.dart';
+import 'package:cood/features/auth/domain/entities/login_response.dart';
+import 'package:cood/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:dartz/dartz.dart';
 
-import '/core/base_classes/base_one_response.dart';
-import '/features/auth/data/models/delivery_register_model.dart';
-import '/features/auth/data/models/new_models/login_model.dart';
-import '/features/auth/data/models/new_models/pre_register_model.dart';
-import '/features/auth/data/models/new_models/register_model.dart';
 import '/features/auth/data/models/new_models/verify_code_model.dart';
-import '/features/auth/domain/entities/new_entities/login_response.dart';
-import '/features/auth/domain/usecases/delivery_register_use_case.dart';
-import '/features/auth/domain/usecases/landery_register_use_case.dart';
-import '/features/auth/domain/usecases/new_usecases/new_login_usecase.dart';
-import '/features/auth/domain/usecases/new_usecases/pre_register_usecase.dart';
-import '/features/auth/domain/usecases/new_usecases/register_usecase.dart';
 import '/features/auth/domain/usecases/new_usecases/verify_code_usecase.dart';
 import '../../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
@@ -20,20 +14,16 @@ import '../../../../core/utils/enums.dart';
 import '../../../../core/utils/log_utils.dart' as log;
 import '../../../../core/utils/values/strings.dart';
 import '../../../../injection_container.dart';
-import '../datasources/auth_remote_datasource.dart';
 import '../../domain/entities/confirm_reset_password_response.dart';
 import '../../domain/entities/reset_password_response.dart';
 import '../../domain/entities/verify_reset_password_response.dart';
 import '../../domain/repositories/auth_repo.dart';
-import '../../domain/usecases/confirm_reset_password_usecase.dart';
-import '../../domain/usecases/login_usecase.dart';
-import '../../domain/usecases/logout_usecase.dart';
 import '../../domain/usecases/reset_password_usecase.dart';
 import '../../domain/usecases/save_user_role.dart';
 import '../../domain/usecases/save_user_type_usecase.dart';
-import '../../domain/usecases/user_register_usecase.dart';
 import '../../domain/usecases/verify_otp_usecase.dart';
 import '../../domain/usecases/verify_reset_password_usecase.dart';
+import '../datasources/auth_remote_datasource.dart';
 import '../models/login_model.dart';
 import '../models/user_register_model.dart';
 import '../models/verify_otp_model.dart';
@@ -41,18 +31,16 @@ import '../models/verify_otp_model.dart';
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remote;
 
-  AuthRepositoryImpl({
-    required this.remote,
-  });
+  AuthRepositoryImpl({required this.remote});
 
   /// Impl
   @override
   Future<Either<Failure, UserRegisterRespModel>> userRegisterRepo(
-      {required UserRegisterParams params}) async {
+      {required AuthParams params}) async {
     if (await networkInfo.isConnected) {
       try {
         final UserRegisterRespModel response =
-            await remote.userRegister(params: params);
+            await remote.doRemoteRegister(params: params);
 
         return Right<Failure, UserRegisterRespModel>(response);
       } on AppException catch (error) {
@@ -66,110 +54,20 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, DeliveryRegisterRespModel>> deliveryRegisterRepo(
-      {required DeliveryRegisterParams params}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final DeliveryRegisterRespModel responseResp =
-            await remote.deliveryRegister(params: params);
-
-        return Right<Failure, DeliveryRegisterRespModel>(responseResp);
-      } on AppException catch (error) {
-        log.Log.e(
-            '[register] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left<Failure, DeliveryRegisterRespModel>(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
-    }
-  }
-
-  @override
-  Future<Either<Failure, BaseOneResponse>> landeryRegisterRepo(
-      {required LanderyRegisterParams params}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final BaseOneResponse responseResp =
-            await remote.landeryRegister(params: params);
-
-        return Right<Failure, BaseOneResponse>(responseResp);
-      } on AppException catch (error) {
-        log.Log.e(
-            '[register] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left<Failure, BaseOneResponse>(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
-    }
-  }
-
-  @override
-  Future<Either<Failure, LoginRespModel>> loginRepo(
-      {required LoginParams params}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final LoginRespModel response = await remote.login(params: params);
-        sharedPreferences.saveUserId(response.data!.id ?? 0);
-        // sharedPreferences.saveUser(response.data ?? const User());
-        return Right<Failure, LoginRespModel>(response);
-      } on AppException catch (error) {
-        log.Log.e(
-            '[loginEmail] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left<Failure, LoginRespModel>(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
-    }
-  }
-
-  @override
   Future<Either<Failure, ConfirmCodeAuthRespModel>> verifyOtpRpo(
       {required VerifyOtpParams params}) async {
     if (await networkInfo.isConnected) {
       try {
-        final ConfirmCodeAuthRespModel response =
-            await remote.verifyOtp(params: params);
-        secureStorage.saveAccessToken(response.data!.token);
-        return Right<Failure, ConfirmCodeAuthRespModel>(response);
+        final response =
+            await remote.verifyRemoteCode(params: VerifyCodeParams());
+        secureStorage.saveAccessToken("");
+        log.Log.e(response.toString());
+        return Right<Failure, ConfirmCodeAuthRespModel>(
+            ConfirmCodeAuthRespModel());
       } on AppException catch (error) {
         log.Log.e(
             '[verifyOtp] [${error.runtimeType.toString()}] ---- ${error.message}');
         return Left<Failure, ConfirmCodeAuthRespModel>(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
-    }
-  }
-
-  @override
-  Future<Either<Failure, BaseOneResponse>> logout(
-      {required LogOutParams params}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final BaseOneResponse response = await remote.logout(params: params);
-        await secureStorage.removeDeviceToken();
-        return Right<Failure, BaseOneResponse>(response);
-      } on AppException catch (error) {
-        log.Log.e(
-            '[logout] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left<Failure, BaseOneResponse>(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
-    }
-  }
-
-  @override
-  Future<Either<Failure, BaseOneResponse>> deleteAccount() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final BaseOneResponse response = await remote.deleteAccount();
-        await secureStorage.removeDeviceToken();
-        return Right<Failure, BaseOneResponse>(response);
-      } on AppException catch (error) {
-        log.Log.e(
-            '[deleteAccount] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left<Failure, BaseOneResponse>(error.toFailure());
       }
     } else {
       return Left(NetworkFailure(message: Strings.noInternetConnection));
@@ -229,67 +127,13 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  // @override
-  // Future<Either<Failure, UpdateRegisterResponse>> updateRegister(
-  //     {required UpdateRegisterParams params}) async {
-  //   if (await networkInfo.isConnected) {
-  //     try {
-  //       final UpdateRegisterResponse response =
-  //           await remote.updateRegister(params: params);
-  //       return Right<Failure, UpdateRegisterResponse>(response);
-  //     } on AppException catch (error) {
-  //       log.Log.e(
-  //           '[updateRegister] [${error.runtimeType.toString()}] ---- ${error.message}');
-  //       return Left<Failure, UpdateRegisterResponse>(error.toFailure());
-  //     }
-  //   } else {
-  //     return Left(NetworkFailure(message: Strings.noInternetConnection));
-  //   }
-  // }
-
-  // @override
-  // Future<Either<Failure, VerifyEmailResponse>> verifyEmail(
-  //     {required VerifyEmailParams params}) async {
-  //   if (await networkInfo.isConnected) {
-  //     try {
-  //       final VerifyEmailResponse response =
-  //           await remote.verifyEmail(params: params);
-  //       return Right<Failure, VerifyEmailResponse>(response);
-  //     } on AppException catch (error) {
-  //       log.Log.e(
-  //           '[verifyEmail] [${error.runtimeType.toString()}] ---- ${error.message}');
-  //       return Left<Failure, VerifyEmailResponse>(error.toFailure());
-  //     }
-  //   } else {
-  //     return Left(NetworkFailure(message: Strings.noInternetConnection));
-  //   }
-  // }
-
-  // @override
-  // Future<Either<Failure, CheckMobileResponse>> checkMobile(
-  //     {required CheckMobileParams params}) async {
-  //   if (await networkInfo.isConnected) {
-  //     try {
-  //       final CheckMobileResponse response =
-  //           await remote.checkMobile(params: params);
-  //       return Right<Failure, CheckMobileResponse>(response);
-  //     } on AppException catch (error) {
-  //       log.Log.e(
-  //           '[checkMobile] [${error.runtimeType.toString()}] ---- ${error.message}');
-  //       return Left<Failure, CheckMobileResponse>(error.toFailure());
-  //     }
-  //   } else {
-  //     return Left(NetworkFailure(message: Strings.noInternetConnection));
-  //   }
-  // }
-
   @override
   Future<Either<Failure, VerifyResetPasswordResponse>> verifyResetPassword(
       {required VerifyResetPasswordParams params}) async {
     if (await networkInfo.isConnected) {
       try {
         final VerifyResetPasswordResponse response =
-            await remote.verifyResetPassword(params: params);
+            VerifyResetPasswordResponse(success: true, message: "");
         return Right<Failure, VerifyResetPasswordResponse>(response);
       } on AppException catch (error) {
         log.Log.e(
@@ -321,7 +165,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, ConfirmResetPasswordResponse>> confirmResetPassword(
-      {required ConfirmResetPasswordParams params}) async {
+      {required AuthParams params}) async {
     if (await networkInfo.isConnected) {
       try {
         final ConfirmResetPasswordResponse response =
@@ -338,59 +182,20 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, LoginResponseModel>> newLoginRepo(
-      {required NewLoginParams params}) async {
+  Future<Either<Failure, LoginRespModel>> loginRepo(
+      {required AuthParams params}) async {
     if (await networkInfo.isConnected) {
       try {
-        final LoginResponseModel response =
-            await remote.newLogin(params: params);
-        // sharedPreferences.saveUserId(response.data!.id ?? 0);
-        secureStorage.saveAccessToken(response.details!.token);
-        sharedPreferences.saveUser(response.details ?? const LoginDetails());
+        final LoginRespModel response = await remote.login(params: params);
+        sharedPreferences.saveUserId(response.result?.user?.id ?? 0);
+        sharedPreferences.saveUser(response.result?.user ?? const User());
+        secureStorage.saveAccessToken(response.result?.token);
 
-        return Right<Failure, LoginResponseModel>(response);
+        return Right<Failure, LoginRespModel>(response);
       } on AppException catch (error) {
         log.Log.e(
             '[loginEmail] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left<Failure, LoginResponseModel>(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
-    }
-  }
-
-  @override
-  Future<Either<Failure, PreRegisterResponseModel>> preRegisterRepo(
-      {required PreRegisterParams params}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final PreRegisterResponseModel response =
-            await remote.preRegister(params: params);
-
-        return Right<Failure, PreRegisterResponseModel>(response);
-      } on AppException catch (error) {
-        log.Log.e(
-            '[loginEmail] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left<Failure, PreRegisterResponseModel>(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
-    }
-  }
-
-  @override
-  Future<Either<Failure, RegisterResponseModel>> registerRepo(
-      {required RegisterParams params}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final RegisterResponseModel response =
-            await remote.register(params: params);
-
-        return Right<Failure, RegisterResponseModel>(response);
-      } on AppException catch (error) {
-        log.Log.e(
-            '[register] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left<Failure, RegisterResponseModel>(error.toFailure());
+        return Left<Failure, LoginRespModel>(error.toFailure());
       }
     } else {
       return Left(NetworkFailure(message: Strings.noInternetConnection));
@@ -403,7 +208,7 @@ class AuthRepositoryImpl implements AuthRepository {
     if (await networkInfo.isConnected) {
       try {
         final VerifyCodeResponseModel response =
-            await remote.verifyCode(params: params);
+            await remote.verifyRemoteCode(params: params);
 
         return Right<Failure, VerifyCodeResponseModel>(response);
       } on AppException catch (error) {
@@ -414,5 +219,23 @@ class AuthRepositoryImpl implements AuthRepository {
     } else {
       return Left(NetworkFailure(message: Strings.noInternetConnection));
     }
+  }
+
+  @override
+  Future<Either<Failure, BaseOneResponse>> deleteAccount() {
+    // TODO: implement deleteAccount
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, BaseOneResponse>> logout(
+      {required LogOutParams params}) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, RegisterResponseModel>> registerRepo(
+      {required AuthParams params}) {
+    throw UnimplementedError();
   }
 }
