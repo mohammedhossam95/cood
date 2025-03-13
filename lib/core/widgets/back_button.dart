@@ -19,8 +19,8 @@ class CustomBackButton extends StatelessWidget {
         ),
         child: Icon(
           AppLocalizations.of(context)!.isArLocale
-              ? Icons.arrow_forward_ios_outlined
-              : Icons.arrow_back_ios_new_rounded,
+              ? Icons.arrow_back_ios_new_rounded
+              : Icons.arrow_forward_ios_outlined,
           size: 24.w,
           color: MyColors.black,
         ),

@@ -817,7 +817,7 @@
   "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
   "---------- notification screen ---------------": "",
   "readableNotification": "مقروء",
-  "illegibleNotification": "غير مقروء",
+  "unReadableNotification": "غير مقروء",
   "noResult": "لا توجد نتائج",
   "searchByCodeNumber": " ابحث باستخدام رقم الكود"
 }

@@ -814,7 +814,7 @@
   "confirmNewPassword": "Confirm New Password",
   "--------- notification screen --------------": "",
   "readableNotification": "Readable",
-  "illegibleNotification": "Unreadable",
+  "unReadableNotification": "Unreadable",
   "noResult": "No Result Found",
   "searchByCodeNumber": "search by code number "
 }
