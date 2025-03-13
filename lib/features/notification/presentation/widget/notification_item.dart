@@ -11,7 +11,7 @@ class NotificationItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 30.h),
+      margin: EdgeInsets.only(top: 30.h),
       decoration: BoxDecoration(
         color: colors.baseColor,
         borderRadius: BorderRadius.circular(20.r),
@@ -28,8 +28,8 @@ class NotificationItemWidget extends StatelessWidget {
               ),
               child: Image.asset(
                 ImgAssets.imagesEmail,
-                width: 40.w,
-                height: 40.h,
+                width: 40.0.w,
+                height: 40.0.h,
                 color: colors.baseColor,
               ),
             ),

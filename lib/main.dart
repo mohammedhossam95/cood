@@ -10,7 +10,7 @@ import 'core/services/bloc_observer/bloc_observer.dart';
 import 'injection_container.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();  
   await ServiceLocator.init();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(

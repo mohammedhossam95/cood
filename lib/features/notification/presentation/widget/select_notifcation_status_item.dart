@@ -19,7 +19,8 @@ class SelectedNotificationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 35.w),
+      width: 100.0.w,
+      height: 45.0.h,
       decoration: BoxDecoration(
           color: itemBackground,
           borderRadius: BorderRadius.circular(8.r),
