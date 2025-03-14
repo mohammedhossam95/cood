@@ -5,9 +5,14 @@ import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
 import 'package:cood/core/widgets/show_dialog.dart';
 import 'package:cood/features/categories/domain/entity/contacts_entity.dart';
-import 'package:cood/features/categories/presentation/widgets/social_contact_card.dart';
+import 'package:cood/features/categories/presentation/widgets/my_progress.dart';
+import 'package:cood/features/home/domain/entities/friend_entity_.dart';
+import 'package:cood/features/home/presentation/cubit/get_friends_list/friends_list_cubit.dart';
+import 'package:cood/features/home/presentation/cubit/get_friends_list/friends_list_state.dart';
 import 'package:cood/features/home/presentation/widgets/my_friends/add_friend_dialog.dart';
+import 'package:cood/features/home/presentation/widgets/my_friends/freinds_contact_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MySocialFriends extends StatefulWidget {
@@ -73,12 +78,29 @@ class _MySocialFriendsState extends State<MySocialFriends> {
                   ),
                 ],
               ),
-              child: ListView.builder(
-                itemBuilder: (context, index) => ContactCard(
-                  contacts: contacts[index],
-                  isPhoneAppear: true,
-                ),
-                itemCount: contacts.length,
+              child: BlocBuilder<FriendsListCubit, GetFriendsListState>(
+                builder: (context, state) {
+                    if (state is GetFriendsListLoading) {
+                    return const Center(
+                      child: MyProgrees(),
+                    );
+                  }
+                  //----------------- this condition should be (state is CategoriesSuccerss)
+                  if (state is GetFriendsListSuccerss) {
+                    List<FriendEntity> friendsList =
+                        state.response.data as List<FriendEntity>;
+                    return (friendsList.isNotEmpty)?ListView.builder(
+                      itemBuilder: (context, index) => FriendsContactCard(
+                        contacts: friendsList[index],
+                        isPhoneAppear: true,
+                      ),
+                      itemCount: friendsList.length,
+                    ):const  Center(child: Text('List has no Images !'),);
+                  }
+                  return const Center(
+                    child: Text(' please try again !'),
+                  );
+                },
               ),
             ),
           ),
@@ -93,8 +115,8 @@ class _MySocialFriendsState extends State<MySocialFriends> {
                 child: MyDefaultButton(
                   onPressed: () {
                     showAppDialog(
-                      context:context,
-                      child:AddFriendDialog(),
+                      context: context,
+                      child: AddFriendDialog(),
                     );
                   },
                   height: 50.h,

@@ -1,6 +1,7 @@
 import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/features/auth/domain/entities/login_response.dart';
 import 'package:cood/features/home/presentation/cubit/get_all_user_gallary/get_user_gallary_cubit.dart';
+import 'package:cood/features/home/presentation/cubit/get_friends_list/friends_list_cubit.dart';
 import 'package:cood/features/home/presentation/widgets/myAccounts/my_accounts.dart';
 import 'package:cood/features/home/presentation/widgets/myPhotos/my_photos.dart';
 import 'package:cood/features/home/presentation/widgets/my_friends/my_friends.dart';
@@ -148,6 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
         context.read<GetUserGallaryCubit>().getAllUserGallary();  
         return MySocialPhotos();
       case 2:
+        context.read<FriendsListCubit>().getFriendsList(); 
         return MySocialFriends();
       default:
         // Handle unexpected indices with a default widget.
