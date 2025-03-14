@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,10 +27,35 @@ Future<void> main() async {
   //   DeviceOrientation.portraitUp,
   //   DeviceOrientation.portraitDown,
   // ]);
-
+ //getData();
   Bloc.observer = AppBlocObserver();
   dioConsumer.updateDeviceTypeHeader();
   await DBHelper.initDB();
   runApp(const App());
 }
   
+
+
+// Future<void> getData() async {
+//   final headers = {
+//     'Authorization': 'Bearer 3|tiLlHT6fseS3KLa5yiDLur94T6HCibEw2opQ4NYS27f0ce1d',
+//     'Content-Type': 'application/json',
+//   };
+
+//   try {
+//     final response = await http.get(
+//       Uri.parse('https://cood.testworks.top/api/v1/gallery'),
+//       headers: headers,
+//     );
+
+//     if (response.statusCode == 200) {
+//       final data = jsonDecode(response.body);
+//       print('ali---------gallery---$data');
+//     } else {
+//       print('Error: ${response.statusCode}');
+//       print('Response body: ${response.body}');
+//     }
+//   } catch (e) {
+//     print('Exception occurred: $e');
+//   }
+// }

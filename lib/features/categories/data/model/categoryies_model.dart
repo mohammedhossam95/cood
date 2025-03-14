@@ -34,7 +34,6 @@ class CategoriesRespModel extends BaseListResponse {
   Map<String, dynamic> toJson() => {
         "message": message,
         "status": status,
-
         "result": data == null
             ? []
             : List<dynamic>.from(data!.map((x) => x.toJson())),

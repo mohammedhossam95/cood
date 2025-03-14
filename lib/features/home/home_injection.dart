@@ -1,3 +1,5 @@
+import 'package:cood/features/home/domain/usecases/get_all_user_gallary_use_case.dart';
+import 'package:cood/features/home/presentation/cubit/get_all_user_gallary/get_user_gallary_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,7 +16,15 @@ final _sl = ServiceLocator.instance;
 Future<void> initHomeFeatureInjection() async {
   ///-> Cubits
   // Blocs
-
+  //-----------------------this is new-------------------
+  _sl.registerFactory<GetUserGallaryCubit>(
+      () => GetUserGallaryCubit( _sl()));
+  _sl.registerFactory<GetAllUserGallaryUseCase>(
+      () => GetAllUserGallaryUseCase(repository: _sl())); 
+  _sl.registerFactory<HomeRepo>(() => HomeRepoImpl(remote: _sl()));
+  _sl.registerLazySingleton<HomeRemoteDataSource>(
+      () => HomeRemoteDataSourceImpl());       
+//-----------------------------------------------
   _sl.registerFactory<GetCitiesCubit>(
       () => GetCitiesCubit(getCitiesUsecase: _sl()));
   _sl.registerFactory<CitiesBloc>(() => CitiesBloc(getCitiesUseCase: _sl()));
@@ -34,6 +44,11 @@ Future<void> initHomeFeatureInjection() async {
 
 ///-> BlocProvider
 List<BlocProvider> get homeBlocs => <BlocProvider>[
+     //----------------new----------
+     BlocProvider<GetUserGallaryCubit>(
+        create: (BuildContext context) => _sl<GetUserGallaryCubit>(),
+      ),
+     //----------------------------
       BlocProvider<GetCitiesCubit>(
         create: (BuildContext context) => _sl<GetCitiesCubit>(),
       ),

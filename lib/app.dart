@@ -25,7 +25,6 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         ...languageBlocs,
-
         ...bottomNavBlocs,
         ...carsBlocs,
         ...homeBlocs,

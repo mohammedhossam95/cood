@@ -30,4 +30,21 @@ class HomeRepoImpl implements HomeRepo {
       return Left(NetworkFailure(message: Strings.noInternetConnection));
     }
   }
+  
+  @override
+  Future<Either<Failure, BaseListResponse>> getAllUserGallary() async{
+    if (await networkInfo.isConnected) {
+      try {
+        final  response = await remote.getAllUserGalleryRemoteData();
+        
+        return Right(response);
+      } on AppException catch (error) {
+        Log.e(
+            '[getAllUserGallary] [${error.runtimeType.toString()}] ---- ${error.message}');
+        return Left(error.toFailure());
+      }
+    } else {
+      return Left(NetworkFailure(message: Strings.noInternetConnection));
+    }
+  }
 }
