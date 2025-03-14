@@ -47,4 +47,21 @@ class HomeRepoImpl implements HomeRepo {
       return Left(NetworkFailure(message: Strings.noInternetConnection));
     }
   }
+  
+  @override
+  Future<Either<Failure, BaseListResponse>> getFriendsList() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final  response = await remote.getFriendsList();
+        
+        return Right(response);
+      } on AppException catch (error) {
+        Log.e(
+            '[getFrindsList] [${error.runtimeType.toString()}] ---- ${error.message}');
+        return Left(error.toFailure());
+      }
+    } else {
+      return Left(NetworkFailure(message: Strings.noInternetConnection));
+    }
+  }
 }

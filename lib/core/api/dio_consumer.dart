@@ -85,8 +85,7 @@ class DioConsumerImpl implements DioConsumer {
   }
 
   Future<void> _handleAccessTokenHeader() async {//ToDo update access token
-    // final String? accessToken = await secureStorage.getAccessToken();
-    final String? accessToken = '3|tiLlHT6fseS3KLa5yiDLur94T6HCibEw2opQ4NYS27f0ce1d';
+    final String? accessToken = await secureStorage.getAccessToken();
     if (accessToken != null && accessToken.isNotEmpty) {
       client.options.headers[HttpHeaders.authorizationHeader] =
           'Bearer $accessToken';

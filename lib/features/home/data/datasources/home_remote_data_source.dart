@@ -1,3 +1,4 @@
+import 'package:cood/features/home/data/models/friend_lIst_model.dart';
 import 'package:cood/features/home/data/models/user_gallary_model.dart';
 import '/core/error/exceptions.dart';
 import '/core/params/search_params.dart';
@@ -7,11 +8,27 @@ import '/injection_container.dart';
 abstract class HomeRemoteDataSource {
   //--------------new
   Future<UserGalleryRespModel> getAllUserGalleryRemoteData();
+  Future<FriendListRespModel> getFriendsList();
   //-------------------------
   Future<CityRespModel> getCities(SearchParams params);
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
+  @override
+  Future<FriendListRespModel> getFriendsList() async{
+      String galleryUrl = 'https://cood.testworks.top/api/v1/friends'; 
+  try {
+    final response = await dioConsumer.get(galleryUrl);
+    if (response['status'] == 'success' && response['result'] != null) {
+      return FriendListRespModel.fromJson(response);
+    }
+    throw ServerException(message: response['message'].toString());
+  } on ServerException {
+    rethrow;
+  } catch (error) {
+    rethrow;
+  }
+  }
   @override
   Future<UserGalleryRespModel> getAllUserGalleryRemoteData() async {
   String galleryUrl = 'https://cood.testworks.top/api/v1/gallery'; // Replace with the actual endpoint
@@ -20,13 +37,14 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     if (response['status'] == 'success' && response['result'] != null) {
       return UserGalleryRespModel.fromJson(response);
     }
-    throw ServerException(message: response['message'] ?? 'An error occurred.');
+    throw ServerException(message: response['message'].toString());
   } on ServerException {
     rethrow;
   } catch (error) {
     rethrow;
   }
 }
+
 
   @override
   Future<CityRespModel> getCities(SearchParams params) async {
@@ -45,4 +63,6 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       rethrow;
     }
   }
+  
+
 }
