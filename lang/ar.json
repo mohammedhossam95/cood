@@ -819,5 +819,8 @@
   "readableNotification": "مقروء",
   "unReadableNotification": "غير مقروء",
   "noResult": "لا توجد نتائج",
-  "searchByCodeNumber": " ابحث باستخدام رقم الكود"
+  "searchByCodeNumber": " ابحث باستخدام رقم الكود",
+  "clickToViewProfile":"اضغط لعرض الملف الشخصي",
+  "":""
+
 }

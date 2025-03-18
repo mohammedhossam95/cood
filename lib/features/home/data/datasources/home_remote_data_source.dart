@@ -1,4 +1,5 @@
 import 'package:cood/features/home/data/models/friend_lIst_model.dart';
+import 'package:cood/features/home/data/models/get_user_social_media_model.dart';
 import 'package:cood/features/home/data/models/user_gallary_model.dart';
 import '/core/error/exceptions.dart';
 import '/core/params/search_params.dart';
@@ -9,6 +10,8 @@ abstract class HomeRemoteDataSource {
   //--------------new
   Future<UserGalleryRespModel> getAllUserGalleryRemoteData();
   Future<FriendListRespModel> getFriendsList();
+  Future<SocialMediaRespModel> getUserSocialMedia();
+  Future<SocialMediaRespModel> getAllSocialMedia();
   //-------------------------
   Future<CityRespModel> getCities(SearchParams params);
 }
@@ -16,9 +19,9 @@ abstract class HomeRemoteDataSource {
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<FriendListRespModel> getFriendsList() async{
-      String galleryUrl = 'https://cood.testworks.top/api/v1/friends'; 
+      String branchUrl = 'https://cood.testworks.top/api/v1/friends'; 
   try {
-    final response = await dioConsumer.get(galleryUrl);
+    final response = await dioConsumer.get(branchUrl);
     if (response['status'] == 'success' && response['result'] != null) {
       return FriendListRespModel.fromJson(response);
     }
@@ -44,7 +47,36 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     rethrow;
   }
 }
-
+  @override
+  Future<SocialMediaRespModel> getUserSocialMedia() async{
+    String branchUrl = 'https://cood.testworks.top/api/v1/user/social-media'; 
+  try {
+    final response = await dioConsumer.get(branchUrl);
+    if (response['status'] == 'success' && response['result'] != null) {
+      return SocialMediaRespModel.fromJson(response);
+    }
+    throw ServerException(message: response['message'].toString());
+  } on ServerException {
+    rethrow;
+  } catch (error) {
+    rethrow;
+  }
+  }
+   @override
+  Future<SocialMediaRespModel> getAllSocialMedia() async{
+    String branchUrl = 'https://cood.testworks.top/api/v1/social-media'; 
+  try {
+    final response = await dioConsumer.get(branchUrl);
+    if (response['status'] == 'success' && response['result'] != null) {
+      return SocialMediaRespModel.fromJson(response);
+    }
+    throw ServerException(message: response['message'].toString());
+  } on ServerException {
+    rethrow;
+  } catch (error) {
+    rethrow;
+  }
+  }
 
   @override
   Future<CityRespModel> getCities(SearchParams params) async {
@@ -63,6 +95,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       rethrow;
     }
   }
+  
+
   
 
 }

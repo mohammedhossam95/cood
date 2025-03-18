@@ -1,7 +1,9 @@
 import 'package:cood/features/home/domain/usecases/get_all_user_gallary_use_case.dart';
 import 'package:cood/features/home/domain/usecases/get_friends_list_use_case.dart';
+import 'package:cood/features/home/domain/usecases/get_user_social_media_use_case.dart';
 import 'package:cood/features/home/presentation/cubit/get_all_user_gallary/get_user_gallary_cubit.dart';
 import 'package:cood/features/home/presentation/cubit/get_friends_list/friends_list_cubit.dart';
+import 'package:cood/features/home/presentation/cubit/get_user_social_media/get_user_social_media_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,6 +36,14 @@ Future<void> initHomeFeatureInjection() async {
   _sl.registerFactory<HomeRepo>(() => HomeRepoImpl(remote: _sl()));
   _sl.registerLazySingleton<HomeRemoteDataSource>(
       () => HomeRemoteDataSourceImpl());       
+//-----------------------this is new user social media-------------------
+  _sl.registerFactory<GetUserSocialMediaCubit>(
+      () => GetUserSocialMediaCubit( _sl()));
+  _sl.registerFactory<GetUserSocialMediaUseCase>(
+      () => GetUserSocialMediaUseCase( _sl())); 
+  _sl.registerFactory<HomeRepo>(() => HomeRepoImpl(remote: _sl()));
+  _sl.registerLazySingleton<HomeRemoteDataSource>(
+      () => HomeRemoteDataSourceImpl());       
 //-----------------------------------------------
   _sl.registerFactory<GetCitiesCubit>(
       () => GetCitiesCubit(getCitiesUsecase: _sl()));
@@ -55,6 +65,9 @@ Future<void> initHomeFeatureInjection() async {
 ///-> BlocProvider
 List<BlocProvider> get homeBlocs => <BlocProvider>[
      //----------------new----------
+     BlocProvider<GetUserSocialMediaCubit>(
+        create: (BuildContext context) => _sl<GetUserSocialMediaCubit>(),
+      ),
      BlocProvider<GetUserGallaryCubit>(
         create: (BuildContext context) => _sl<GetUserGallaryCubit>(),
       ),

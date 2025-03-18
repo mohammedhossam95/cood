@@ -8,6 +8,8 @@ abstract class HomeRepo {
   //-----------------new-----------------
   Future<Either<Failure, BaseListResponse>> getAllUserGallary();
   Future<Either<Failure, BaseListResponse>> getFriendsList();
+  Future<Either<Failure, BaseListResponse>> getUserSocialMedia();
+  Future<Either<Failure, BaseListResponse>> getAllSocialMedia();
   //----------------------------
   Future<Either<Failure, BaseListResponse>> getCities(SearchParams params);
 }

@@ -816,5 +816,7 @@
   "readableNotification": "Readable",
   "unReadableNotification": "Unreadable",
   "noResult": "No Result Found",
-  "searchByCodeNumber": "search by code number "
+  "searchByCodeNumber": "search by code number ",
+  "clickToViewProfile":"Click to view profile",
+  "":""
 }

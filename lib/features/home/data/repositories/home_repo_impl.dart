@@ -64,4 +64,36 @@ class HomeRepoImpl implements HomeRepo {
       return Left(NetworkFailure(message: Strings.noInternetConnection));
     }
   }
+  
+  @override
+  Future<Either<Failure, BaseListResponse>> getUserSocialMedia() async{
+    if (await networkInfo.isConnected) {
+      try {
+        final  response = await remote.getUserSocialMedia();
+        return Right(response);
+      } on AppException catch (error) {
+        Log.e(
+            '[getUsersocialMedia] [${error.runtimeType.toString()}] ---- ${error.message}');
+        return Left(error.toFailure());
+      }
+    } else {
+      return Left(NetworkFailure(message: Strings.noInternetConnection));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, BaseListResponse>> getAllSocialMedia() async{
+      if (await networkInfo.isConnected) {
+      try {
+        final  response = await remote.getAllSocialMedia();
+        return Right(response);
+      } on AppException catch (error) {
+        Log.e(
+            '[getAllSocialMedia] [${error.runtimeType.toString()}] ---- ${error.message}');
+        return Left(error.toFailure());
+      }
+    } else {
+      return Left(NetworkFailure(message: Strings.noInternetConnection));
+    }
+  }
 }
