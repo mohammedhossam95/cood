@@ -31,7 +31,6 @@ class GetUserGallaryCubit extends Cubit<GetUserGallaryState> {
         ),
       );
     } catch (e) {
-      print('allllllllllll${e.toString()}');
       emit(GetUserGallaryFailure(errorMessage: e.toString()));
     }
   }

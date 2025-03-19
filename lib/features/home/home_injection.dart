@@ -1,6 +1,8 @@
+import 'package:cood/features/home/domain/usecases/get_all_social_media_use_case.dart';
 import 'package:cood/features/home/domain/usecases/get_all_user_gallary_use_case.dart';
 import 'package:cood/features/home/domain/usecases/get_friends_list_use_case.dart';
 import 'package:cood/features/home/domain/usecases/get_user_social_media_use_case.dart';
+import 'package:cood/features/home/presentation/cubit/get_all_social_media/get_all_social_media_cubit.dart';
 import 'package:cood/features/home/presentation/cubit/get_all_user_gallary/get_user_gallary_cubit.dart';
 import 'package:cood/features/home/presentation/cubit/get_friends_list/friends_list_cubit.dart';
 import 'package:cood/features/home/presentation/cubit/get_user_social_media/get_user_social_media_cubit.dart';
@@ -44,6 +46,14 @@ Future<void> initHomeFeatureInjection() async {
   _sl.registerFactory<HomeRepo>(() => HomeRepoImpl(remote: _sl()));
   _sl.registerLazySingleton<HomeRemoteDataSource>(
       () => HomeRemoteDataSourceImpl());       
+//-----------------------this is new user social media-------------------
+  _sl.registerFactory<GetAllSocialMediaCubit>(
+      () => GetAllSocialMediaCubit( _sl()));
+  _sl.registerFactory<GetAllSocialMediaUseCase>(
+      () => GetAllSocialMediaUseCase( _sl())); 
+  _sl.registerFactory<HomeRepo>(() => HomeRepoImpl(remote: _sl()));
+  _sl.registerLazySingleton<HomeRemoteDataSource>(
+      () => HomeRemoteDataSourceImpl());       
 //-----------------------------------------------
   _sl.registerFactory<GetCitiesCubit>(
       () => GetCitiesCubit(getCitiesUsecase: _sl()));
@@ -65,6 +75,9 @@ Future<void> initHomeFeatureInjection() async {
 ///-> BlocProvider
 List<BlocProvider> get homeBlocs => <BlocProvider>[
      //----------------new----------
+     BlocProvider<GetAllSocialMediaCubit>(
+        create: (BuildContext context) => _sl<GetAllSocialMediaCubit>(),
+      ),
      BlocProvider<GetUserSocialMediaCubit>(
         create: (BuildContext context) => _sl<GetUserSocialMediaCubit>(),
       ),

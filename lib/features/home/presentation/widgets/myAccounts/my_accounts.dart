@@ -1,12 +1,19 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, sized_box_for_whitespace
 
+import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
+import 'package:cood/core/widgets/app_divider.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
+import 'package:cood/core/widgets/show_dialog.dart';
 import 'package:cood/features/categories/presentation/widgets/my_progress.dart';
+import 'package:cood/features/home/domain/entities/all_social_media_entity.dart';
 import 'package:cood/features/home/domain/entities/user_social_media_entity.dart';
+import 'package:cood/features/home/presentation/cubit/get_all_social_media/get_All_social_media_state.dart';
+import 'package:cood/features/home/presentation/cubit/get_all_social_media/get_all_social_media_cubit.dart';
 import 'package:cood/features/home/presentation/cubit/get_user_social_media/get_user_social_media_cubit.dart';
 import 'package:cood/features/home/presentation/cubit/get_user_social_media/get_user_social_media_state.dart';
+import 'package:cood/features/home/presentation/widgets/myAccounts/all_social_media_container_item.dart';
 import 'package:cood/features/home/presentation/widgets/myAccounts/social_accounts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,8 +33,6 @@ class MySocialAccounts extends StatelessWidget {
     MyColors.snapShatItemColor,
     MyColors.whatsAppItemColor,
   ];
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -49,14 +54,14 @@ class MySocialAccounts extends StatelessWidget {
                   ),
                 ],
               ),
-              child: BlocBuilder<GetUserSocialMediaCubit, GetUserSocialMediaState>(
+              child:
+                  BlocBuilder<GetUserSocialMediaCubit, GetUserSocialMediaState>(
                 builder: (context, state) {
                   if (state is GetUserSocialMediaLoading) {
                     return const Center(
                       child: MyProgrees(),
                     );
-                  }
-                  else if (state is GetUserSocialMediaSuccerss) {
+                  } else if (state is GetUserSocialMediaSuccerss) {
                     List<SocialMediaEntity> sociaAccounts =
                         state.response.data as List<SocialMediaEntity>;
                     return SocialAccounts(
@@ -64,12 +69,11 @@ class MySocialAccounts extends StatelessWidget {
                       socialBackgroundColors: socialBacgroundColors,
                       socialPhotoColors: socialPhotoColors,
                     );
-                  }else{
+                  } else {
                     return const Center(
-                    child: Text(' please try again !'),
-                  );
+                      child: Text(' please try again !'),
+                    );
                   }
-                  
                 },
               ),
             ),
@@ -83,7 +87,14 @@ class MySocialAccounts extends StatelessWidget {
                 child: Container(
                   margin: EdgeInsets.all(10.h),
                   child: MyDefaultButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      print('hiiiiiiiiiiiiii');
+                      await context
+                          .read<GetAllSocialMediaCubit>()
+                          .getAllSocialMedia();
+                      addAccountButton(context);
+//---------------------------------/end dialog
+                    },
                     height: 50.h,
                     btnText: "link_other_accounts",
                   ),
@@ -103,6 +114,118 @@ class MySocialAccounts extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  addAccountButton(BuildContext context) => showAppDialog(
+        borderRadius: 30.0.r,
+        horizontalPadding: 0.0,
+        verticalPadding: 0.0,
+        context: context,
+        child: Container(
+          height: 590.0.h,
+          width: 393.0.w,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30.r),
+            color: MyColors.lightBlue,
+          ),
+          //-------------------show dialo
+          child: ShowAllAccountsDialog(
+            socialPhotoColors: socialPhotoColors,
+            socialBackgroundColors: socialBacgroundColors,
+          ),
+        ),
+      );
+}
+
+class ShowAllAccountsDialog extends StatelessWidget {
+  final List<Color> socialPhotoColors;
+  final List<Color> socialBackgroundColors;
+
+  const ShowAllAccountsDialog({
+    super.key,
+    required this.socialPhotoColors,
+    required this.socialBackgroundColors,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Gaps.vGap20,
+        InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: AppDivider(
+            width: 56.w,
+            height: 2.h,
+          ),
+        ),
+        Gaps.vGap10,
+        Text(
+          'link_other_accounts'.tr,
+          style: TextStyle(
+            color: MyColors.main,
+            fontSize: 20.sp,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Gaps.vGap10,
+        AppDivider(
+          width: 246.w,
+          height: 2.h,
+          color: MyColors.main,
+        ),
+        Gaps.vGap20,
+        Expanded(
+          child: Container(
+            height: 474.0.h,
+            width: 378.0.w,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30.r),
+              color: MyColors.white,
+            ),
+            child: BlocBuilder<GetAllSocialMediaCubit, GetAllSocialMediaState>(
+              builder: (context, state) {
+                if (state is GetAllSocialMediaLoading) {
+                  return const Center(
+                    child: MyProgrees(),
+                  );
+                } else if (state is GetAllSocialMediaSuccerss) {
+                  List<AllSocialMediaEntity> allsocialMedia =
+                      state.response.data as List<AllSocialMediaEntity>;
+
+                  //-----------------show social media
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: allsocialMedia.length,
+                    itemBuilder: (context, index) {
+                      return AllSocialContainerItem(
+                        allSocialAccount: allsocialMedia[index],
+                        socialPhotoColors: socialPhotoColors[index],
+                        socialBackgroundColors: socialBackgroundColors[index],
+                      );
+                    },
+                  );
+                } else {
+                  return const Center(
+                    child: Text(' please try again !'),
+                  );
+                }
+              },
+            ),
+          ),
+        ),
+        Gaps.vGap20,
+        MyDefaultButton(
+          onPressed: () {},
+          height: 44.h,
+          width: 128.w,
+          btnText: "save",
+        ),
+        Gaps.vGap20,
+      ],
     );
   }
 }

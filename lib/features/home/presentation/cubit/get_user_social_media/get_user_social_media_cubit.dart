@@ -31,7 +31,6 @@ class GetUserSocialMediaCubit extends Cubit<GetUserSocialMediaState> {
         ),
       );
     } catch (e) {
-      print('allllllllllll${e.toString()}');
       emit(GetUserSocialMediaFailure(errorMessage: e.toString()));
     }
   }

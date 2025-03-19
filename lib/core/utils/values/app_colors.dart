@@ -29,6 +29,7 @@ class MyColors {
   static const Color socialYellow = Color(0xFFFFFC01);
   static const Color arrowBackGrey = Color(0xFFD9D9D9);
   static const Color contactCardGrey = Color(0xD9D9D999);
+  static const Color lightBlue = Color(0xFFF0F8FF);
 
 //---------insta colors
   static const Color pink = Color(0xFFE1306C); // Instagram Pink

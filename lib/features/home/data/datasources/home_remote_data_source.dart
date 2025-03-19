@@ -1,4 +1,5 @@
 import 'package:cood/features/home/data/models/friend_lIst_model.dart';
+import 'package:cood/features/home/data/models/get_all_social_media_model.dart';
 import 'package:cood/features/home/data/models/get_user_social_media_model.dart';
 import 'package:cood/features/home/data/models/user_gallary_model.dart';
 import '/core/error/exceptions.dart';
@@ -11,7 +12,7 @@ abstract class HomeRemoteDataSource {
   Future<UserGalleryRespModel> getAllUserGalleryRemoteData();
   Future<FriendListRespModel> getFriendsList();
   Future<SocialMediaRespModel> getUserSocialMedia();
-  Future<SocialMediaRespModel> getAllSocialMedia();
+  Future<AllSocialMediaRespModel> getAllSocialMedia();
   //-------------------------
   Future<CityRespModel> getCities(SearchParams params);
 }
@@ -63,12 +64,12 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
   }
    @override
-  Future<SocialMediaRespModel> getAllSocialMedia() async{
+  Future<AllSocialMediaRespModel> getAllSocialMedia() async{
     String branchUrl = 'https://cood.testworks.top/api/v1/social-media'; 
   try {
     final response = await dioConsumer.get(branchUrl);
     if (response['status'] == 'success' && response['result'] != null) {
-      return SocialMediaRespModel.fromJson(response);
+      return AllSocialMediaRespModel.fromJson(response);
     }
     throw ServerException(message: response['message'].toString());
   } on ServerException {

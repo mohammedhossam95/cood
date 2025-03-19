@@ -14,7 +14,7 @@ import 'package:cood/features/home/domain/entities/user_social_media_entity.dart
     status: json["status"],
     data: json["result"] == null
         ? []
-        : List<SocialMediaItemModel>.from(json["result"].map((x) => SocialMediaItemModel.fromJson(x))),
+        : List<UserSocialMediaItemModel>.from(json["result"].map((x) => UserSocialMediaItemModel.fromJson(x))),
   );
   Map<String, dynamic> toJson() => {
     "message": message,
@@ -24,15 +24,15 @@ import 'package:cood/features/home/domain/entities/user_social_media_entity.dart
         : List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }
-class SocialMediaItemModel extends SocialMediaEntity {
-  const SocialMediaItemModel({
+class UserSocialMediaItemModel extends SocialMediaEntity {
+  const UserSocialMediaItemModel({
     super.id,
     super.platform,
     super.icon,
     super.link,
   });
 
-  factory SocialMediaItemModel.fromJson(Map<String, dynamic> json) => SocialMediaItemModel(
+  factory UserSocialMediaItemModel.fromJson(Map<String, dynamic> json) => UserSocialMediaItemModel(
         id: json["id"],
         platform: json["platform"],
         icon: json["icon"],
