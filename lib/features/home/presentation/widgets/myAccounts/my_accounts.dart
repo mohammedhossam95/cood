@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, sized_box_for_whitespace
+// ignore_for_file: must_be_immutable, sized_box_for_whitespace, use_key_in_widget_constructors
 
 import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
@@ -64,7 +64,7 @@ class MySocialAccounts extends StatelessWidget {
                   } else if (state is GetUserSocialMediaSuccerss) {
                     List<SocialMediaEntity> sociaAccounts =
                         state.response.data as List<SocialMediaEntity>;
-                    return SocialAccounts(
+                    return SocialAccounts(//ToDo when color added in response
                       socialAccounts: sociaAccounts,
                       socialBackgroundColors: socialBacgroundColors,
                       socialPhotoColors: socialPhotoColors,
@@ -88,10 +88,11 @@ class MySocialAccounts extends StatelessWidget {
                   margin: EdgeInsets.all(10.h),
                   child: MyDefaultButton(
                     onPressed: () async {
-                      print('hiiiiiiiiiiiiii');
+                      
                       await context
                           .read<GetAllSocialMediaCubit>()
                           .getAllSocialMedia();
+                      // ignore: use_build_context_synchronously
                       addAccountButton(context);
 //---------------------------------/end dialog
                     },
@@ -130,24 +131,12 @@ class MySocialAccounts extends StatelessWidget {
             color: MyColors.lightBlue,
           ),
           //-------------------show dialo
-          child: ShowAllAccountsDialog(
-            socialPhotoColors: socialPhotoColors,
-            socialBackgroundColors: socialBacgroundColors,
-          ),
+          child: ShowAllAccountsDialog(  ),
         ),
       );
 }
 
 class ShowAllAccountsDialog extends StatelessWidget {
-  final List<Color> socialPhotoColors;
-  final List<Color> socialBackgroundColors;
-
-  const ShowAllAccountsDialog({
-    super.key,
-    required this.socialPhotoColors,
-    required this.socialBackgroundColors,
-  });
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -203,8 +192,6 @@ class ShowAllAccountsDialog extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return AllSocialContainerItem(
                         allSocialAccount: allsocialMedia[index],
-                        socialPhotoColors: socialPhotoColors[index],
-                        socialBackgroundColors: socialBackgroundColors[index],
                       );
                     },
                   );
@@ -219,7 +206,9 @@ class ShowAllAccountsDialog extends StatelessWidget {
         ),
         Gaps.vGap20,
         MyDefaultButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           height: 44.h,
           width: 128.w,
           btnText: "save",

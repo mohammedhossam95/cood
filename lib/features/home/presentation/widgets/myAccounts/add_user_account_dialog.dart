@@ -10,7 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddUserAccountDialog extends StatefulWidget {
-  const AddUserAccountDialog({super.key});
+  final int id;
+  final Color color;
+  final String? image;
+  const AddUserAccountDialog(
+      {super.key, required this.id, required this.color,this.image,});
 
   @override
   State<AddUserAccountDialog> createState() => _AddUserAccountDialogState();
@@ -36,7 +40,7 @@ class _AddUserAccountDialogState extends State<AddUserAccountDialog> {
             child: Container(
               padding: EdgeInsets.all(15.w),
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 230, 196, 196),
+                color: widget.color.withOpacity(0.6),
                 borderRadius: BorderRadius.vertical(
                   bottom: Radius.circular(15.r),
                 ),
@@ -62,7 +66,8 @@ class _AddUserAccountDialogState extends State<AddUserAccountDialog> {
                     height: 44.h,
                     width: 128.w,
                     btnText: "save", // For localization
-                    color: MyColors.errorColor,
+                    color: widget.color,
+                  textColor: widget.color == MyColors.socialYellow?MyColors.black:MyColors.white,          
                   ),
                   Gaps.vGap10,
                 ],
@@ -76,7 +81,7 @@ class _AddUserAccountDialogState extends State<AddUserAccountDialog> {
               height: 80.h,
               width: 80.w,
               decoration: BoxDecoration(
-                color: MyColors.errorColor,
+                color: widget.color,
                 borderRadius: BorderRadius.circular(12.r),
               ),
               child: Padding(
@@ -84,8 +89,8 @@ class _AddUserAccountDialogState extends State<AddUserAccountDialog> {
                 child: DiffImage(
                   width: 50.w,
                   height: 50.h,
-                  image:
-                      'https://cood.testworks.top/storage/social-media-icons/8EEzhsMW69i60QuEPD2N41GzgvSiNnPrENcMrYzc.png',
+                  image:widget.image??'https://cood.testworks.top/storage/social-media-icons/1ojm33Ez9jem0ysLxrLzKBk2KCq2YCi6iWtU02Z4.png',
+                  //userName: 'image',
                 ),
               ),
             ),

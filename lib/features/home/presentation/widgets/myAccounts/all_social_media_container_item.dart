@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, unused_element
 
 import 'package:cood/config/locale/app_localizations.dart';
+import 'package:cood/core/utils/convert_string_color.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/utils/values/text_styles.dart';
 import 'package:cood/core/widgets/diff_img.dart';
@@ -8,33 +9,28 @@ import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/core/widgets/show_dialog.dart';
 import 'package:cood/features/home/domain/entities/all_social_media_entity.dart';
 import 'package:cood/features/home/presentation/widgets/myAccounts/add_user_account_dialog.dart';
-import 'package:cood/features/home/presentation/widgets/my_friends/add_friend_dialog.dart';
-import 'package:cood/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AllSocialContainerItem extends StatelessWidget {
   const AllSocialContainerItem({
     required this.allSocialAccount,
-    this.socialPhotoColors = MyColors.main,
-    this.socialBackgroundColors = MyColors.lightTextColor,
     super.key,
   });
 
   final AllSocialMediaEntity allSocialAccount;
-  final Color socialPhotoColors;
-  final Color socialBackgroundColors;
+
+  // Convert color code to a Color object
 
   @override
   Widget build(BuildContext context) {
+    final Color itemColor = convertStringColor(allSocialAccount.color ?? '1877F2');
     return Container(
       decoration: BoxDecoration(
-        color: socialBackgroundColors,
+        color: itemColor.withOpacity(0.1,),
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(
-          color: (socialPhotoColors == MyColors.socialYellow)
-              ? MyColors.black
-              : socialPhotoColors,
+          color: itemColor,
         ),
       ),
       margin: EdgeInsets.all(10.h),
@@ -49,7 +45,7 @@ class AllSocialContainerItem extends StatelessWidget {
             width: 70.w,
             height: double.infinity,
             decoration: BoxDecoration(
-              color: socialPhotoColors,
+              color: itemColor,
               borderRadius: (AppLocalizations.of(context)?.isArLocale ?? false)
                   ? BorderRadius.only(
                       topLeft: Radius.circular(20.r),
@@ -78,7 +74,11 @@ class AllSocialContainerItem extends StatelessWidget {
               children: [
                 Text(
                   allSocialAccount.name ?? '',
-                  style: TextStyles.bold14(),
+                  style: TextStyles.bold14(
+                    color: (itemColor == MyColors.socialYellow)
+                            ? MyColors.black
+                            : itemColor,
+                  ),
                   maxLines: 2,
                 ),
                 GestureDetector(
@@ -89,13 +89,18 @@ class AllSocialContainerItem extends StatelessWidget {
                       showAppDialog(
                         backgroundColor: Colors.transparent,
                         context: context,
-                        child: AddUserAccountDialog(),
+                        child: AddUserAccountDialog(
+                          color: itemColor,
+                          id: allSocialAccount.id??1,
+                        ),
                       );
                     },
                     child: Text(
                       'addAccount'.tr,
                       style: TextStyles.bold14(
-                        color: colors.main,
+                        color: (itemColor == MyColors.socialYellow)
+                            ? MyColors.black
+                            : itemColor,
                       ),
                     ),
                   ),
@@ -106,9 +111,9 @@ class AllSocialContainerItem extends StatelessWidget {
           // Menu icon
           Image.asset(
             'assets/images/Menu.png',
-            color: (socialPhotoColors == MyColors.socialYellow)
+            color: (itemColor == MyColors.socialYellow)
                 ? MyColors.black
-                : socialPhotoColors,
+                : itemColor,
           ),
           Gaps.hGap1,
         ],
