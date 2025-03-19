@@ -92,6 +92,7 @@ class AllSocialContainerItem extends StatelessWidget {
                         child: AddUserAccountDialog(
                           color: itemColor,
                           id: allSocialAccount.id??1,
+                          image: allSocialAccount.icon??'',
                         ),
                       );
                     },

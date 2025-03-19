@@ -1,23 +1,27 @@
-// ignore_for_file: avoid_print, unused_local_variable, sized_box_for_whitespace
+// ignore_for_file: avoid_print, unused_local_variable, sized_box_for_whitespace, deprecated_member_use, use_build_context_synchronously
 
 import 'package:cood/config/locale/app_localizations.dart';
+import 'package:cood/core/params/add_user_account.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/widgets/defult_text_field.dart';
 import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
+import 'package:cood/features/home/presentation/cubit/add_user_social_account/add_user_social_account_cubit.dart';
+import 'package:cood/features/home/presentation/cubit/add_user_social_account/add_user_social_account_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddUserAccountDialog extends StatefulWidget {
   final int id;
   final Color color;
-  final String? image;
+  final String image;
   const AddUserAccountDialog({
     super.key,
     required this.id,
     required this.color,
-    this.image,
+    required this.image,
   });
 
   @override
@@ -27,6 +31,7 @@ class AddUserAccountDialog extends StatefulWidget {
 class _AddUserAccountDialogState extends State<AddUserAccountDialog> {
   final TextEditingController addUserAccountController =
       TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -57,33 +62,64 @@ class _AddUserAccountDialogState extends State<AddUserAccountDialog> {
                     bottom: Radius.circular(15.r),
                   ),
                 ),
-                child: Column(
-                  children: [
-                    // Input Field
-                    Gaps.vGap30,
-                    MyTextFormField(
-                      controller: addUserAccountController,
-                      hintText: 'addLink'.tr, // For localization
-                      focusNode: FocusNode(),
-                      keyboardType: TextInputType.text,
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        // Input Field
+                        Gaps.vGap30,
+                        MyTextFormField(
+                          controller: addUserAccountController,
+                          hintText: 'addLink'.tr, // For localization
+                          focusNode: FocusNode(),
+                          keyboardType: TextInputType
+                              .text, // Set to number for numeric input
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a link'; // Error message for empty input
+                            }
+
+                            return null; // Input is valid
+                          },
+                        ),
+                        Gaps.vGap20,
+                        // Save Button
+                        BlocBuilder<AddUserSocialAccountCubit,
+                            AddUserSocialAccountState>(
+                          builder: (context, state) {
+                            final param = AddAccountParams(
+                                  id: widget.id,
+                                  link: addUserAccountController
+                                      .text, // Convert the text input to an integer
+                                );
+
+                            //------------------------------------------------
+                            return MyDefaultButton(
+                              onPressed: () async {
+                                //-------------------------------param Field
+                                if (_formKey.currentState!.validate()) {
+                                  await context
+                                      .read<AddUserSocialAccountCubit>()
+                                      .addUserSocialAccount(param)
+                                      .then((value) {
+                                    Navigator.pop(context);
+                                  });
+                                }
+                              },
+                              height: 44.h,
+                              width: 128.w,
+                              btnText: "save", // For localization
+                              color: widget.color,
+                              textColor: widget.color == MyColors.socialYellow
+                                  ? MyColors.black
+                                  : MyColors.white,
+                            );
+                          },
+                        ),
+                      ],
                     ),
-                    Gaps.vGap20,
-                    // Save Button
-                    MyDefaultButton(
-                      onPressed: () {
-                        //ToDo post method
-                        //----consume cubit
-                        //post(id,addUserAccountController);
-                      },
-                      height: 44.h,
-                      width: 128.w,
-                      btnText: "save", // For localization
-                      color: widget.color,
-                      textColor: widget.color == MyColors.socialYellow
-                          ? MyColors.black
-                          : MyColors.white,
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -100,13 +136,9 @@ class _AddUserAccountDialogState extends State<AddUserAccountDialog> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
-                child: DiffImage(
-                  width: 50.w,
-                  height: 50.h,
-                  image: widget.image ??
-                      'https://cood.testworks.top/storage/social-media-icons/1ojm33Ez9jem0ysLxrLzKBk2KCq2YCi6iWtU02Z4.png',
-                  //userName: 'image',
-                ),
+                child: DiffImage(width: 50.w, height: 50.h, image: widget.image
+                    //userName: 'image',
+                    ),
               ),
             ),
           ),

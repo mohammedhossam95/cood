@@ -1,7 +1,9 @@
+import 'package:cood/features/home/domain/usecases/add_user_account_use_case.dart';
 import 'package:cood/features/home/domain/usecases/get_all_social_media_use_case.dart';
 import 'package:cood/features/home/domain/usecases/get_all_user_gallary_use_case.dart';
 import 'package:cood/features/home/domain/usecases/get_friends_list_use_case.dart';
 import 'package:cood/features/home/domain/usecases/get_user_social_media_use_case.dart';
+import 'package:cood/features/home/presentation/cubit/add_user_social_account/add_user_social_account_cubit.dart';
 import 'package:cood/features/home/presentation/cubit/get_all_social_media/get_all_social_media_cubit.dart';
 import 'package:cood/features/home/presentation/cubit/get_all_user_gallary/get_user_gallary_cubit.dart';
 import 'package:cood/features/home/presentation/cubit/get_friends_list/friends_list_cubit.dart';
@@ -54,7 +56,16 @@ Future<void> initHomeFeatureInjection() async {
   _sl.registerFactory<HomeRepo>(() => HomeRepoImpl(remote: _sl()));
   _sl.registerLazySingleton<HomeRemoteDataSource>(
       () => HomeRemoteDataSourceImpl());       
+//-----------------------this is new Add user social media account-------------------
+  _sl.registerFactory<AddUserSocialAccountCubit>(
+      () => AddUserSocialAccountCubit( _sl()));
+  _sl.registerFactory<AddUserSocialAccountUseCase>(
+      () => AddUserSocialAccountUseCase( _sl())); 
+  _sl.registerFactory<HomeRepo>(() => HomeRepoImpl(remote: _sl()));
+  _sl.registerLazySingleton<HomeRemoteDataSource>(
+      () => HomeRemoteDataSourceImpl());   
 //-----------------------------------------------
+
   _sl.registerFactory<GetCitiesCubit>(
       () => GetCitiesCubit(getCitiesUsecase: _sl()));
   _sl.registerFactory<CitiesBloc>(() => CitiesBloc(getCitiesUseCase: _sl()));
@@ -75,6 +86,9 @@ Future<void> initHomeFeatureInjection() async {
 ///-> BlocProvider
 List<BlocProvider> get homeBlocs => <BlocProvider>[
      //----------------new----------
+     BlocProvider<AddUserSocialAccountCubit>(
+        create: (BuildContext context) => _sl<AddUserSocialAccountCubit>(),
+      ),
      BlocProvider<GetAllSocialMediaCubit>(
         create: (BuildContext context) => _sl<GetAllSocialMediaCubit>(),
       ),
