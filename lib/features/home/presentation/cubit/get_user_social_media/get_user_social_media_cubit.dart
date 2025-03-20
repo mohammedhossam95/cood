@@ -25,9 +25,9 @@ class GetUserSocialMediaCubit extends Cubit<GetUserSocialMediaState> {
           await getUserSocialMediaUseCase.call(NoParams());
       emit(
         result.fold(
-          (failure) =>
-              GetUserSocialMediaFailure(errorMessage: failure.message.toString()),
-          (resp) => GetUserSocialMediaSuccerss(response: resp),
+          (failure) => GetUserSocialMediaFailure(
+              errorMessage: failure.message.toString()),
+          (resp) => GetUserSocialMediaSuccess(response: resp),
         ),
       );
     } catch (e) {

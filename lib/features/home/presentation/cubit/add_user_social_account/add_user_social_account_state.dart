@@ -16,10 +16,10 @@ final class AddUserSocialAccountLoading extends AddUserSocialAccountState {
   const AddUserSocialAccountLoading({required this.isLoading});
 }
 
-final class AddUserSocialAccountSuccerss extends AddUserSocialAccountState {
+final class AddUserSocialAccountSuccess extends AddUserSocialAccountState {
   final BaseListResponse response;
 
-  const AddUserSocialAccountSuccerss({required this.response});
+  const AddUserSocialAccountSuccess({required this.response});
 }
 
 final class AddUserSocialAccountFailure extends AddUserSocialAccountState {
@@ -27,4 +27,3 @@ final class AddUserSocialAccountFailure extends AddUserSocialAccountState {
 
   const AddUserSocialAccountFailure({required this.errorMessage});
 }
-

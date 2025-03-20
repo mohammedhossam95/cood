@@ -24,10 +24,13 @@ class AllSocialContainerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color itemColor = convertStringColor(allSocialAccount.color ?? '1877F2');
+    final Color itemColor =
+        convertStringColor(allSocialAccount.color ?? '1877F2');
     return Container(
       decoration: BoxDecoration(
-        color: itemColor.withOpacity(0.1,),
+        color: itemColor.withOpacity(
+          0.1,
+        ),
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(
           color: itemColor,
@@ -76,33 +79,30 @@ class AllSocialContainerItem extends StatelessWidget {
                   allSocialAccount.name ?? '',
                   style: TextStyles.bold14(
                     color: (itemColor == MyColors.socialYellow)
-                            ? MyColors.black
-                            : itemColor,
+                        ? MyColors.black
+                        : itemColor,
                   ),
                   maxLines: 2,
                 ),
-                GestureDetector(
-                  //lanuch url
-                  onTap: () {},
-                  child: InkWell(
-                    onTap: () {
-                      showAppDialog(
-                        backgroundColor: Colors.transparent,
-                        context: context,
-                        child: AddUserAccountDialog(
-                          color: itemColor,
-                          id: allSocialAccount.id??1,
-                          image: allSocialAccount.icon??'',
-                        ),
-                      );
-                    },
-                    child: Text(
-                      'addAccount'.tr,
-                      style: TextStyles.bold14(
-                        color: (itemColor == MyColors.socialYellow)
-                            ? MyColors.black
-                            : itemColor,
+                InkWell(
+                  onTap: () {
+                    showAppDialog(
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      isDismissible: true,
+                      child: AddUserAccountDialog(
+                        color: itemColor,
+                        id: allSocialAccount.id ?? 1,
+                        image: allSocialAccount.icon ?? '',
                       ),
+                    );
+                  },
+                  child: Text(
+                    'addAccount'.tr,
+                    style: TextStyles.bold14(
+                      color: (itemColor == MyColors.socialYellow)
+                          ? MyColors.black
+                          : itemColor,
                     ),
                   ),
                 ),

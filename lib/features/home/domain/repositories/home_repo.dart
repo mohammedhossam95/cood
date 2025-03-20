@@ -11,7 +11,8 @@ abstract class HomeRepo {
   Future<Either<Failure, BaseListResponse>> getFriendsList();
   Future<Either<Failure, BaseListResponse>> getUserSocialMedia();
   Future<Either<Failure, BaseListResponse>> getAllSocialMedia();
-   addUserSocialAccount(AddAccountParams params);  
+  Future<Either<Failure, BaseListResponse>> addUserSocialAccount(
+      AddAccountParams params);
 //----------------------------
   Future<Either<Failure, BaseListResponse>> getCities(SearchParams params);
 }
