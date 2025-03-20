@@ -33,17 +33,22 @@ class _AddUserAccountDialogState extends State<AddUserAccountDialog> {
   final TextEditingController addUserAccountController =
       TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    BlocProvider.of<AddUserSocialAccountCubit>(context).emitIntial();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     bool isArabic = AppLocalizations.of(context)!.isArLocale;
     AddAccountParams param = AddAccountParams();
-    String? errorMessage;
+
     return ZoomIn(
       duration:
           const Duration(milliseconds: 500), // Customize animation duration
       child: SizedBox(
-        height: 235.h,
+        height: 250.h,
         width: 348.w,
         child: Stack(
           children: [
@@ -72,8 +77,10 @@ class _AddUserAccountDialogState extends State<AddUserAccountDialog> {
                     child: Form(
                       key: _formKey,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           // Input Field
+
                           Gaps.vGap30,
                           MyTextFormField(
                               controller: addUserAccountController,
@@ -89,39 +96,60 @@ class _AddUserAccountDialogState extends State<AddUserAccountDialog> {
                               }),
                           Gaps.vGap10,
                           // Save Button
-                          BlocBuilder<AddUserSocialAccountCubit,
+                          BlocConsumer<AddUserSocialAccountCubit,
                               AddUserSocialAccountState>(
+                            listener: (context, state) {
+                              if (state is AddUserSocialAccountSuccess) {
+                                Navigator.pop(context);
+                              }
+                            },
                             builder: (context, state) {
                               //-------------------------params
-                              if (state is AddUserSocialAccountFailure) {
-                                errorMessage = state.errorMessage;
-                              }
+
                               //------------------------------------------------
-                              return FadeInRight(
-                                child:(state is AddUserSocialAccountLoading)? MyDefaultButton(
-                                  onPressed: () async {
-                                    //-------------------------------param Field
-                                    if (_formKey.currentState!.validate()) {
-                                      await context
-                                          .read<AddUserSocialAccountCubit>()
-                                          .addUserSocialAccount(param);
-                                      //Navigator.pop(context);
-                                    }
-                                  },
-                                  height: 44.h,
-                                  width: 128.w,
-                                  btnText:
-                                      "save", // For localization
-                                  color: widget.color,
-                                  textColor:
-                                      widget.color == MyColors.socialYellow
-                                          ? MyColors.black
-                                          : MyColors.white,
-                                ):Center(child: CircularProgressIndicator()),
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  FadeInRight(
+                                    child: (state
+                                            is AddUserSocialAccountLoading)
+                                        ? Center(
+                                            child: CircularProgressIndicator())
+                                        : MyDefaultButton(
+                                            onPressed: () async {
+                                              //-------------------------------param Field
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                await context
+                                                    .read<
+                                                        AddUserSocialAccountCubit>()
+                                                    .addUserSocialAccount(
+                                                        param);
+                                                //Navigator.pop(context);
+                                              }
+                                            },
+                                            height: 44.h,
+                                            width: 128.w,
+                                            btnText: "save", // For localization
+                                            color: widget.color,
+                                            textColor: widget.color ==
+                                                    MyColors.socialYellow
+                                                ? MyColors.black
+                                                : MyColors.white,
+                                          ),
+                                  ),
+                                  if (state is AddUserSocialAccountFailure) ...[
+                                    Gaps.vGap10,
+                                    Text(
+                                      state.errorMessage,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                    ),
+                                  ]
+                                ],
                               );
                             },
                           ),
-                          Text(errorMessage??''),
                         ],
                       ),
                     ),

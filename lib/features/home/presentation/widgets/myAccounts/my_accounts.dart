@@ -3,6 +3,7 @@
 import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/widgets/app_divider.dart';
+import 'package:cood/core/widgets/error_text.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
 import 'package:cood/core/widgets/show_dialog.dart';
@@ -61,18 +62,27 @@ class MySocialAccounts extends StatelessWidget {
                     return const Center(
                       child: MyProgrees(),
                     );
-                  } else if (state is GetUserSocialMediaSuccerss) {
+                  } else if (state is GetUserSocialMediaSuccess) {
                     List<SocialMediaEntity> sociaAccounts =
                         state.response.data as List<SocialMediaEntity>;
-                    return SocialAccounts(//ToDo when color added in response
-                      socialAccounts: sociaAccounts,
-                      socialBackgroundColors: socialBacgroundColors,
-                      socialPhotoColors: socialPhotoColors,
+                    return sociaAccounts.isNotEmpty
+                        ? SocialAccounts(
+                            //ToDo when color added in response
+                            socialAccounts: sociaAccounts,
+                            socialBackgroundColors: socialBacgroundColors,
+                            socialPhotoColors: socialPhotoColors,
+                          )
+                        : ErrorText(
+                            width: ScreenUtil().screenWidth,
+                            text: 'noData'.tr,
+                          );
+                  } else if (state is GetUserSocialMediaFailure) {
+                    return ErrorText(
+                      width: ScreenUtil().screenWidth,
+                      text: state.errorMessage,
                     );
                   } else {
-                    return const Center(
-                      child: Text(' please try again !'),
-                    );
+                    return SizedBox();
                   }
                 },
               ),
@@ -88,7 +98,6 @@ class MySocialAccounts extends StatelessWidget {
                   margin: EdgeInsets.all(10.h),
                   child: MyDefaultButton(
                     onPressed: () async {
-                      
                       await context
                           .read<GetAllSocialMediaCubit>()
                           .getAllSocialMedia();
@@ -131,7 +140,7 @@ class MySocialAccounts extends StatelessWidget {
             color: MyColors.lightBlue,
           ),
           //-------------------show dialo
-          child: ShowAllAccountsDialog(  ),
+          child: ShowAllAccountsDialog(),
         ),
       );
 }

@@ -16,10 +16,10 @@ final class GetUserSocialMediaLoading extends GetUserSocialMediaState {
   const GetUserSocialMediaLoading({required this.isLoading});
 }
 
-final class GetUserSocialMediaSuccerss extends GetUserSocialMediaState {
+final class GetUserSocialMediaSuccess extends GetUserSocialMediaState {
   final BaseListResponse response;
 
-  const GetUserSocialMediaSuccerss({required this.response});
+  const GetUserSocialMediaSuccess({required this.response});
 }
 
 final class GetUserSocialMediaFailure extends GetUserSocialMediaState {
