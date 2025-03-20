@@ -115,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               //----------2
+              Gaps.vGap16,
               Padding(
                 padding:
                     EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 20.h),
@@ -129,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-
+                Gaps.vGap16,
               //--------3
               //---- here switch index(frinds, photoes or accounts)
               getCurrentTapBarWidget(selectedDurationIndex),
@@ -182,7 +183,9 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 15.h),
+          alignment: Alignment.center,
+          height: 45.h,
+          //padding: EdgeInsets.symmetric(vertical: 10.h),
           decoration: BoxDecoration(
             border: Border.all(color: colors.main, width: 1.5.r),
             color: isSelected ? colors.main : colors.main.withValues(alpha: .4),
