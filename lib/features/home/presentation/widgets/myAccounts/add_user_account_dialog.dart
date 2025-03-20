@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, unused_local_variable, sized_box_for_whitespace, deprecated_member_use, use_build_context_synchronously
+// ignore_for_file: avoid_print, unused_local_variable, sized_box_for_whitespace, deprecated_member_use, use_build_context_synchronously, prefer_typing_uninitialized_variables
 
 import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/params/add_user_account.dart';
@@ -36,6 +36,7 @@ class _AddUserAccountDialogState extends State<AddUserAccountDialog> {
   @override
   Widget build(BuildContext context) {
     bool isArabic = AppLocalizations.of(context)!.isArLocale;
+    AddAccountParams param=AddAccountParams();
     return SizedBox(
       height: 224.h,
       width: 348.w,
@@ -70,29 +71,23 @@ class _AddUserAccountDialogState extends State<AddUserAccountDialog> {
                         // Input Field
                         Gaps.vGap30,
                         MyTextFormField(
-                          controller: addUserAccountController,
-                          hintText: 'addLink'.tr, // For localization
-                          focusNode: FocusNode(),
-                          keyboardType: TextInputType
-                              .text, // Set to number for numeric input
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a link'; // Error message for empty input
-                            }
-
-                            return null; // Input is valid
-                          },
-                        ),
+                            controller: addUserAccountController,
+                            hintText: 'addLink'.tr,
+                            focusNode: FocusNode(),
+                            keyboardType: TextInputType.text,
+                            validator: (value) {
+                               param = AddAccountParams(
+                                id: widget.id,
+                                link: value,
+                              );
+                              return validateTextFormField(value);
+                            }),
                         Gaps.vGap20,
                         // Save Button
                         BlocBuilder<AddUserSocialAccountCubit,
                             AddUserSocialAccountState>(
                           builder: (context, state) {
-                            final param = AddAccountParams(
-                                  id: widget.id,
-                                  link: addUserAccountController
-                                      .text, // Convert the text input to an integer
-                                );
+                            //-------------------------params
 
                             //------------------------------------------------
                             return MyDefaultButton(
@@ -101,15 +96,13 @@ class _AddUserAccountDialogState extends State<AddUserAccountDialog> {
                                 if (_formKey.currentState!.validate()) {
                                   await context
                                       .read<AddUserSocialAccountCubit>()
-                                      .addUserSocialAccount(param)
-                                      .then((value) {
-                                    Navigator.pop(context);
-                                  });
+                                      .addUserSocialAccount(param);
+                                  Navigator.pop(context);
                                 }
                               },
                               height: 44.h,
                               width: 128.w,
-                              btnText: "save", // For localization
+                              btnText: (state is AddUserSocialAccountLoading)?'uploading':"save", // For localization
                               color: widget.color,
                               textColor: widget.color == MyColors.socialYellow
                                   ? MyColors.black
@@ -145,5 +138,13 @@ class _AddUserAccountDialogState extends State<AddUserAccountDialog> {
         ],
       ),
     );
+  }
+
+  String? validateTextFormField(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a link'; // Error message for empty input
+    }
+
+    return null; // Input is valid
   }
 }
