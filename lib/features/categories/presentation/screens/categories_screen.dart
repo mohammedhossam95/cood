@@ -1,6 +1,7 @@
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/widgets/defult_text_field.dart';
 import 'package:cood/features/categories/domain/entity/category_entity.dart';
+import 'package:cood/features/categories/presentation/cubit/get_filter_user_by_category/get_filter_user_by_category_cubit.dart';
 import 'package:cood/features/categories/presentation/widgets/communication_guide_item.dart';
 import 'package:cood/features/categories/presentation/widgets/my_progress.dart';
 import 'package:cood/features/categories/presentation/widgets/no_reservations_widget.dart';
@@ -100,11 +101,16 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                       itemCount: communicationList.length,
                                       itemBuilder: (context, index) =>
                                           GestureDetector(
-                                        onTap: () {
+                                        onTap: () async {
+                                          //-------getFilterUserById
                                           Navigator.pushNamed(context,
-                                              Routes.communicationItemDetails,
-                                              arguments:{} 
+                                              Routes.communicationItemSliver,
                                               );
+                                        await  context
+                                              .read<
+                                                  GetFilterUserByCategoryCubit>()
+                                              .getGetFilterUserByCategoryId(communicationList[index].id??2);
+                                        //-------getFilterUserById      
                                         },
                                         child: CommunicationGuideItem(
                                             item: communicationList[index]),

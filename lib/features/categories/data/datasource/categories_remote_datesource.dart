@@ -1,4 +1,5 @@
 import 'package:cood/features/categories/data/model/checkout_resp_model.dart';
+import 'package:cood/features/categories/data/model/get_filter_user_by_category_model.dart';
 import 'package:cood/features/categories/data/model/price_status_resp_model.dart';
 import 'package:cood/features/categories/data/model/reserve_status_resp_model.dart';
 
@@ -10,6 +11,7 @@ import '../model/categoryies_model.dart';
 
 abstract class CategoriesRemoteDatesource {
   //--------------new
+  Future<FilterUserByCategoryRespModel> getFilterUserByCategoryId(int id);
   Future<CategoriesRespModel> getCategoriesRemoteData();
   //-----------------------------------------
   Future<ReserveStatusRespModel> checkRemoteReserveStatus(CarParams params);
@@ -21,6 +23,26 @@ abstract class CategoriesRemoteDatesource {
 }
 
 class CategoriesRemoteDatesourceImpl extends CategoriesRemoteDatesource {
+    @override
+  Future<FilterUserByCategoryRespModel> getFilterUserByCategoryId(int id) async{
+    String branchUrl = '/users/filter-by-category';
+    try {
+  final response = await dioConsumer.get(
+    branchUrl,
+    queryParameters: {
+      "category_id":id,
+    }
+    );
+  if (response['status'] == 'success' && response['result'] != null) {
+    return FilterUserByCategoryRespModel.fromJson(response);
+  }
+      throw ServerException(message: response['message'] ?? '');
+} on ServerException {
+      rethrow;
+    } catch (error) {
+      rethrow;
+    }
+  }
   @override
   Future<CategoriesRespModel> getCategoriesRemoteData() async {
     String branchUrl = 'https://cood.testworks.top/api/v1/categories';
@@ -170,4 +192,6 @@ class CategoriesRemoteDatesourceImpl extends CategoriesRemoteDatesource {
       rethrow;
     }
   }
+
+
 }

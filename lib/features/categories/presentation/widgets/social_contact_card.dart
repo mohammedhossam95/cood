@@ -5,7 +5,7 @@ import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/utils/values/assets.dart';
 import 'package:cood/core/utils/values/text_styles.dart';
 import 'package:cood/core/widgets/gaps.dart';
-import 'package:cood/features/categories/domain/entity/contacts_entity.dart';
+import 'package:cood/features/categories/domain/entity/category_user_entity.dart';
 import 'package:cood/features/categories/presentation/widgets/social_contact_card_custom_icon.dart';
 
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class ContactCard extends StatefulWidget {
-  final ContactEntity contacts;
+  final CategoryUserEntity contacts;
   bool isPhoneAppear;
   ContactCard({super.key, required this.contacts, this.isPhoneAppear = false});
 
@@ -237,7 +237,7 @@ class _ContactCardState extends State<ContactCard> {
             height: 65.h,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('${widget.contacts.profileImage}'),
+                image: AssetImage('assets/images/person.png'),
                 fit: BoxFit.cover,
               ),
               borderRadius: (isArabic)

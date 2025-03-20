@@ -7,6 +7,7 @@ class BaseOneResponse extends Equatable {
     this.success,
     this.value,
     this.key,
+    this.status,
     this.statusCode,
   });
   final String? value;
@@ -14,6 +15,7 @@ class BaseOneResponse extends Equatable {
   final dynamic data;
   final String? message;
   final bool? success;
+  final String? status;
   final int? statusCode;
 
   @override
@@ -23,6 +25,7 @@ class BaseOneResponse extends Equatable {
         success,
         value,
         key,
+        status,
         statusCode,
       ];
 }

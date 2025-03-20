@@ -206,8 +206,9 @@ class ShowAllAccountsDialog extends StatelessWidget {
         ),
         Gaps.vGap20,
         MyDefaultButton(
-          onPressed: () {
+          onPressed: () async{
             Navigator.pop(context);
+            await context.read<GetUserSocialMediaCubit>().getUserSocialMedia();
           },
           height: 44.h,
           width: 128.w,
