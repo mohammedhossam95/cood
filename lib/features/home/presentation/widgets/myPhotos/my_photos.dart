@@ -1,10 +1,17 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:cood/core/utils/values/app_colors.dart';
+import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
+import 'package:cood/features/categories/presentation/widgets/my_progress.dart';
+import 'package:cood/features/home/domain/entities/user_gallary_entity.dart';
+import 'package:cood/features/home/presentation/cubit/get_all_user_gallary/get_user_gallary_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../cubit/get_all_user_gallary/get_user_gallary_states.dart';
 
 class MySocialPhotos extends StatelessWidget {
   MySocialPhotos({super.key});
@@ -43,31 +50,51 @@ class MySocialPhotos extends StatelessWidget {
                   ),
                 ],
               ),
-              child: GridView.builder(
-              itemCount: gridImages.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 15.0.w,
-                mainAxisSpacing: 15.0.h,
-                
+              child: BlocBuilder<GetUserGallaryCubit, GetUserGallaryState>(
+                builder: (context, state) {
+                  if (state is GetUserGallaryLoading) {
+                    return const Center(
+                      child: MyProgrees(),
+                    );
+                    //----------------- this condition should be (state is CategoriesSuccerss)
+                  } else if (state is GetUserGallarySuccerss) {
+                    List<UserGalleryEntity> gallaryList =
+                        state.response.data as List<UserGalleryEntity>;
+                    return (gallaryList.isNotEmpty)
+                        ? GridView.builder(
+                            itemCount: gallaryList.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 15.0.w,
+                              mainAxisSpacing: 15.0.h,
+                            ),
+                            itemBuilder: (context, index) {
+                              return Container(
+                                width: 100.0.w,
+                                height: 100.0.h,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                child: DiffImage(
+                                  image: gallaryList[index].imageUrl ?? '',
+                                  userName: gallaryList[index].imagePath ?? '',
+                                ),
+                              );
+                            },
+                          )
+                        : const  Center(child: Text('List has no Images !'),);
+                  } else {
+                    return const Center(
+                      child: Text('No data available'),
+                    );
+                  }
+                },
               ),
-              itemBuilder: (context, index) {
-                return Container(
-                  width: 100.0.w,
-                  height: 100.0.h,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  child: Image.asset(
-                    gridImages[index],
-                    fit: BoxFit.cover, // Ensures the image fits well
-                  ),
-                );
-              },
-            ),
             ),
           ),
+
           Gaps.vGap20,
           //-----------------4
           Row(
@@ -89,7 +116,6 @@ class MySocialPhotos extends StatelessWidget {
                   margin: EdgeInsets.all(10.h),
                   child: MyDefaultButton(
                     textColor: MyColors.backGround,
-                    
                     onPressed: () {},
                     height: 50.h,
                     btnText: 'addPhoto',

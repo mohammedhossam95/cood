@@ -102,7 +102,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                           GestureDetector(
                                         onTap: () {
                                           Navigator.pushNamed(context,
-                                              Routes.communicationItemDetails);
+                                              Routes.communicationItemDetails,
+                                              arguments:{} 
+                                              );
                                         },
                                         child: CommunicationGuideItem(
                                             item: communicationList[index]),

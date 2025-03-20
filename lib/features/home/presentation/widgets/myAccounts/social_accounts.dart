@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cood/features/home/domain/entities/user_social_media_entity.dart';
 import 'package:flutter/material.dart';
 
-import 'package:cood/features/home/domain/entities/social_entity.dart';
 import 'package:cood/features/home/presentation/widgets/myAccounts/social_container_item.dart';
 
 /// A widget that displays a scrollable list of social accounts with customizable colors.
@@ -14,7 +14,7 @@ class SocialAccounts extends StatelessWidget {
   });
 
   /// List of social accounts to be displayed.
-  final List<SocialEntity> socialAccounts;
+  final List<SocialMediaEntity> socialAccounts;
 
   /// Colors for the social account photos.
   final List<Color> socialPhotoColors;
@@ -24,11 +24,11 @@ class SocialAccounts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    assert(
-      socialAccounts.length == socialPhotoColors.length &&
-          socialAccounts.length == socialBackgroundColors.length,
-      'The lengths of socialAccounts, socialPhotoColors, and socialBackgroundColors must match.',
-    );
+    // assert(
+    //   socialAccounts.length == socialPhotoColors.length &&
+    //       socialAccounts.length == socialBackgroundColors.length,
+    //   'The lengths of socialAccounts, socialPhotoColors, and socialBackgroundColors must match.',
+    // );
 
     return ListView.builder(
       shrinkWrap: true,

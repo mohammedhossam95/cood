@@ -1,5 +1,6 @@
 import 'dart:async';
 
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,10 +26,13 @@ Future<void> main() async {
   //   DeviceOrientation.portraitUp,
   //   DeviceOrientation.portraitDown,
   // ]);
-
+ //getData();
   Bloc.observer = AppBlocObserver();
   dioConsumer.updateDeviceTypeHeader();
   await DBHelper.initDB();
   runApp(const App());
 }
   
+
+
+

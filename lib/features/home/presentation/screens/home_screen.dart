@@ -1,5 +1,8 @@
 import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/features/auth/domain/entities/login_response.dart';
+import 'package:cood/features/home/presentation/cubit/get_all_user_gallary/get_user_gallary_cubit.dart';
+import 'package:cood/features/home/presentation/cubit/get_friends_list/friends_list_cubit.dart';
+import 'package:cood/features/home/presentation/cubit/get_user_social_media/get_user_social_media_cubit.dart';
 import 'package:cood/features/home/presentation/widgets/myAccounts/my_accounts.dart';
 import 'package:cood/features/home/presentation/widgets/myPhotos/my_photos.dart';
 import 'package:cood/features/home/presentation/widgets/my_friends/my_friends.dart';
@@ -112,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               //----------2
+              Gaps.vGap16,
               Padding(
                 padding:
                     EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 20.h),
@@ -126,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-
+                Gaps.vGap16,
               //--------3
               //---- here switch index(frinds, photoes or accounts)
               getCurrentTapBarWidget(selectedDurationIndex),
@@ -142,10 +146,13 @@ class _HomeScreenState extends State<HomeScreen> {
     // This function is called in _buildDurationOption to assign the appropriate widget based on the index.
     switch (index) {
       case 0:
+       context.read<GetUserSocialMediaCubit>().getUserSocialMedia(); 
         return MySocialAccounts();
       case 1:
+        context.read<GetUserGallaryCubit>().getAllUserGallary();  
         return MySocialPhotos();
       case 2:
+        context.read<FriendsListCubit>().getFriendsList(); 
         return MySocialFriends();
       default:
         // Handle unexpected indices with a default widget.
@@ -176,7 +183,9 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 15.h),
+          alignment: Alignment.center,
+          height: 45.h,
+          //padding: EdgeInsets.symmetric(vertical: 10.h),
           decoration: BoxDecoration(
             border: Border.all(color: colors.main, width: 1.5.r),
             color: isSelected ? colors.main : colors.main.withValues(alpha: .4),

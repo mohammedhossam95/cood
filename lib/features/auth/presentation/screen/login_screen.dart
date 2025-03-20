@@ -68,6 +68,7 @@ class LoginScreenState extends State<LoginScreen> {
       firebaseToken = token!;
     }).catchError((onError) {
       Constants.showSnakToast(
+        // ignore: use_build_context_synchronously
         context: context,
         type: 3,
         message: onError.toString(),
