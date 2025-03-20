@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/params/add_user_account.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
+import 'package:cood/core/utils/values/text_styles.dart';
 import 'package:cood/core/widgets/defult_text_field.dart';
 import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/core/widgets/gaps.dart';
@@ -144,6 +145,11 @@ class _AddUserAccountDialogState extends State<AddUserAccountDialog> {
                                       state.errorMessage,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 2,
+                                      style: TextStyles.bold14(
+                                        color: widget.color ==
+                                                    MyColors.socialYellow
+                                                ? MyColors.black:widget.color,
+                                      ),
                                     ),
                                   ]
                                 ],
