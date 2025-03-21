@@ -2,6 +2,7 @@
 
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/widgets/diff_img.dart';
+import 'package:cood/core/widgets/error_text.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
 import 'package:cood/features/categories/presentation/widgets/my_progress.dart';
@@ -84,11 +85,14 @@ class MySocialPhotos extends StatelessWidget {
                               );
                             },
                           )
-                        : const  Center(child: Text('List has no Images !'),);
-                  } else {
-                    return const Center(
-                      child: Text('No data available'),
-                    );
+                        : const SizedBox();
+                  } else if(state is GetUserGallaryFailure) {
+                    return ErrorText(
+                        text: state.errorMessage,
+                        width: ScreenUtil().screenWidth,
+                      );
+                  }else{
+                    return const SizedBox();
                   }
                 },
               ),

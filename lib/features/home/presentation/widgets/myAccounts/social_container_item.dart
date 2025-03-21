@@ -3,6 +3,7 @@
 import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/utils/convert_string_color.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
+import 'package:cood/core/utils/values/luanche_url_method.dart';
 import 'package:cood/core/utils/values/text_styles.dart';
 import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/core/widgets/gaps.dart';
@@ -108,12 +109,5 @@ class SocialContainerItem extends StatelessWidget {
     );
   }
 
-  Future<void> onLaunche(String url, context) async {
-    final uri = Uri.parse(url);
-    if (!await launchUrl(uri)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Could not launch $url')),
-      );
-    }
-  }
+
 }

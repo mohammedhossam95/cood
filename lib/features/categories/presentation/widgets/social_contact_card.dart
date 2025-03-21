@@ -1,9 +1,12 @@
 // ignore_for_file: use_super_parameters
 
 import 'package:cood/config/locale/app_localizations.dart';
+import 'package:cood/core/utils/constants.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/utils/values/assets.dart';
+import 'package:cood/core/utils/values/luanche_url_method.dart';
 import 'package:cood/core/utils/values/text_styles.dart';
+import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/features/categories/domain/entity/category_user_entity.dart';
 import 'package:cood/features/categories/presentation/widgets/social_contact_card_custom_icon.dart';
@@ -125,7 +128,9 @@ class _ContactCardState extends State<ContactCard> {
                               shape: BoxShape.circle,
                               backgroundColor: MyColors.socialYellow,
                               childImagePath: ImgAssets.snapChatImg,
-                              onPressed: () {},
+                              onPressed: () {
+                                onLaunche(widget.contacts.socialMediaLinks?[2].link ?? '', context);
+                              },
                             ),
 
                             //------------------------2 tiktok
@@ -134,6 +139,7 @@ class _ContactCardState extends State<ContactCard> {
                               backgroundColor: MyColors.black,
                               childImagePath: ImgAssets.tiktokImg,
                               onPressed: () {
+                                onLaunche(widget.contacts.socialMediaLinks?[1].link ?? '', context);
                               },
                             ),
 
@@ -182,7 +188,9 @@ class _ContactCardState extends State<ContactCard> {
                             CustomIconWidget(
                               backgroundColor: MyColors.main,
                               childImagePath: ImgAssets.facbookImg,
-                              onPressed: () {},
+                              onPressed: () {
+                                onLaunche(widget.contacts.socialMediaLinks?[0].link ?? '', context);
+                              },
                             ),
 
                             //--------------------------7 imo
@@ -228,18 +236,17 @@ class _ContactCardState extends State<ContactCard> {
             ),
           ),
         ),
+        //-------------sliver List Image
         Positioned(
           right: (isArabic) ? 17.0.w : null,
           left: (isArabic) ? null : 17.0.w,
           top: 10.0.h,
-          child: Container(
+          child: SizedBox(
             width: 65.w,
             height: 65.h,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/person.png'),
-                fit: BoxFit.cover,
-              ),
+            child: DiffImage(
+              image: widget.contacts.image??nullNetworkImage,
+              fitType: BoxFit.cover,
               borderRadius: (isArabic)
                   ? BorderRadius.only(
                       topLeft: Radius.circular(20.r),

@@ -496,3 +496,5 @@ abstract class ArabicNumeric {
   static String eight = '٨';
   static String nine = '٩';
 }
+
+ const  String nullNetworkImage='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMjnIX5FuaL7lt6QNyi5G1SLM6NvWIF6sd9A&s';

@@ -1,7 +1,9 @@
 import 'package:cood/config/locale/app_localizations.dart';
+import 'package:cood/core/utils/constants.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/utils/values/text_styles.dart';
 import 'package:cood/core/widgets/back_button.dart';
+import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/core/widgets/error_text.dart';
 import 'package:cood/features/categories/domain/entity/category_entity.dart';
 import 'package:cood/features/categories/domain/entity/category_user_entity.dart';
@@ -139,13 +141,22 @@ class _CommunicationItemDetailsState extends State<CommunicationItemDetails> {
                     flexibleSpace: FlexibleSpaceBar(
                       background: Container(
                         decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(categoryresp.image??''),
-                            fit: BoxFit.fill,
-                          ),
+                          // image: DecorationImage(
+                          //   image: NetworkImage(categoryresp.image??''),
+                          //   fit: BoxFit.cover,
+                          // ),
                         ),
                         child: Stack(
                           children: [
+                            //----------bacground Image
+                            SizedBox(
+                              width: double.infinity,
+                              height: double.infinity,
+                              child: DiffImage(
+                                image:categoryresp.image??nullNetworkImage,
+                              ),
+                            ),
+                            //--------backButton
                             if (isArabic)
                               Positioned(
                                 top: 15.0.h,
@@ -158,6 +169,7 @@ class _CommunicationItemDetailsState extends State<CommunicationItemDetails> {
                                 left: 15.0.h,
                                 child: CustomBackButton(),
                               ),
+                            //-----------------name  
                             Align(
                               alignment: Alignment.bottomCenter,
                               child: Padding(
@@ -170,9 +182,10 @@ class _CommunicationItemDetailsState extends State<CommunicationItemDetails> {
                                 ),
                               ),
                             ),
+                            
                           ],
                         ),
-                      ),
+                      )
                     ),
                   ),
 
