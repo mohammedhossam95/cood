@@ -1,14 +1,14 @@
 import 'package:cood/features/home/data/models/add_user_account_model.dart';
-import 'package:cood/features/home/data/models/friend_lIst_model.dart';
+import 'package:cood/features/home/data/models/friend_list_resp_model.dart';
 import 'package:cood/features/home/data/models/get_all_social_media_model.dart';
 import 'package:cood/features/home/data/models/get_user_social_media_model.dart';
 import 'package:cood/features/home/data/models/user_gallary_model.dart';
-import 'package:dio/dio.dart';
-import '../../../../core/params/add_user_account.dart';
+
 import '/core/error/exceptions.dart';
 import '/core/params/search_params.dart';
 import '/features/home/data/models/city_resp_model.dart';
 import '/injection_container.dart';
+import '../../../../core/params/add_user_account.dart';
 
 abstract class HomeRemoteDataSource {
   //--------------new
@@ -111,19 +111,18 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       AddAccountParams params) async {
     String branchUrl = '/user/social-media';
     try {
-  final response = await dioConsumer.post(
-    branchUrl,
-    body: params.toJson(),
-  );
-  if(response['status']=='success'){
-    return AddUserSocialAccountRespModel.fromJson(response);
-  }
-  throw ServerException(message: response['message'].toString());
-} on ServerException {
+      final response = await dioConsumer.post(
+        branchUrl,
+        body: params.toJson(),
+      );
+      if (response['status'] == 'success') {
+        return AddUserSocialAccountRespModel.fromJson(response);
+      }
+      throw ServerException(message: response['message'].toString());
+    } on ServerException {
       rethrow;
     } catch (error) {
       rethrow;
     }
-    
   }
 }

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:cood/config/routes/app_routes.dart';
@@ -6,6 +5,7 @@ import 'package:cood/core/params/auth_params.dart';
 import 'package:cood/core/utils/constants.dart';
 import 'package:cood/core/widgets/loading_view.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
+import 'package:cood/features/auth/domain/entities/user_register_response.dart';
 import 'package:cood/features/auth/presentation/cubit/user_register_cubit/user_register_cubit.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/gestures.dart';
@@ -232,12 +232,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   BlocConsumer<UserRegisterCubit, UserRegisterState>(
                     listener: (context, state) {
                       if (state is UserRegisterSuccess) {
-                        log(state.resp.data?.token ?? '');
-
+                        RegResult result = state.resp.data as RegResult;
                         Navigator.pushNamed(
                           context,
                           Routes.otpAuthRoute,
-                          arguments: AuthParams(),
+                          arguments: AuthParams(
+                            phone: state.params.phone ?? '',
+                            userId: result.userId ?? 0,
+                          ),
                         );
                       }
                       if (state is UserRegisterFailure) {

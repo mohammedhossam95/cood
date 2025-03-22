@@ -14,7 +14,6 @@ import 'core/api/app_interceptors.dart';
 import 'core/api/dio_consumer.dart';
 import 'core/services/local_storage/app_secure_storage.dart';
 import 'core/services/local_storage/app_shared_preferences.dart';
-import 'core/services/network/netwok_info.dart';
 import 'core/utils/values/app_colors.dart';
 import 'features/auth/auth_injection.dart';
 import 'features/language/language_injection.dart';
@@ -23,7 +22,7 @@ abstract class ServiceLocator {
   static final GetIt instance = GetIt.instance;
 
   static Future<void> init() async {
-   instance.allowReassignment = true;
+    instance.allowReassignment = true;
 
     /// Features
     await initLanguageFeatureInjection();
@@ -38,7 +37,6 @@ abstract class ServiceLocator {
     await _injectSharedPreferences();
     _injectSecureStorage();
     _injectDioConsumer();
-    _injectNetworkInfo();
     _injectAppInterceptors();
     _injectLogInterceptor();
     injectRoutesStackSingleton(<String>[]);
@@ -47,10 +45,6 @@ abstract class ServiceLocator {
   static void _injectDioConsumer() {
     instance.registerLazySingleton<DioConsumer>(
         () => DioConsumerImpl(client: Dio()));
-  }
-
-  static void _injectNetworkInfo() {
-    instance.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl());
   }
 
   static void _injectAppInterceptors() {
@@ -120,8 +114,6 @@ AppSecureStorage get secureStorage =>
     ServiceLocator.instance<AppSecureStorage>();
 
 DioConsumer get dioConsumer => ServiceLocator.instance<DioConsumer>();
-
-NetworkInfo get networkInfo => ServiceLocator.instance<NetworkInfo>();
 
 AppInterceptors get appInterceptors =>
     ServiceLocator.instance<AppInterceptors>();

@@ -9,26 +9,24 @@ abstract class VerifyOtpState extends Equatable {
 
 class VerifyOtpInitialState extends VerifyOtpState {}
 
-class VerifyOtpLoadingState extends VerifyOtpState {
+class VerifyOtpLoading extends VerifyOtpState {
   final bool isLoading;
-  const VerifyOtpLoadingState({required this.isLoading});
+  const VerifyOtpLoading({required this.isLoading});
 }
 
-class VerifyOtpSuccessState extends VerifyOtpState {
-  final ConfirmCodeAuthRespModel resp;
+class VerifyOtpSuccess extends VerifyOtpState {
+  final BaseOneResponse resp;
 
-  const VerifyOtpSuccessState({required this.resp});
+  const VerifyOtpSuccess({required this.resp});
 
   @override
   List<Object?> get props => <Object?>[resp];
 }
 
-class VerifyOtpErrorState extends VerifyOtpState {
+class VerifyOtpError extends VerifyOtpState {
   final String errorMessage;
 
-  const VerifyOtpErrorState({
-    required this.errorMessage,
-  });
+  const VerifyOtpError({required this.errorMessage});
 
   @override
   List<Object?> get props => <Object?>[errorMessage];

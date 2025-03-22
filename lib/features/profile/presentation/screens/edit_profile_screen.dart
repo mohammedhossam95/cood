@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cood/config/routes/app_routes.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
+import 'package:cood/features/auth/presentation/widgets/custom_back_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -32,96 +33,77 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: colors.backGround,
+        appBar: AppBar(
+          backgroundColor: colors.backGround,
+          title: Text(
+            'editMyProfile'.tr,
+            style: TextStyles.bold20(color: colors.main),
+          ),
+          elevation: 0,
+          leading: CustomBack(),
+        ),
         body: Padding(
           padding: EdgeInsets.all(16.r),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'editMyProfile'.tr,
-                          style: TextStyles.bold20(color: colors.main),
-                        ),
-                      ],
-                    ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Gaps.vGap78,
+                Center(
+                  child: ProfileImage(
+                    image: '',
+                    updateBannerImage: (f) {},
                   ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      height: 40.h,
-                      width: 40.w,
-                      margin: EdgeInsets.only(top: 20.h),
-                      decoration: BoxDecoration(
-                        color: colors.textColor.withValues(alpha: .3),
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      child: Icon(
-                        Icons.arrow_forward_ios_rounded,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Gaps.vGap78,
-              Center(child: ProfileImage()),
-              Gaps.vGap45,
-              Text(
-                'name'.tr,
-                style: TextStyles.bold14(color: colors.main),
-              ),
-              Gaps.vGap10,
-              AppTextFormField(
-                controller: phoneNumberController,
-                focusNode: phoneNumberFocus,
-                hintText: 'فهد سليمان',
-                borderColor: colors.main,
-              ),
-              Gaps.vGap12,
-              Text(
-                'phone_number'.tr,
-                style: TextStyles.bold14(color: colors.main),
-              ),
-              Gaps.vGap10,
-              AppTextFormField(
-                controller: usernameController,
-                focusNode: usernameFocus,
-                hintText: '+966562485527',
-                borderColor: colors.main,
-              ),
-              Gaps.vGap30,
-              MyDefaultButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, Routes.changePasswordRoute);
-                },
-                btnText: 'changePassword',
-                borderColor: colors.baseColor,
-                color: colors.baseColor,
-                textStyle: TextStyles.bold14(
-                  color: colors.blackColor,
                 ),
-              ),
-              Gaps.vGap50,
-              Padding(
-                padding:  EdgeInsets.symmetric(horizontal: 60.w),
-                child: MyDefaultButton(
-                  
-                  onPressed: () {},
-                  btnText: 'saveChanges',
+                Gaps.vGap45,
+                Text(
+                  'name'.tr,
+                  style: TextStyles.bold14(color: colors.main),
+                ),
+                Gaps.vGap10,
+                AppTextFormField(
+                  controller: phoneNumberController,
+                  focusNode: phoneNumberFocus,
+                  hintText: 'name'.tr,
                   borderColor: colors.main,
-                  color: colors.main,
-                  textStyle: TextStyles.bold17(),
                 ),
-              ),
-            ],
+                Gaps.vGap12,
+                Text(
+                  'phone_number'.tr,
+                  style: TextStyles.bold14(color: colors.main),
+                ),
+                Gaps.vGap10,
+                AppTextFormField(
+                  controller: usernameController,
+                  focusNode: usernameFocus,
+                  hintText: 'phone_number'.tr,
+                  borderColor: colors.main,
+                ),
+                Gaps.vGap30,
+                MyDefaultButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, Routes.changePasswordRoute);
+                  },
+                  btnText: 'changePassword',
+                  borderColor: colors.baseColor,
+                  color: colors.baseColor,
+                  textStyle: TextStyles.bold14(
+                    color: colors.blackColor,
+                  ),
+                ),
+                Gaps.vGap50,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 60.w),
+                  child: MyDefaultButton(
+                    onPressed: () {},
+                    btnText: 'saveChanges',
+                    borderColor: colors.main,
+                    color: colors.main,
+                    textStyle: TextStyles.bold17(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

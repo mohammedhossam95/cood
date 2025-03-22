@@ -24,7 +24,7 @@ class UserRegisterCubit extends Cubit<UserRegisterState> {
       result.fold(
         (failure) =>
             emit(UserRegisterFailure(errorMessage: failure.message.toString())),
-        (data) => emit(UserRegisterSuccess(resp: data)),
+        (data) => emit(UserRegisterSuccess(resp: data, params: params)),
       );
     } catch (e) {
       emit(

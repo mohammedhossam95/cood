@@ -1,11 +1,9 @@
-// ignore_for_file: must_be_immutable
-
+import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/widgets/error_text.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
 import 'package:cood/core/widgets/show_dialog.dart';
-import 'package:cood/features/categories/domain/entity/contacts_entity.dart';
 import 'package:cood/features/categories/presentation/widgets/my_progress.dart';
 import 'package:cood/features/home/domain/entities/friend_entity_.dart';
 import 'package:cood/features/home/presentation/cubit/get_friends_list/friends_list_cubit.dart';
@@ -24,41 +22,6 @@ class MySocialFriends extends StatefulWidget {
 }
 
 class _MySocialFriendsState extends State<MySocialFriends> {
-  final List<ContactEntity> contacts = [
-    ContactEntity(
-        name: "عبدالله جمال",
-        phone: "359698820",
-        profileImage: 'assets/images/person.png'),
-    ContactEntity(
-        name: "أحمد المحمدي",
-        phone: "359698845",
-        profileImage: 'assets/images/person.png'),
-    ContactEntity(
-        name: "عبدالله جمال",
-        phone: "359698820",
-        profileImage: 'assets/images/person.png'),
-    ContactEntity(
-        name: "أحمد المحمدي",
-        phone: "359698845",
-        profileImage: 'assets/images/person.png'),
-    ContactEntity(
-        name: "عبدالله جمال",
-        phone: "359698820",
-        profileImage: 'assets/images/person.png'),
-    ContactEntity(
-        name: "أحمد المحمدي",
-        phone: "359698845",
-        profileImage: 'assets/images/person.png'),
-    ContactEntity(
-        name: "عبدالله جمال",
-        phone: "359698820",
-        profileImage: 'assets/images/person.png'),
-    ContactEntity(
-        name: "أحمد المحمدي",
-        phone: "359698845",
-        profileImage: 'assets/images/person.png'),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -81,7 +44,7 @@ class _MySocialFriendsState extends State<MySocialFriends> {
               ),
               child: BlocBuilder<FriendsListCubit, GetFriendsListState>(
                 builder: (context, state) {
-                    if (state is GetFriendsListLoading) {
+                  if (state is GetFriendsListLoading) {
                     return const Center(
                       child: MyProgrees(),
                     );
@@ -90,22 +53,27 @@ class _MySocialFriendsState extends State<MySocialFriends> {
                   if (state is GetFriendsListSuccerss) {
                     List<FriendEntity> friendsList =
                         state.response.data as List<FriendEntity>;
-                    return (friendsList.isNotEmpty)?ListView.builder(
-                      itemBuilder: (context, index) => FriendsContactCard(
-                        contacts: friendsList[index],
-                        isPhoneAppear: true,
-                      ),
-                      itemCount: friendsList.length,
-                    ):const  Center(child:  SizedBox());
-                  }else if(state is GetFriendsListFailure){
+                    return (friendsList.isNotEmpty)
+                        ? ListView.builder(
+                            itemBuilder: (context, index) => FriendsContactCard(
+                              contacts: friendsList[index],
+                              isPhoneAppear: true,
+                            ),
+                            itemCount: friendsList.length,
+                          )
+                        : Center(
+                            child: ErrorText(
+                            width: ScreenUtil().screenWidth,
+                            text: 'noData'.tr,
+                          ));
+                  } else if (state is GetFriendsListFailure) {
                     return ErrorText(
-                        text: state.errorMessage,
-                        width: ScreenUtil().screenWidth,
-                      );
-                  }else{
+                      text: state.errorMessage,
+                      width: ScreenUtil().screenWidth,
+                    );
+                  } else {
                     return const SizedBox();
                   }
-                  
                 },
               ),
             ),

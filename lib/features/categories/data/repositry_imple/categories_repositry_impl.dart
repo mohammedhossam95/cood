@@ -6,10 +6,8 @@ import '/core/base_classes/base_list_response.dart';
 import '/core/base_classes/base_one_response.dart';
 import '/core/error/failures.dart';
 import '/core/params/car_params.dart';
-import '/core/utils/values/strings.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/utils/log_utils.dart';
-import '../../../../injection_container.dart';
 import '../../domain/repository/categories_repository.dart';
 
 class CategoriesRepositryImpl extends CategoriesRepositry {
@@ -17,130 +15,98 @@ class CategoriesRepositryImpl extends CategoriesRepositry {
   CategoriesRepositryImpl({required this.remoteDataSource});
   @override
   Future<Either<Failure, BaseListResponse>> fetchCategories() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final response = await remoteDataSource.getCategoriesRemoteData();
-        Log.d(response.toString());
-        return Right(response);
-      } on ServerException catch (error) {
-        Log.e(
-            '[updateRegister] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
+    try {
+      final response = await remoteDataSource.getCategoriesRemoteData();
+      Log.d(response.toString());
+      return Right(response);
+    } on ServerException catch (error) {
+      Log.e(
+          '[updateRegister] [${error.runtimeType.toString()}] ---- ${error.message}');
+      return Left(error.toFailure());
     }
   }
 
   @override
   Future<Either<Failure, BaseOneResponse>> checkReserveStatus(
       CarParams params) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteData =
-            await remoteDataSource.checkRemoteReserveStatus(params);
+    try {
+      final remoteData =
+          await remoteDataSource.checkRemoteReserveStatus(params);
 
-        return Right(remoteData);
-      } on ServerException catch (error) {
-        return Left(error.toFailure());
-      }
-    } else {
-      return const Left(NetworkFailure());
+      return Right(remoteData);
+    } on ServerException catch (error) {
+      return Left(error.toFailure());
     }
   }
 
   @override
   Future<Either<Failure, BaseOneResponse>> reserve(CarParams params) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteData = await remoteDataSource.makeRemoteReserve(params);
-        return Right(remoteData);
-      } on ServerException catch (error) {
-        return Left(error.toFailure());
-      }
-    } else {
-      return const Left(NetworkFailure());
+    try {
+      final remoteData = await remoteDataSource.makeRemoteReserve(params);
+      return Right(remoteData);
+    } on ServerException catch (error) {
+      return Left(error.toFailure());
     }
   }
 
   @override
   Future<Either<Failure, CheckoutResponse>> getConfig(CarParams params) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteData = await remoteDataSource.getRemoteAPayCheckout(params);
-        return Right(remoteData);
-      } on ServerException catch (error) {
-        return Left(error.toFailure());
-      }
-    } else {
-      return const Left(NetworkFailure());
+    try {
+      final remoteData = await remoteDataSource.getRemoteAPayCheckout(params);
+      return Right(remoteData);
+    } on ServerException catch (error) {
+      return Left(error.toFailure());
     }
   }
 
   @override
   Future<Either<Failure, BaseOneResponse>> getPriceStatus(
       CarParams params) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteData = await remoteDataSource.getRemotePriceStatus(params);
-        return Right(remoteData);
-      } on ServerException catch (error) {
-        return Left(error.toFailure());
-      }
-    } else {
-      return const Left(NetworkFailure());
+    try {
+      final remoteData = await remoteDataSource.getRemotePriceStatus(params);
+      return Right(remoteData);
+    } on ServerException catch (error) {
+      return Left(error.toFailure());
     }
   }
 
   @override
   Future<Either<Failure, BaseOneResponse>> completeAPay(
       CarParams params) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteData = await remoteDataSource.completeRemoteAPay(params);
-        return Right(remoteData);
-      } on ServerException catch (error) {
-        return Left(error.toFailure());
-      }
-    } else {
-      return const Left(NetworkFailure());
+    try {
+      final remoteData = await remoteDataSource.completeRemoteAPay(params);
+      return Right(remoteData);
+    } on ServerException catch (error) {
+      return Left(error.toFailure());
     }
   }
 
   @override
   Future<Either<Failure, BaseListResponse>> getAdditional(
       int categoryId) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final response =
-            await remoteDataSource.getAdditionalRemoteData(categoryId);
-        Log.d(response.toString());
-        return Right(response);
-      } on ServerException catch (error) {
-        Log.e(
-            '[updateRegister] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
+    try {
+      final response =
+          await remoteDataSource.getAdditionalRemoteData(categoryId);
+      Log.d(response.toString());
+      return Right(response);
+    } on ServerException catch (error) {
+      Log.e(
+          '[updateRegister] [${error.runtimeType.toString()}] ---- ${error.message}');
+      return Left(error.toFailure());
     }
   }
-  
+
   @override
-  Future<Either<Failure, BaseOneResponse>> getFilterUserByCategory(int id)  async {
-    if (await networkInfo.isConnected) {
-      try {
-        final response =
-            await remoteDataSource.getFilterUserByCategoryId(id);
-        Log.d(response.toString());
-        return Right(response);
-      } on ServerException catch (error) {
-        Log.e(
-            '[getFilterUserById] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
+  Future<Either<Failure, BaseOneResponse>> getFilterUserByCategory(
+      int id) async {
+    try {
+      final response = await remoteDataSource.getFilterUserByCategoryId(id);
+      Log.d(response.toString());
+      return Right(response);
+    } on ServerException catch (error) {
+      Log.e(
+          '[getFilterUserById] [${error.runtimeType.toString()}] ---- ${error.message}');
+      return Left(error.toFailure());
     }
   }
 }

@@ -14,7 +14,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class FriendsContactCard extends StatefulWidget {
   final FriendEntity contacts;
   bool isPhoneAppear;
-  FriendsContactCard({super.key, required this.contacts, this.isPhoneAppear = false});
+  FriendsContactCard(
+      {super.key, required this.contacts, this.isPhoneAppear = false});
 
   @override
   State<FriendsContactCard> createState() => _ContactCardState();
@@ -81,12 +82,12 @@ class _ContactCardState extends State<FriendsContactCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.contacts.name??'',
+                            widget.contacts.name ?? '',
                             style: TextStyles.bold12(),
                           ),
                           if (widget.isPhoneAppear)
                             Text(
-                              widget.contacts.phone??'',
+                              widget.contacts.phone ?? '',
                               style: TextStyles.bold12(),
                             ),
                         ],
@@ -109,7 +110,7 @@ class _ContactCardState extends State<FriendsContactCard> {
                           ),
                   ],
                 ),
-                (widget.isPhoneAppear) ? Gaps.vGap2 : Gaps.vGap15,
+                (widget.isPhoneAppear) ? Gaps.vGap2 : Gaps.vGap16,
                 if (isExpanded)
                   Padding(
                     padding: EdgeInsets.symmetric(
@@ -132,8 +133,7 @@ class _ContactCardState extends State<FriendsContactCard> {
                               shape: BoxShape.circle,
                               backgroundColor: MyColors.black,
                               childImagePath: ImgAssets.tiktokImg,
-                              onPressed: () {
-                              },
+                              onPressed: () {},
                             ),
 
                             //------------------------3  insta
@@ -251,7 +251,7 @@ class _ContactCardState extends State<FriendsContactCard> {
                       bottomLeft: Radius.circular(19.r),
                     ),
             ),
-            //child: 
+            //child:
           ),
         ),
       ],

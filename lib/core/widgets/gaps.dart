@@ -30,7 +30,6 @@ class Gaps {
   static Widget vGap10 = SizedBox(height: 10.h);
   static Widget vGap11 = SizedBox(height: 11.h);
   static Widget vGap12 = SizedBox(height: 12.0.h);
-  static Widget vGap15 = SizedBox(height: 15.h);
   static Widget vGap16 = SizedBox(height: 16.h);
   static Widget vGap18 = SizedBox(height: 18.h);
   static Widget vGap35 = SizedBox(height: 35.h);
@@ -48,7 +47,7 @@ class Gaps {
   static Widget vGap95 = SizedBox(height: 95.h);
   static Widget vGap100 = SizedBox(height: 100.h);
   static Widget vGap145 = SizedBox(height: 145.h);
-  static Widget vGap150 = SizedBox(height: 150.h);
+  static Widget vGap160 = SizedBox(height: 150.h);
   static Widget vGap30 = SizedBox(height: 30.h);
   static Widget vGap32 = SizedBox(height: 32.h);
   static Widget vGap20 = SizedBox(height: 20.h);

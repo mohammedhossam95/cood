@@ -1,8 +1,6 @@
-
-import 'package:equatable/equatable.dart';
-
 import 'package:cood/features/categories/domain/entity/category_entity.dart';
 import 'package:cood/features/categories/domain/entity/category_user_entity.dart';
+import 'package:equatable/equatable.dart';
 
 class ResultEntity extends Equatable {
   final CategoryEntity? category;
@@ -15,11 +13,4 @@ class ResultEntity extends Equatable {
 
   @override
   List<Object?> get props => [category, users];
-
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'category': category?.toJson(),
-      'users': users?.map((x) => x.toJson()).toList(),
-    };
-  }
 }

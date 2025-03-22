@@ -1,4 +1,3 @@
-import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -7,8 +6,8 @@ Future<bool?> showAppDialog({
   required Widget child,
   double? borderRadius,
   bool isDismissible = true,
-  double horizontalPadding=40.0,
-  double verticalPadding=24.0,
+  double horizontalPadding = 40.0,
+  double verticalPadding = 24.0,
   Color? backgroundColor,
 }) {
   return showDialog<bool?>(
@@ -20,8 +19,9 @@ Future<bool?> showAppDialog({
           borderRadius: BorderRadius.circular(borderRadius ?? 12.r),
         ),
         child: Dialog(
-          backgroundColor: backgroundColor??Colors.white,
-          insetPadding: EdgeInsets.symmetric(horizontal: horizontalPadding.w, vertical: verticalPadding.h),
+          backgroundColor: backgroundColor ?? Colors.white,
+          insetPadding: EdgeInsets.symmetric(
+              horizontal: horizontalPadding.w, vertical: verticalPadding.h),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius ?? 12.r),
           ),

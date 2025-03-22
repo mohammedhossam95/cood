@@ -80,7 +80,7 @@ class ConfirmResetPasswordScreenState
                         ),
                         Gaps.vGap25,
                         Image.asset(ImageAssets.otpForgetPasswordScreenIcon),
-                        Gaps.vGap15,
+                        Gaps.vGap16,
                         Text(
                           'modifyPassword'.tr,
                           style: TextStyles.bold24(color: colors.upBackGround),

@@ -769,6 +769,8 @@
   "otpVerificationCode": "Otp Verification Code",
   "otpVerificationPhrase": "We have sent an OTP code to your phone number +11111111. Enter the OTP code below to verify.",
   "notHaveOtp": "Did not receive the temporary password?",
+  "resend": "Resend code",
+
   "resendCodeOtp": "Resend temporary password",
   "modifyPassword": "Modify Password",
   "saveNewPassword": "Save new password",

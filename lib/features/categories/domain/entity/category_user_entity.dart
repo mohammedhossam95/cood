@@ -1,8 +1,5 @@
-
-
-import 'package:equatable/equatable.dart';
-
 import 'package:cood/features/categories/domain/entity/social_media_links_entity.dart';
+import 'package:equatable/equatable.dart';
 
 class CategoryUserEntity extends Equatable {
   final int? id;
@@ -19,15 +16,11 @@ class CategoryUserEntity extends Equatable {
     this.socialMediaLinks,
   });
   @override
-  List<Object?> get props => [];
-
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'id': id,
-      'name': name,
-      'phone': phone,
-      'image': image,
-      'socialMediaLinks': socialMediaLinks?.map((x) => x.toJson()).toList(),
-    };
-  }
+  List<Object?> get props => [
+        id,
+        name,
+        phone,
+        image,
+        socialMediaLinks,
+      ];
 }

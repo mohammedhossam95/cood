@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cood/core/base_classes/api_error.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
@@ -84,7 +85,8 @@ class DioConsumerImpl implements DioConsumer {
     }
   }
 
-  Future<void> _handleAccessTokenHeader() async {//ToDo update access token
+  Future<void> _handleAccessTokenHeader() async {
+    //ToDo update access token
     final String? accessToken = await secureStorage.getAccessToken();
     if (accessToken != null && accessToken.isNotEmpty) {
       client.options.headers[HttpHeaders.authorizationHeader] =
@@ -227,6 +229,13 @@ class DioConsumerImpl implements DioConsumer {
                 error.response?.data.toString(),
       );
     }
+    if (error.response?.statusCode == StatusCode.unProcessableContent) {
+      APIError apiError = APIError.fromJson(error.response?.data);
+      String? message = apiError.getFirstError();
+      throw ServerException(
+        message: message,
+      );
+    }
 
     if (error.response?.statusCode == StatusCode.updateRegisterApprovedUser) {
       throw UpdateRegisterApprovedUserException(
@@ -237,6 +246,7 @@ class DioConsumerImpl implements DioConsumer {
     if (error.type == DioExceptionType.unknown) {
       throw InternetConnectionException(message: Strings.noInternetConnection);
     }
+
     throw ServerException(
       message:
           error.response?.data['message'] ?? error.response?.data.toString(),

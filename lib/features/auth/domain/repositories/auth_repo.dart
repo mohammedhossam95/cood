@@ -5,12 +5,10 @@ import '/core/base_classes/base_one_response.dart';
 import '/features/auth/data/models/new_models/register_model.dart';
 import '/features/auth/data/models/new_models/verify_code_model.dart';
 import '/features/auth/data/models/user_register_model.dart';
-import '/features/auth/domain/usecases/new_usecases/verify_code_usecase.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/utils/enums.dart';
 import '../../data/models/login_model.dart';
-import '../../data/models/verify_otp_model.dart';
 import '../entities/confirm_reset_password_response.dart';
 import '../entities/reset_password_response.dart';
 import '../entities/verify_reset_password_response.dart';
@@ -18,7 +16,6 @@ import '../usecases/logout_usecase.dart';
 import '../usecases/reset_password_usecase.dart';
 import '../usecases/save_user_role.dart';
 import '../usecases/save_user_type_usecase.dart';
-import '../usecases/verify_otp_usecase.dart';
 import '../usecases/verify_reset_password_usecase.dart';
 
 abstract class AuthRepository {
@@ -32,10 +29,10 @@ abstract class AuthRepository {
       {required AuthParams params});
 
   Future<Either<Failure, VerifyCodeResponseModel>> verifyCode(
-      {required VerifyCodeParams params});
+      {required AuthParams params});
 
-  Future<Either<Failure, ConfirmCodeAuthRespModel>> verifyOtpRpo(
-      {required VerifyOtpParams params});
+  Future<Either<Failure, BaseOneResponse>> verifyOtpRpo(
+      {required AuthParams params});
 
   Future<Either<Failure, BaseOneResponse>> logout(
       {required LogOutParams params});

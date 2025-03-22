@@ -1,48 +1,18 @@
-import 'package:equatable/equatable.dart';
+import 'package:cood/core/base_classes/base_one_response.dart';
+import 'package:cood/core/params/auth_params.dart';
 import 'package:dartz/dartz.dart';
+
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../../data/models/verify_otp_model.dart';
 import '../repositories/auth_repo.dart';
 
-class VerifyOtpUseCase
-    extends UseCase<ConfirmCodeAuthRespModel, VerifyOtpParams> {
+class VerifyOtpUseCase extends UseCase<BaseOneResponse, AuthParams> {
   final AuthRepository repository;
 
   VerifyOtpUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, ConfirmCodeAuthRespModel>> call(
-      VerifyOtpParams params) async {
+  Future<Either<Failure, BaseOneResponse>> call(AuthParams params) async {
     return await repository.verifyOtpRpo(params: params);
   }
-}
-
-class VerifyOtpParams extends Equatable {
-  final String? phone;
-  final String? code;
-  final String? deviceId;
-  final String? deviceType;
-
-  const VerifyOtpParams({
-    this.phone,
-    this.code,
-    this.deviceId,
-    this.deviceType,
-  });
-
-  Map<String, dynamic> toJson() => {
-        "phone": phone,
-        "login_confirmation": code,
-        "device_id": deviceId,
-        "device_type": deviceType,
-      };
-
-  @override
-  List<Object?> get props => <Object?>[
-        phone,
-        code,
-        deviceId,
-        deviceType,
-      ];
 }

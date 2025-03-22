@@ -7,6 +7,8 @@ class AuthParams extends Equatable {
   final String? passwordConfirm;
   final String? token;
   final String? userType;
+  final int? userId;
+  final String? otp;
 
   const AuthParams({
     this.name,
@@ -15,6 +17,8 @@ class AuthParams extends Equatable {
     this.passwordConfirm,
     this.token,
     this.userType,
+    this.userId,
+    this.otp,
   });
 
   @override
@@ -25,6 +29,8 @@ class AuthParams extends Equatable {
         passwordConfirm,
         token,
         userType,
+        userId,
+        otp,
       ];
 
   Map<String, dynamic> toJson() => {

@@ -6,10 +6,8 @@ import '/core/error/exceptions.dart';
 import '/core/error/failures.dart';
 import '/core/params/search_params.dart';
 import '/core/utils/log_utils.dart';
-import '/core/utils/values/strings.dart';
 import '/features/home/data/datasources/home_remote_data_source.dart';
 import '/features/home/domain/repositories/home_repo.dart';
-import '/injection_container.dart';
 
 class HomeRepoImpl implements HomeRepo {
   final HomeRemoteDataSource remote;
@@ -18,100 +16,76 @@ class HomeRepoImpl implements HomeRepo {
   @override
   Future<Either<Failure, BaseListResponse>> getCities(
       SearchParams params) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final BaseListResponse response = await remote.getCities(params);
-        return Right(response);
-      } on AppException catch (error) {
-        Log.e(
-            '[getCities] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
+    try {
+      final BaseListResponse response = await remote.getCities(params);
+      return Right(response);
+    } on AppException catch (error) {
+      Log.e(
+          '[getCities] [${error.runtimeType.toString()}] ---- ${error.message}');
+      return Left(error.toFailure());
     }
   }
 
   @override
   Future<Either<Failure, BaseListResponse>> getAllUserGallary() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final response = await remote.getAllUserGalleryRemoteData();
+    try {
+      final response = await remote.getAllUserGalleryRemoteData();
 
-        return Right(response);
-      } on AppException catch (error) {
-        Log.e(
-            '[getAllUserGallary] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
+      return Right(response);
+    } on AppException catch (error) {
+      Log.e(
+          '[getAllUserGallary] [${error.runtimeType.toString()}] ---- ${error.message}');
+      return Left(error.toFailure());
     }
   }
 
   @override
   Future<Either<Failure, BaseListResponse>> getFriendsList() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final response = await remote.getFriendsList();
+    try {
+      final response = await remote.getFriendsList();
 
-        return Right(response);
-      } on AppException catch (error) {
-        Log.e(
-            '[getFrindsList] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
+      return Right(response);
+    } on AppException catch (error) {
+      Log.e(
+          '[getFrindsList] [${error.runtimeType.toString()}] ---- ${error.message}');
+      return Left(error.toFailure());
     }
   }
 
   @override
   Future<Either<Failure, BaseListResponse>> getUserSocialMedia() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final response = await remote.getUserSocialMedia();
-        return Right(response);
-      } on AppException catch (error) {
-        Log.e(
-            '[getUsersocialMedia] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
+    try {
+      final response = await remote.getUserSocialMedia();
+      return Right(response);
+    } on AppException catch (error) {
+      Log.e(
+          '[getUsersocialMedia] [${error.runtimeType.toString()}] ---- ${error.message}');
+      return Left(error.toFailure());
     }
   }
 
   @override
   Future<Either<Failure, BaseListResponse>> getAllSocialMedia() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final response = await remote.getAllSocialMedia();
-        return Right(response);
-      } on AppException catch (error) {
-        Log.e(
-            '[getAllSocialMedia] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
+    try {
+      final response = await remote.getAllSocialMedia();
+      return Right(response);
+    } on AppException catch (error) {
+      Log.e(
+          '[getAllSocialMedia] [${error.runtimeType.toString()}] ---- ${error.message}');
+      return Left(error.toFailure());
     }
   }
 
   @override
   Future<Either<Failure, BaseListResponse>> addUserSocialAccount(
       AddAccountParams params) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final response = await remote.addUserSocialAccount(params);
-        return Right(response);
-      } on AppException catch (error) {
-        Log.e(
-            '[AddUserSocialMediaAccount] [${error.runtimeType.toString()}] ---- ${error.message}');
-        return Left(error.toFailure());
-      }
-    } else {
-      return Left(NetworkFailure(message: Strings.noInternetConnection));
+    try {
+      final response = await remote.addUserSocialAccount(params);
+      return Right(response);
+    } on AppException catch (error) {
+      Log.e(
+          '[AddUserSocialMediaAccount] [${error.runtimeType.toString()}] ---- ${error.message}');
+      return Left(error.toFailure());
     }
   }
 }
