@@ -23,6 +23,7 @@ class FriendshipInfoModel extends FriendshipInfoEntity {
         "isSender": isSender,
       };
 }
+
 class FriendListRespModel extends BaseListResponse {
   const FriendListRespModel({
     super.message,
@@ -60,9 +61,9 @@ class FriendItemModel extends FriendEntity {
     super.socialMediaLinks,
     super.friendshipInfo,
   });
-    
 
-  factory FriendItemModel.fromJson(Map<String, dynamic> json) => FriendItemModel(
+  factory FriendItemModel.fromJson(Map<String, dynamic> json) =>
+      FriendItemModel(
         id: json["id"],
         name: json["name"],
         phone: json["phone"],

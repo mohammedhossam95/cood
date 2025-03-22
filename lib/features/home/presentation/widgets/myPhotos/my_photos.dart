@@ -1,5 +1,4 @@
-// ignore_for_file: must_be_immutable
-
+import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/core/widgets/error_text.dart';
@@ -15,20 +14,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../cubit/get_all_user_gallary/get_user_gallary_states.dart';
 
 class MySocialPhotos extends StatelessWidget {
-  MySocialPhotos({super.key});
-  List<String> gridImages = [
-    'assets/images/gridImage.png',
-    'assets/images/gridImage3.png',
-    'assets/images/gridImage2.png',
-    'assets/images/gridImage.png',
-    'assets/images/gridImage3.png',
-    'assets/images/gridImage2.png',
-    'assets/images/gridImage.png',
-    'assets/images/gridImage3.png',
-    'assets/images/gridImage2.png',
-    'assets/images/gridImage.png',
-    'assets/images/gridImage3.png',
-  ];
+  const MySocialPhotos({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -85,13 +71,16 @@ class MySocialPhotos extends StatelessWidget {
                               );
                             },
                           )
-                        : const SizedBox();
-                  } else if(state is GetUserGallaryFailure) {
+                        : ErrorText(
+                            width: ScreenUtil().screenWidth,
+                            text: 'noData'.tr,
+                          );
+                  } else if (state is GetUserGallaryFailure) {
                     return ErrorText(
-                        text: state.errorMessage,
-                        width: ScreenUtil().screenWidth,
-                      );
-                  }else{
+                      text: state.errorMessage,
+                      width: ScreenUtil().screenWidth,
+                    );
+                  } else {
                     return const SizedBox();
                   }
                 },

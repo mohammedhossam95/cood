@@ -223,7 +223,6 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, BaseOneResponse>> deleteAccount() {
-    // TODO: implement deleteAccount
     throw UnimplementedError();
   }
 

@@ -45,11 +45,11 @@ class CategoriesRespModel extends BaseListResponse {
 
 class CategoryModel extends CategoryEntity {
   const CategoryModel({
-     super.id,
-     super.nameAr,
-     super.nameEn,
-     super.image,
-     super.icon,
+    super.id,
+    super.nameAr,
+    super.nameEn,
+    super.image,
+    super.icon,
   });
 
   // Map JSON to `CategoryModel`
@@ -64,6 +64,7 @@ class CategoryModel extends CategoryEntity {
   }
 
   // Map `CategoryModel` to JSON
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -74,4 +75,3 @@ class CategoryModel extends CategoryEntity {
     };
   }
 }
-

@@ -1,5 +1,3 @@
-
-
 import 'package:equatable/equatable.dart';
 
 class CategoryEntity extends Equatable {
@@ -18,14 +16,4 @@ class CategoryEntity extends Equatable {
   });
   @override
   List<Object?> get props => [id, nameAr, nameEn, image, icon];
-
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'id': id,
-      'nameAr': nameAr,
-      'nameEn': nameEn,
-      'image': image,
-      'icon': icon,
-    };
-  }
 }

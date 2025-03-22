@@ -28,14 +28,13 @@ class AllSocialContainerItem extends StatelessWidget {
         convertStringColor(allSocialAccount.color ?? '1877F2');
     return Container(
       decoration: BoxDecoration(
-        color: itemColor.withOpacity(
-          0.1,
+        color: itemColor.withValues(
+          alpha: 0.1,
         ),
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(
-          color:  (itemColor == MyColors.socialYellow)
-                ? MyColors.black
-                : itemColor,
+          color:
+              (itemColor == MyColors.socialYellow) ? MyColors.black : itemColor,
         ),
       ),
       margin: EdgeInsets.all(10.h),
@@ -79,7 +78,7 @@ class AllSocialContainerItem extends StatelessWidget {
               children: [
                 Text(
                   allSocialAccount.name ?? '',
-                  style: TextStyles.bold14(  ),
+                  style: TextStyles.bold14(),
                   maxLines: 2,
                 ),
                 InkWell(
