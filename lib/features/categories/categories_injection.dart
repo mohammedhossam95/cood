@@ -6,6 +6,7 @@ import 'package:cood/features/categories/domain/use_case/categories_use_case.dar
 import 'package:cood/features/categories/domain/use_case/check_reserve_status_usecase.dart';
 import 'package:cood/features/categories/domain/use_case/complete_applepay_usecase.dart';
 import 'package:cood/features/categories/domain/use_case/get_apple_config_usecase.dart';
+import 'package:cood/features/categories/domain/use_case/get_filter_users_by_category_use_case.dart';
 import 'package:cood/features/categories/domain/use_case/get_price_status_usecase.dart';
 import 'package:cood/features/categories/domain/use_case/make_reserve_usecase.dart';
 import 'package:cood/features/categories/presentation/cubit/apple_pay_config_cubit/apple_pay_config_cubit.dart';
@@ -13,6 +14,7 @@ import 'package:cood/features/categories/presentation/cubit/categories_cubit/cat
 import 'package:cood/features/categories/presentation/cubit/check_reserve_status/check_reserve_status_cubit.dart';
 import 'package:cood/features/categories/presentation/cubit/complete_applepay_cubit/complete_applepay_cubit.dart';
 import 'package:cood/features/categories/presentation/cubit/coupon_validation/coupon_validation_cubit.dart';
+import 'package:cood/features/categories/presentation/cubit/get_filter_user_by_category/get_filter_user_by_category_cubit.dart';
 import 'package:cood/features/categories/presentation/cubit/price_status_cubit/price_status_cubit.dart';
 import 'package:cood/features/categories/presentation/cubit/reserve_cubit/reserve_cubit.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +24,15 @@ import '/injection_container.dart';
 
 final _sl = ServiceLocator.instance;
 Future<void> initCategoriesInjection() async {
+  //--------------------------------------------------
+          _sl.registerFactory<GetFilterUserByCategoryCubit>(
+      () => GetFilterUserByCategoryCubit(  _sl()));
+  _sl.registerFactory<GetFilterUserByCategoryUseCase>(
+      () => GetFilterUserByCategoryUseCase( _sl())); 
+  // _sl.registerFactory<CategoriesRepositry>(() => CategoriesRepositryImpl(_sl()));
+  // _sl.registerLazySingleton<HomeRemoteDataSource>(
+  //     () => HomeRemoteDataSourceImpl());  
+  //-----------------------------------------------
   _sl.registerFactory<CategoriesCubit>(() => CategoriesCubit(_sl()));
   _sl.registerFactory<CheckReserveStatusCubit>(
       () => CheckReserveStatusCubit(checkReserveUseCase: _sl()));
@@ -65,6 +76,9 @@ Future<void> initCategoriesInjection() async {
 
 /// BlocProviders
 List<BlocProvider> get categoriesBlocs => <BlocProvider>[
+  BlocProvider<GetFilterUserByCategoryCubit>(
+        create: (BuildContext context) => _sl<GetFilterUserByCategoryCubit>(),
+      ),
       BlocProvider<CategoriesCubit>(
         create: (BuildContext context) => _sl<CategoriesCubit>(),
       ),

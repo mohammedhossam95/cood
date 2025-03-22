@@ -33,7 +33,9 @@ class AllSocialContainerItem extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(
-          color: itemColor,
+          color:  (itemColor == MyColors.socialYellow)
+                ? MyColors.black
+                : itemColor,
         ),
       ),
       margin: EdgeInsets.all(10.h),
@@ -77,11 +79,7 @@ class AllSocialContainerItem extends StatelessWidget {
               children: [
                 Text(
                   allSocialAccount.name ?? '',
-                  style: TextStyles.bold14(
-                    color: (itemColor == MyColors.socialYellow)
-                        ? MyColors.black
-                        : itemColor,
-                  ),
+                  style: TextStyles.bold14(  ),
                   maxLines: 2,
                 ),
                 InkWell(
@@ -99,11 +97,7 @@ class AllSocialContainerItem extends StatelessWidget {
                   },
                   child: Text(
                     'addAccount'.tr,
-                    style: TextStyles.bold14(
-                      color: (itemColor == MyColors.socialYellow)
-                          ? MyColors.black
-                          : itemColor,
-                    ),
+                    style: TextStyles.bold14(),
                   ),
                 ),
               ],

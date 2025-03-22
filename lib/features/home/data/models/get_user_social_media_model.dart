@@ -30,6 +30,8 @@ class UserSocialMediaItemModel extends SocialMediaEntity {
     super.platform,
     super.icon,
     super.link,
+    super.color,
+    super.inputType,
   });
 
   factory UserSocialMediaItemModel.fromJson(Map<String, dynamic> json) => UserSocialMediaItemModel(
@@ -37,6 +39,8 @@ class UserSocialMediaItemModel extends SocialMediaEntity {
         platform: json["platform"],
         icon: json["icon"],
         link: json["link"],
+        color: json["color"],
+        inputType: json["input_type"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -44,5 +48,9 @@ class UserSocialMediaItemModel extends SocialMediaEntity {
         "platform": platform,
         "icon": icon,
         "link": link,
+        "color":color,
+        "input_type":inputType,
+
+
       };
 }

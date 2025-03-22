@@ -9,26 +9,14 @@ class SocialAccounts extends StatelessWidget {
   const SocialAccounts({
     super.key,
     required this.socialAccounts,
-    required this.socialPhotoColors,
-    required this.socialBackgroundColors,
   });
 
   /// List of social accounts to be displayed.
   final List<SocialMediaEntity> socialAccounts;
-
-  /// Colors for the social account photos.
-  final List<Color> socialPhotoColors;
-
-  /// Background colors for the social account containers.
-  final List<Color> socialBackgroundColors;
+  
 
   @override
   Widget build(BuildContext context) {
-    // assert(
-    //   socialAccounts.length == socialPhotoColors.length &&
-    //       socialAccounts.length == socialBackgroundColors.length,
-    //   'The lengths of socialAccounts, socialPhotoColors, and socialBackgroundColors must match.',
-    // );
 
     return ListView.builder(
       shrinkWrap: true,
@@ -36,8 +24,6 @@ class SocialAccounts extends StatelessWidget {
       itemBuilder: (context, index) {
         return SocialContainerItem(
           socialAccount: socialAccounts[index],
-          socialPhotoColors: socialPhotoColors[index],
-          socialBackgroundColors: socialBackgroundColors[index],
         );
       },
     );

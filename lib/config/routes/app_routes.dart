@@ -146,7 +146,7 @@ class Routes {
   static const String failedOtpScreenRoute = '/FailedOtpScreenScreen';
   static const String changePasswordRoute = '/changePasswordScreen';
 //---------------------added by ali
-  static const String communicationItemDetails = '/CommunicationItemDetails';
+  static const String communicationItemSliver = '/CommunicationItemDetails';
 }
 
 final _sl = ServiceLocator.instance;
@@ -340,7 +340,7 @@ class AppRoutes {
             params: params,
           ),
         );
-      case Routes.communicationItemDetails:
+      case Routes.communicationItemSliver:
         return MaterialPageRoute(
           settings: routeSettings,
           builder: (BuildContext context) => CommunicationItemDetails(),

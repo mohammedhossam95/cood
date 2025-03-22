@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:cood/core/utils/values/app_colors.dart';
+import 'package:cood/core/widgets/error_text.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
 import 'package:cood/core/widgets/show_dialog.dart';
@@ -95,11 +96,16 @@ class _MySocialFriendsState extends State<MySocialFriends> {
                         isPhoneAppear: true,
                       ),
                       itemCount: friendsList.length,
-                    ):const  Center(child: Text('List has no Images !'),);
+                    ):const  Center(child:  SizedBox());
+                  }else if(state is GetFriendsListFailure){
+                    return ErrorText(
+                        text: state.errorMessage,
+                        width: ScreenUtil().screenWidth,
+                      );
+                  }else{
+                    return const SizedBox();
                   }
-                  return const Center(
-                    child: Text(' please try again !'),
-                  );
+                  
                 },
               ),
             ),

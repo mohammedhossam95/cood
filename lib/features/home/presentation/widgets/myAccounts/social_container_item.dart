@@ -1,12 +1,13 @@
 // ignore_for_file: use_build_context_synchronously, unused_element
 
 import 'package:cood/config/locale/app_localizations.dart';
+import 'package:cood/core/utils/convert_string_color.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
+import 'package:cood/core/utils/values/luanche_url_method.dart';
 import 'package:cood/core/utils/values/text_styles.dart';
 import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/features/home/domain/entities/user_social_media_entity.dart';
-import 'package:cood/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,25 +15,26 @@ import 'package:url_launcher/url_launcher.dart';
 class SocialContainerItem extends StatelessWidget {
   const SocialContainerItem({
     required this.socialAccount,
-    this.socialPhotoColors = MyColors.main,
-    this.socialBackgroundColors = MyColors.lightTextColor,
     super.key,
   });
 
   final SocialMediaEntity socialAccount;
-  final Color socialPhotoColors;
-  final Color socialBackgroundColors;
+  
+
 
   @override
   Widget build(BuildContext context) {
+    final Color itemColor =
+        convertStringColor(socialAccount.color ?? '1877F2');
     return  Container(
         decoration: BoxDecoration(
-          color: socialBackgroundColors,
+          // ignore: deprecated_member_use
+          color: itemColor.withOpacity(0.1,),
           borderRadius: BorderRadius.circular(20.r),
           border: Border.all(
-            color: (socialPhotoColors == MyColors.socialYellow)
+            color: (itemColor == MyColors.socialYellow)
                 ? MyColors.black
-                : socialPhotoColors,
+                : itemColor,
           ),
         ),
         margin: EdgeInsets.all(10.h),
@@ -47,7 +49,7 @@ class SocialContainerItem extends StatelessWidget {
               width: 70.w,
               height: double.infinity,
               decoration: BoxDecoration(
-                color: socialPhotoColors,
+                color: itemColor,
                 borderRadius:
                     (AppLocalizations.of(context)?.isArLocale ?? false)
                         ? BorderRadius.only(
@@ -87,9 +89,7 @@ class SocialContainerItem extends StatelessWidget {
                     },
                     child: Text(
                       'clickToViewProfile'.tr,
-                      style: TextStyles.bold14(
-                        color:colors.main,
-                      ),
+                      style:TextStyles.bold14(),
                     ),
                   ),
                 ],
@@ -98,9 +98,9 @@ class SocialContainerItem extends StatelessWidget {
             // Menu icon
             Image.asset(
               'assets/images/Menu.png',
-              color: (socialPhotoColors == MyColors.socialYellow)
+              color: (itemColor == MyColors.socialYellow)
                   ? MyColors.black
-                  : socialPhotoColors,
+                  : itemColor,
             ),
             Gaps.hGap1,
           ],
@@ -109,12 +109,5 @@ class SocialContainerItem extends StatelessWidget {
     );
   }
 
-  Future<void> onLaunche(String url, context) async {
-    final uri = Uri.parse(url);
-    if (!await launchUrl(uri)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Could not launch $url')),
-      );
-    }
-  }
+
 }

@@ -22,12 +22,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MySocialAccounts extends StatelessWidget {
   MySocialAccounts({super.key});
-  List<Color> socialPhotoColors = [
-    MyColors.main,
-    MyColors.black,
-    MyColors.socialYellow,
-    MyColors.socialGreen,
-  ];
   List<Color> socialBacgroundColors = [
     MyColors.facbookItemColor,
     MyColors.tikokItemColor,
@@ -67,10 +61,7 @@ class MySocialAccounts extends StatelessWidget {
                         state.response.data as List<SocialMediaEntity>;
                     return sociaAccounts.isNotEmpty
                         ? SocialAccounts(
-                            //ToDo when color added in response
                             socialAccounts: sociaAccounts,
-                            socialBackgroundColors: socialBacgroundColors,
-                            socialPhotoColors: socialPhotoColors,
                           )
                         : ErrorText(
                             width: ScreenUtil().screenWidth,
@@ -215,8 +206,9 @@ class ShowAllAccountsDialog extends StatelessWidget {
         ),
         Gaps.vGap20,
         MyDefaultButton(
-          onPressed: () {
+          onPressed: () async{
             Navigator.pop(context);
+            await context.read<GetUserSocialMediaCubit>().getUserSocialMedia();
           },
           height: 44.h,
           width: 128.w,

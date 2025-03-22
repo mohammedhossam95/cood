@@ -125,4 +125,22 @@ class CategoriesRepositryImpl extends CategoriesRepositry {
       return Left(NetworkFailure(message: Strings.noInternetConnection));
     }
   }
+  
+  @override
+  Future<Either<Failure, BaseOneResponse>> getFilterUserByCategory(int id)  async {
+    if (await networkInfo.isConnected) {
+      try {
+        final response =
+            await remoteDataSource.getFilterUserByCategoryId(id);
+        Log.d(response.toString());
+        return Right(response);
+      } on ServerException catch (error) {
+        Log.e(
+            '[getFilterUserById] [${error.runtimeType.toString()}] ---- ${error.message}');
+        return Left(error.toFailure());
+      }
+    } else {
+      return Left(NetworkFailure(message: Strings.noInternetConnection));
+    }
+  }
 }

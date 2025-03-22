@@ -7,6 +7,9 @@ import '../../../../core/base_classes/base_list_response.dart';
 import '../../../../core/error/failures.dart';
 
 abstract class CategoriesRepositry {
+  //------------------------------
+  Future<Either<Failure, BaseOneResponse>> getFilterUserByCategory(int id);
+  //-------------------------------
   Future<Either<Failure, BaseListResponse>> fetchCategories();
   Future<Either<Failure, BaseOneResponse>> checkReserveStatus(CarParams params);
   Future<Either<Failure, BaseOneResponse>> reserve(CarParams params);
