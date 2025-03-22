@@ -71,7 +71,7 @@ class MyPageView extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 10.w),
                     child: Column(
                       children: [
-                        Gaps.vGap15,
+                        Gaps.vGap16,
                         _buildDots(context: context, currentIndex: index),
                       ],
                     ),

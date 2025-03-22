@@ -10,7 +10,6 @@ import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/features/categories/domain/entity/category_user_entity.dart';
 import 'package:cood/features/categories/presentation/widgets/social_contact_card_custom_icon.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -113,7 +112,7 @@ class _ContactCardState extends State<ContactCard> {
                           ),
                   ],
                 ),
-                (widget.isPhoneAppear) ? Gaps.vGap2 : Gaps.vGap15,
+                (widget.isPhoneAppear) ? Gaps.vGap2 : Gaps.vGap16,
                 if (isExpanded)
                   Padding(
                     padding: EdgeInsets.symmetric(
@@ -129,7 +128,10 @@ class _ContactCardState extends State<ContactCard> {
                               backgroundColor: MyColors.socialYellow,
                               childImagePath: ImgAssets.snapChatImg,
                               onPressed: () {
-                                onLaunche(widget.contacts.socialMediaLinks?[2].link ?? '', context);
+                                onLaunche(
+                                    widget.contacts.socialMediaLinks?[2].link ??
+                                        '',
+                                    context);
                               },
                             ),
 
@@ -139,7 +141,10 @@ class _ContactCardState extends State<ContactCard> {
                               backgroundColor: MyColors.black,
                               childImagePath: ImgAssets.tiktokImg,
                               onPressed: () {
-                                onLaunche(widget.contacts.socialMediaLinks?[1].link ?? '', context);
+                                onLaunche(
+                                    widget.contacts.socialMediaLinks?[1].link ??
+                                        '',
+                                    context);
                               },
                             ),
 
@@ -189,7 +194,10 @@ class _ContactCardState extends State<ContactCard> {
                               backgroundColor: MyColors.main,
                               childImagePath: ImgAssets.facbookImg,
                               onPressed: () {
-                                onLaunche(widget.contacts.socialMediaLinks?[0].link ?? '', context);
+                                onLaunche(
+                                    widget.contacts.socialMediaLinks?[0].link ??
+                                        '',
+                                    context);
                               },
                             ),
 
@@ -245,7 +253,7 @@ class _ContactCardState extends State<ContactCard> {
             width: 65.w,
             height: 65.h,
             child: DiffImage(
-              image: widget.contacts.image??nullNetworkImage,
+              image: widget.contacts.image ?? nullNetworkImage,
               fitType: BoxFit.cover,
               borderRadius: (isArabic)
                   ? BorderRadius.only(

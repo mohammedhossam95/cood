@@ -3,11 +3,9 @@ import 'package:dio/dio.dart';
 
 import '/features/auth/data/models/new_models/verify_code_model.dart';
 import '/features/auth/data/models/verify_otp_model.dart';
-import '/features/auth/domain/usecases/new_usecases/verify_code_usecase.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../injection_container.dart';
 import '../../domain/usecases/reset_password_usecase.dart';
-import '../../domain/usecases/verify_otp_usecase.dart';
 import '../models/confirm_reset_password_model.dart';
 import '../models/login_model.dart';
 import '../models/reset_password_model.dart';
@@ -17,10 +15,9 @@ abstract class AuthRemoteDataSource {
   Future<LoginRespModel> login({required AuthParams params});
   Future<UserRegisterRespModel> doRemoteRegister({required AuthParams params});
   Future<VerifyCodeResponseModel> verifyRemoteCode(
-      {required VerifyCodeParams params});
+      {required AuthParams params});
 
-  Future<ConfirmCodeAuthRespModel> sendRemoteCode(
-      {required VerifyOtpParams params});
+  Future<ConfirmCodeAuthRespModel> sendRemoteCode({required AuthParams params});
 
   Future<ResetPasswordModel> resetPassword(
       {required ResetPasswordParams params});
@@ -109,13 +106,27 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<ConfirmCodeAuthRespModel> sendRemoteCode(
-      {required VerifyOtpParams params}) {
+      {required AuthParams params}) {
     throw UnimplementedError();
   }
 
   @override
   Future<VerifyCodeResponseModel> verifyRemoteCode(
-      {required VerifyCodeParams params}) {
-    throw UnimplementedError();
+      {required AuthParams params}) async {
+    try {
+      final dynamic response = await dioConsumer.post(
+        '/auth/verify-otp',
+        body: {
+          "user_id": params.userId,
+          "otp": params.otp,
+        },
+      );
+      if (response['status'] == 'success') {
+        return VerifyCodeResponseModel.fromJson(response);
+      }
+      throw ServerException(message: response['message'] ?? '');
+    } catch (error) {
+      rethrow;
+    }
   }
 }

@@ -103,14 +103,17 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                           GestureDetector(
                                         onTap: () async {
                                           //-------getFilterUserById
-                                          Navigator.pushNamed(context,
-                                              Routes.communicationItemSliver,
-                                              );
-                                        await  context
+                                          Navigator.pushNamed(
+                                            context,
+                                            Routes.communicationItemSliver,
+                                          );
+                                          await context
                                               .read<
                                                   GetFilterUserByCategoryCubit>()
-                                              .getGetFilterUserByCategoryId(communicationList[index].id??2);
-                                        //-------getFilterUserById      
+                                              .getGetFilterUserByCategoryId(
+                                                  communicationList[index].id ??
+                                                      2);
+                                          //-------getFilterUserById
                                         },
                                         child: CommunicationGuideItem(
                                             item: communicationList[index]),
@@ -131,7 +134,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               'back_to_login'.tr,
                               style: TextStyles.bold20(),
                             ),
-                            Gaps.vGap15,
+                            Gaps.vGap16,
                             MyDefaultButton(
                               width: ScreenUtil.defaultSize.width,
                               color: colors.main,

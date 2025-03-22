@@ -1,37 +1,27 @@
-// To parse this JSON data, do
-//
-//     final verifyCodeResponse = verifyCodeResponseFromJson(jsonString);
+import 'package:cood/core/base_classes/base_one_response.dart';
+import 'package:cood/features/auth/data/models/login_model.dart';
 
-import 'dart:convert';
-
-import '/features/auth/domain/entities/new_entities/verify_code_response.dart';
-
-VerifyCodeResponse verifyCodeResponseFromJson(String str) =>
-    VerifyCodeResponseModel.fromJson(json.decode(str));
-
-String verifyCodeResponseToJson(VerifyCodeResponseModel data) =>
-    json.encode(data.toJson());
-
-class VerifyCodeResponseModel extends VerifyCodeResponse {
+class VerifyCodeResponseModel extends BaseOneResponse {
   const VerifyCodeResponseModel({
+    super.status,
+    super.data,
+    super.success,
     super.message,
-    super.statusCode,
-    super.time,
-    super.details,
   });
 
   factory VerifyCodeResponseModel.fromJson(Map<String, dynamic> json) =>
       VerifyCodeResponseModel(
+        status: json["status"],
+        data:
+            json["result"] == null ? null : UserModel.fromJson(json["result"]),
+        success: json["success"],
         message: json["message"],
-        statusCode: json["status_code"],
-        time: json["time"],
-        details: json["details"],
       );
 
   Map<String, dynamic> toJson() => {
+        "status": status,
+        "result": (data as UserModel?)?.toJson(),
+        "success": success,
         "message": message,
-        "status_code": statusCode,
-        "time": time,
-        "details": details,
       };
 }

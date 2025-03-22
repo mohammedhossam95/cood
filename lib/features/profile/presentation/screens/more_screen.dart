@@ -3,12 +3,16 @@
 import 'dart:io';
 
 import 'package:cood/config/locale/app_localizations.dart';
+import 'package:cood/core/utils/constants.dart';
+import 'package:cood/core/utils/enums.dart';
 import 'package:cood/core/utils/values/text_styles.dart';
 import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
 import 'package:cood/features/auth/domain/entities/login_response.dart';
+import 'package:cood/features/auth/presentation/cubit/auto_login/auto_login_cubit.dart';
 import 'package:cood/injection_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -117,7 +121,26 @@ class _MoreScreenState extends State<MoreScreen> {
             ),
             Gaps.vGap12,
             MyDefaultButton(
-              onPressed: () {},
+              onPressed: () {
+                Constants.showLoading(context);
+                Future.delayed(
+                  const Duration(seconds: 2),
+                  () {
+                    if (context.mounted) {
+                      Constants.hideLoading(context);
+                      BlocProvider.of<AutoLoginCubit>(context)
+                          .saveUserCycle(type: UserCycle.login);
+                      BlocProvider.of<AutoLoginCubit>(context)
+                          .saveUserType(type: UserType.pending);
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        Routes.loginScreenRoute,
+                        (route) => false,
+                      );
+                    }
+                  },
+                );
+              },
               btnText: 'logout',
               color: colors.baseColor,
               textColor: colors.errorColor,

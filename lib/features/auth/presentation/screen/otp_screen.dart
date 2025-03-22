@@ -1,12 +1,17 @@
-import 'dart:async';
+import 'dart:developer';
 
+import 'package:cood/config/routes/app_routes.dart';
 import 'package:cood/core/params/auth_params.dart';
+import 'package:cood/core/utils/constants.dart';
+import 'package:cood/core/widgets/custom_alert.dart';
+import 'package:cood/core/widgets/loading_view.dart';
+import 'package:cood/features/auth/presentation/cubit/verify_otp/verify_otp_cubit.dart';
 import 'package:cood/features/auth/presentation/widgets/custom_back_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '/config/locale/app_localizations.dart';
-import '/config/routes/app_routes.dart';
 import '/core/utils/values/text_styles.dart';
 import '/core/widgets/gaps.dart';
 import '/core/widgets/my_default_button.dart';
@@ -29,34 +34,45 @@ class OtpAuthScreen extends StatefulWidget {
   State<OtpAuthScreen> createState() => _OtpAuthScreenState();
 }
 
-class _OtpAuthScreenState extends State<OtpAuthScreen> {
+class _OtpAuthScreenState extends State<OtpAuthScreen>
+    with TickerProviderStateMixin {
   final TextEditingController codeController = TextEditingController(text: "");
   final FocusNode codeFocus = FocusNode();
   late UserType userType;
-  late Timer _timer;
-  int _start = 60;
   late UserCycle userCycle;
   String firebaseToken = '';
   String? deviceType;
   String? customerCode;
 
-  @override
+  final Duration timeOut = const Duration(seconds: 60);
+  AnimationController? timecontroller;
+
   @override
   void initState() {
-    startTimer();
-    // userType = BlocProvider.of<AutoLoginCubit>(context).userType;
-    // userCycle = BlocProvider.of<AutoLoginCubit>(context).userCycle;
-    // updateToken();
+    timecontroller = AnimationController(vsync: this, duration: timeOut);
+    _initTimer();
 
     super.initState();
   }
 
-  updateToken() async {}
+  _initTimer() {
+    log("${timecontroller!.value} value");
+    timecontroller!.reverse(
+      from: timecontroller!.value == 0.0 ? 1.0 : timecontroller!.value,
+    );
+  }
 
   @override
   void dispose() {
-    _timer.cancel();
+    timecontroller!.dispose();
+    codeController.dispose();
     super.dispose();
+  }
+
+  updateToken() async {}
+  String get timerString {
+    Duration duration = timecontroller!.duration! * timecontroller!.value;
+    return '${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
   }
 
   @override
@@ -70,189 +86,139 @@ class _OtpAuthScreenState extends State<OtpAuthScreen> {
         elevation: 0,
         leading: CustomBack(),
       ),
-      body:
-
-          //       return BlocConsumer<VerifyCodeCubit, VerifyCodeState>(
-          //         listener: (context, state) {
-          //           if (state is VerifyCodeSuccessState) {
-          //             Navigator.pushNamed(
-          //               context,
-          //               Routes.newUserRegisterRoute,
-          //               // arguments: AuthParam(
-          //               //   widget.authParam.phoneNumber,
-          //               //   widget.authParam.countryCode,
-          //               //   customerCode!,
-          //               // ),
-          //             );
-
-          //             // }
-          //           } else if (state is VerifyCodeErrorState) {
-          //             state.errorMessage == "رقم الجوال غير صحيح"
-          //                 ? Constants.showSnakToast(
-          //                     context: context,
-          //                     type: 2,
-          //                     message: state.errorMessage,
-          //                   )
-          //                 : Constants.showSnakToast(
-          //                     context: context,
-          //                     type: 3,
-          //                     message: state.errorMessage,
-          //                   );
-          //             // Navigator.pop(context);
-          //           }
-          //         },
-          //         builder: (context, state) {
-          //           return SingleChildScrollView(
-          SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              // height: 0.3.sh,
-              padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 28.w),
-              color: colors.main,
-              child: Column(
-                children: [
-                  Gaps.vGap25,
-                  Image.asset(ImageAssets.otpForgetPasswordScreenIcon),
-                  Gaps.vGap15,
-                  Text(
-                    'enterOtpNumber'.tr,
-                    style: TextStyles.bold20(color: colors.upBackGround),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              color: colors.backGround,
-              child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Gaps.vGap20,
-                  Text(
-                    'otpVerificationCode'.tr,
-                    style: TextStyles.bold24(color: colors.main),
-                    textAlign: TextAlign.right,
-                  ),
-                  Gaps.vGap10,
-                  Text(
-                    'otpVerificationPhrase'.tr,
-                    style: TextStyles.medium17(color: colors.blackColor),
-                    textAlign: TextAlign.right,
-                  ),
-                  Gaps.vGap40,
-                  PinCodeWidget(
-                    pinLength: 5,
-                    controller: codeController,
-                    focus: codeFocus,
-                    textSubmit: (t) {
-                      // BlocProvider.of(context).verifyCode(
-                      //   params:
-                      //       VerifyCodeParams(userCode: customerCode, otp: t),
-                      // );
-                    },
-                  ),
-                  Gaps.vGap35,
-                  /*
-                  Gaps.vGap30,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: BlocConsumer<VerifyOtpCubit, VerifyOtpState>(
+        listener: (context, state) {
+          if (state is VerifyOtpSuccess) {
+            CustomAlert().showAlertDialog(
+              context: context,
+              title: state.resp.status ?? '',
+              subTitle: state.resp.message ?? '',
+              btnTitle: 'login',
+              onpress: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Routes.loginScreenRoute,
+                  (route) => false,
+                );
+              },
+            );
+          } else if (state is VerifyOtpError) {
+            Constants.showSnakToast(
+              context: context,
+              type: 3,
+              message: state.errorMessage,
+            );
+          }
+        },
+        builder: (context, state) {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.h, horizontal: 28.w),
+                  color: colors.main,
+                  child: Column(
                     children: [
+                      Gaps.vGap16,
+                      Image.asset(ImageAssets.otpForgetPasswordScreenIcon),
+                      Gaps.vGap16,
                       Text(
-                        locale.text('codeNotSent'),
-                        style: theme.bodyMedium!.copyWith(
-                          fontSize: 14.sp,
-                          color: colors(context).body,
-                        ),
-                      ),
-                      Gaps.hGap10,
-                      AnimatedBuilder(
-                        animation: timeController!,
-                        builder: (BuildContext context, Widget? child) {
-                          return timeController!.value == 0.0
-                              ? InkWell(
-                                  onTap: () => resendVerificationCode(),
-                                  child: Text(
-                                    locale.text('resend_code'),
-                                    style: theme.bodyMedium!.copyWith(
-                                        fontSize: 14.sp,
-                                        color: colors(context).main),
-                                  ))
-                              : Text(
-                                  "${'resend'.tr} ($timerString)",
-                                  style: theme.bodyMedium!.copyWith(
-                                      fontSize: 14.sp,
-                                      color: colors(context).body),
-                                );
-                        },
+                        'enterOtpNumber'.tr,
+                        style: TextStyles.bold20(color: colors.upBackGround),
                       ),
                     ],
                   ),
-                  Gaps.vGap30,
-                  */
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                ),
+                Container(
+                  height: ScreenUtil().screenHeight * 0.6,
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  color: colors.backGround,
+                  child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
+                      Gaps.vGap20,
+                      Text(
+                        'otpVerificationPhrase'.tr,
+                        style: TextStyles.medium17(color: colors.blackColor),
+                        textAlign: TextAlign.right,
+                      ),
+                      Gaps.vGap40,
+                      PinCodeWidget(
+                        pinLength: 4,
+                        controller: codeController,
+                        focus: codeFocus,
+                        textSubmit: (code) {
+                          BlocProvider.of<VerifyOtpCubit>(context).fVerifyOtp(
+                            params: AuthParams(
+                              userId: widget.authParams.userId ?? 0,
+                              otp: code,
+                            ),
+                          );
+                        },
+                      ),
+                      Gaps.vGap35,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             'notHaveOtp'.tr,
-                            style: TextStyles.bold15(),
+                            style: TextStyles.medium14(),
                           ),
-                          Gaps.vGap5,
-                          InkWell(
-                            onTap: () {},
-                            child: Text(
-                              'resendCodeOtp'.tr,
-                              style: TextStyles.bold15(color: colors.main),
-                            ),
+                          Gaps.hGap10,
+                          AnimatedBuilder(
+                            animation: timecontroller!,
+                            builder: (BuildContext context, Widget? child) {
+                              return timecontroller!.value == 0.0
+                                  ? InkWell(
+                                      // onTap: () => resendVerificationCode(),
+                                      child: Text(
+                                      'resend_code'.tr,
+                                      style: TextStyles.medium14(
+                                          color: colors.main),
+                                    ))
+                                  : Text(
+                                      "${'resend'.tr} ($timerString)",
+                                      style: TextStyles.medium14(),
+                                    );
+                            },
                           ),
                         ],
                       ),
+                      Gaps.vGap40,
+                      (state is VerifyOtpLoading)
+                          ? LoadingView()
+                          : MyDefaultButton(
+                              color: colors.main,
+                              btnText: 'confirm_button',
+                              onPressed: () {
+                                BlocProvider.of<VerifyOtpCubit>(context)
+                                    .fVerifyOtp(
+                                  params: AuthParams(
+                                    userId: widget.authParams.userId ?? 0,
+                                    otp: codeController.text,
+                                  ),
+                                );
+                              },
+                            ),
+                      if (state is VerifyOtpError) ...[
+                        Gaps.vGap10,
+                        Text(
+                          state.errorMessage,
+                          style: TextStyles.medium14(color: Colors.red),
+                        ),
+                      ],
+                      Gaps.vGap30,
                     ],
                   ),
-                  Gaps.vGap25,
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 100.w),
-                    child: MyDefaultButton(
-                      color: colors.main,
-                      borderColor: colors.main,
-                      onPressed: () => Navigator.pushNamed(
-                          context, Routes.successOtpScreenRoute),
-                      //  Navigator.pushNamed(context, Routes.failedOtpScreenRoute),
-
-                      // Navigator.pushNamed(
-                      //     context, Routes.confirmResetPasswordScreenRoute),
-                      // onLoginPressed(context),
-                      btnText: 'confirm_button',
-                    ),
-                  )
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
-    );
-  }
-
-  void startTimer() {
-    const oneSec = Duration(seconds: 1);
-    _timer = Timer.periodic(
-      oneSec,
-      (Timer timer) {
-        if (_start == 0) {
-          setState(() {
-            timer.cancel();
-          });
-        } else {
-          setState(() {
-            _start--;
-          });
-        }
-      },
     );
   }
 }

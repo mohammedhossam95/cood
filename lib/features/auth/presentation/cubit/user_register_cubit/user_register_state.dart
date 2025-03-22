@@ -17,8 +17,9 @@ final class UserRegisterLoading extends UserRegisterState {
 
 final class UserRegisterSuccess extends UserRegisterState {
   final UserRegisterRespModel resp;
+  final AuthParams params;
 
-  const UserRegisterSuccess({required this.resp});
+  const UserRegisterSuccess({required this.params, required this.resp});
 }
 
 final class UserRegisterFailure extends UserRegisterState {

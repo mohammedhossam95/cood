@@ -1,6 +1,7 @@
 import 'package:cood/core/params/auth_params.dart';
 import 'package:cood/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:cood/features/auth/presentation/cubit/user_register_cubit/user_register_cubit.dart';
+import 'package:cood/features/auth/presentation/cubit/verify_otp/verify_otp_cubit.dart';
 import 'package:cood/features/categories/presentation/widgets/communication_details_item_sliver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -258,8 +259,11 @@ class AppRoutes {
         AuthParams authParams = routeSettings.arguments as AuthParams;
         return MaterialPageRoute(
           settings: routeSettings,
-          builder: (BuildContext context) => OtpAuthScreen(
-            authParams: authParams,
+          builder: (BuildContext context) => BlocProvider(
+            create: (context) => ServiceLocator.instance<VerifyOtpCubit>(),
+            child: OtpAuthScreen(
+              authParams: authParams,
+            ),
           ),
         );
       case Routes.successChangePassRoute:

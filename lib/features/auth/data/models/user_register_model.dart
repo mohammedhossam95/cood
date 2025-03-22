@@ -1,20 +1,25 @@
+import 'package:cood/core/base_classes/base_one_response.dart';
+
 import '../../domain/entities/user_register_response.dart';
 
-class UserRegisterRespModel extends UserRegister {
+class UserRegisterRespModel extends BaseOneResponse {
   const UserRegisterRespModel({
-    super.value,
-    super.key,
+    super.status,
     super.data,
+    super.success,
+    super.message,
   });
 
   factory UserRegisterRespModel.fromJson(Map<String, dynamic> json) =>
       UserRegisterRespModel(
-        value: json["value"],
-        key: json["key"],
-        data: json["data"] == null ? null : DataModel.fromJson(json["data"]),
+        status: json["status"],
+        data: json["result"] == null
+            ? null
+            : RegResultModel.fromJson(json["result"]),
+        success: json["success"],
+        message: json["message"],
       );
 
-  @override
   Map<String, dynamic> toJson() => {
         "value": value,
         "key": key,
@@ -22,60 +27,16 @@ class UserRegisterRespModel extends UserRegister {
       };
 }
 
-class DataModel extends Data {
-  const DataModel({
-    super.name,
-    super.phone,
-    super.email,
-    super.code,
-    super.userType,
-    super.commercial,
-    super.descAr,
-    super.descEn,
-    super.deliveryPrice,
-    super.deviceId,
-    super.deviceType,
-    super.avatar,
-    super.date,
-    super.workTimes,
-    super.token,
+class RegResultModel extends RegResult {
+  const RegResultModel({
+    super.userId,
   });
 
-  factory DataModel.fromJson(Map<String, dynamic> json) => DataModel(
-        name: json["name"],
-        phone: json["phone"],
-        email: json["email"],
-        code: json["code"],
-        userType: json["user_type"],
-        commercial: json["commercial"],
-        descAr: json["desc_ar"],
-        descEn: json["desc_en"],
-        deliveryPrice: json["delivery_price"],
-        deviceId: json["device_id"],
-        deviceType: json["device_type"],
-        avatar: json["avatar"],
-        date: json["date"] == null ? null : DateTime.parse(json["date"]),
-        workTimes: json["work_times"],
-        token: json["token"],
+  factory RegResultModel.fromJson(Map<String, dynamic> json) => RegResultModel(
+        userId: json["user_id"],
       );
 
-  @override
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "phone": phone,
-        "email": email,
-        "code": code,
-        "user_type": userType,
-        "commercial": commercial,
-        "desc_ar": descAr,
-        "desc_en": descEn,
-        "delivery_price": deliveryPrice,
-        "device_id": deviceId,
-        "device_type": deviceType,
-        "avatar": avatar,
-        "date":
-            "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
-        "work_times": workTimes,
-        "token": token,
+        "user_id": userId,
       };
 }
