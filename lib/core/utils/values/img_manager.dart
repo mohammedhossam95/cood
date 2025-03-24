@@ -10,5 +10,8 @@ class ImageAssets {
       'assets/images/otp_success.png';
   static const String otpFailed =
       'assets/images/otp_failed.png';
-
+    static const String close =
+      'assets/images/close.png';
+    static const String accept =
+      'assets/images/Done2.png';  
 }

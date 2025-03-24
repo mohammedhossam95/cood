@@ -8,6 +8,7 @@ import 'package:cood/features/categories/presentation/widgets/my_progress.dart';
 import 'package:cood/features/home/domain/entities/friend_entity_.dart';
 import 'package:cood/features/home/presentation/cubit/get_friends_list/friends_list_cubit.dart';
 import 'package:cood/features/home/presentation/cubit/get_friends_list/friends_list_state.dart';
+import 'package:cood/features/home/presentation/cubit/get_search_user_by_code/get_search_user_by_code_cubit.dart';
 import 'package:cood/features/home/presentation/widgets/my_friends/add_friend_dialog.dart';
 import 'package:cood/features/home/presentation/widgets/my_friends/freinds_contact_card.dart';
 import 'package:flutter/material.dart';
@@ -88,6 +89,7 @@ class _MySocialFriendsState extends State<MySocialFriends> {
                 margin: EdgeInsets.all(10.h),
                 child: MyDefaultButton(
                   onPressed: () {
+                    context.read<GetSearchUserByCodeCubit>().emitInitial();
                     showAppDialog(
                       context: context,
                       child: AddFriendDialog(),

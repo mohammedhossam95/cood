@@ -11,6 +11,7 @@ class MySearchBar extends StatelessWidget {
   final String? labelText;
   final String? hintText;
   final bool autoComplete;
+  final void Function()? onPressed;
 
   const MySearchBar({
     super.key,
@@ -21,6 +22,7 @@ class MySearchBar extends StatelessWidget {
     this.labelText,
     this.hintText,
     this.autoComplete = false,
+    this.onPressed,
   });
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class MySearchBar extends StatelessWidget {
             color: colors.body,
             fontSize: myFontSize,
           ),
-          prefixIcon: const Icon(Icons.search),
+          prefixIcon:  IconButton(onPressed:onPressed , icon: Icon(Icons.search,)),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(raduis)),
             borderSide: BorderSide(

@@ -1,7 +1,10 @@
 import 'package:cood/features/home/data/models/add_user_account_model.dart';
 import 'package:cood/features/home/data/models/friend_list_resp_model.dart';
 import 'package:cood/features/home/data/models/get_all_social_media_model.dart';
+import 'package:cood/features/home/data/models/get_pending_requests_model.dart';
 import 'package:cood/features/home/data/models/get_user_social_media_model.dart';
+import 'package:cood/features/home/data/models/search_user_by_code_model.dart';
+import 'package:cood/features/home/data/models/send_friend_request_model.dart';
 import 'package:cood/features/home/data/models/user_gallary_model.dart';
 
 import '/core/error/exceptions.dart';
@@ -12,6 +15,9 @@ import '../../../../core/params/add_user_account.dart';
 
 abstract class HomeRemoteDataSource {
   //--------------new
+    Future<PendingRequestsRespModel> getPendingRequest();
+  Future<SendFriendRequestRespModel> sendFreindRequest(int id);
+  Future<SearchUserByCodeRespModel> getSearchUserByCode(String params);
   Future<UserGalleryRespModel> getAllUserGalleryRemoteData();
   Future<FriendListRespModel> getFriendsList();
   Future<SocialMediaRespModel> getUserSocialMedia();
@@ -117,6 +123,63 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       );
       if (response['status'] == 'success') {
         return AddUserSocialAccountRespModel.fromJson(response);
+      }
+      throw ServerException(message: response['message'].toString());
+    } on ServerException {
+      rethrow;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  //------------search user by code
+  @override
+  Future<SearchUserByCodeRespModel> getSearchUserByCode(
+      String code) async {
+    String branchUrl = "/friends/search-by-code";
+    try {
+      final response = await dioConsumer.get(branchUrl, queryParameters: {
+        "code": code,
+      });
+      if (response['status'] == 'success'&& response['result'] != null) {
+        return SearchUserByCodeRespModel.fromJson(response);
+      }
+      throw ServerException(message: response['message'].toString());
+    } on ServerException {
+      rethrow;
+    } catch (error) {
+      rethrow;
+    }
+  }
+  
+  @override
+  Future<SendFriendRequestRespModel> sendFreindRequest(int id)async {
+    String branchUrl = '/friends/request';
+    try {
+      final response = await dioConsumer.post(
+        branchUrl,
+        body:{
+            "receiver_id": id,
+        },
+      );
+      if (response['status'] == 'success') {
+        return SendFriendRequestRespModel.fromJson(response);
+      }
+      throw ServerException(message: response['message'].toString());
+    } on ServerException {
+      rethrow;
+    } catch (error) {
+      rethrow;
+    }
+  }
+  //----------------get pending requests
+  @override
+  Future<PendingRequestsRespModel> getPendingRequest() async{
+    String branchUrl = "/friends/requests";
+    try {
+      final response = await dioConsumer.get(branchUrl);
+      if (response['status'] == 'success'&& response['result'] != null) {
+        return PendingRequestsRespModel.fromJson(response);
       }
       throw ServerException(message: response['message'].toString());
     } on ServerException {

@@ -3,6 +3,7 @@ import 'package:cood/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:cood/features/auth/presentation/cubit/user_register_cubit/user_register_cubit.dart';
 import 'package:cood/features/auth/presentation/cubit/verify_otp/verify_otp_cubit.dart';
 import 'package:cood/features/categories/presentation/widgets/communication_details_item_sliver.dart';
+import 'package:cood/features/profile/presentation/screens/friend_request_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -148,6 +149,7 @@ class Routes {
   static const String changePasswordRoute = '/changePasswordScreen';
 //---------------------added by ali
   static const String communicationItemSliver = '/CommunicationItemDetails';
+    static const String friendRequests = '/friendRequests';
 }
 
 final _sl = ServiceLocator.instance;
@@ -348,6 +350,11 @@ class AppRoutes {
         return MaterialPageRoute(
           settings: routeSettings,
           builder: (BuildContext context) => CommunicationItemDetails(),
+        );
+        case Routes.friendRequests:
+        return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (BuildContext context) => FriendRequestsScreen(),
         );
 
       default:

@@ -1,3 +1,4 @@
+import 'package:cood/core/base_classes/base_one_response.dart';
 import 'package:cood/core/params/add_user_account.dart';
 import 'package:dartz/dartz.dart';
 
@@ -85,6 +86,43 @@ class HomeRepoImpl implements HomeRepo {
     } on AppException catch (error) {
       Log.e(
           '[AddUserSocialMediaAccount] [${error.runtimeType.toString()}] ---- ${error.message}');
+      return Left(error.toFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, BaseOneResponse>> searchUserByCode(
+      String code) async {
+    try {
+      final response = await remote.getSearchUserByCode(code);
+      return Right(response);
+    } on AppException catch (error) {
+      Log.e(
+          '[GetSearchUserByCode] [${error.runtimeType.toString()}] ---- ${error.message}');
+      return Left(error.toFailure());
+    }
+  }
+  
+  @override
+  Future<Either<Failure, BaseOneResponse>> sendFriendRequest(int id) async{
+    try {
+      final response = await remote.sendFreindRequest(id);
+      return Right(response);
+    } on AppException catch (error) {
+      Log.e(
+          '[SendFriendRequest] [${error.runtimeType.toString()}] ---- ${error.message}');
+      return Left(error.toFailure());
+    }
+  }
+  
+  @override
+  Future<Either<Failure, BaseListResponse>> getPendingRequests()async {
+    try {
+      final response = await remote.getPendingRequest();
+      return Right(response);
+    } on AppException catch (error) {
+      Log.e(
+          '[GetPendingRequest] [${error.runtimeType.toString()}] ---- ${error.message}');
       return Left(error.toFailure());
     }
   }

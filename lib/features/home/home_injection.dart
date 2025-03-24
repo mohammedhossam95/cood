@@ -2,12 +2,18 @@ import 'package:cood/features/home/domain/usecases/add_user_account_use_case.dar
 import 'package:cood/features/home/domain/usecases/get_all_social_media_use_case.dart';
 import 'package:cood/features/home/domain/usecases/get_all_user_gallary_use_case.dart';
 import 'package:cood/features/home/domain/usecases/get_friends_list_use_case.dart';
+import 'package:cood/features/home/domain/usecases/get_pending_requests_use_case.dart';
 import 'package:cood/features/home/domain/usecases/get_user_social_media_use_case.dart';
+import 'package:cood/features/home/domain/usecases/search_user_by_code_use_case.dart';
+import 'package:cood/features/home/domain/usecases/send_friend_request_use_case.dart';
 import 'package:cood/features/home/presentation/cubit/add_user_social_account/add_user_social_account_cubit.dart';
 import 'package:cood/features/home/presentation/cubit/get_all_social_media/get_all_social_media_cubit.dart';
 import 'package:cood/features/home/presentation/cubit/get_all_user_gallary/get_user_gallary_cubit.dart';
 import 'package:cood/features/home/presentation/cubit/get_friends_list/friends_list_cubit.dart';
+import 'package:cood/features/home/presentation/cubit/get_pending_requests/get_pending_request_cubit.dart';
+import 'package:cood/features/home/presentation/cubit/get_search_user_by_code/get_search_user_by_code_cubit.dart';
 import 'package:cood/features/home/presentation/cubit/get_user_social_media/get_user_social_media_cubit.dart';
+import 'package:cood/features/home/presentation/cubit/send_friend_request/send_friend_request_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,6 +30,22 @@ final _sl = ServiceLocator.instance;
 Future<void> initHomeFeatureInjection() async {
   ///-> Cubits
   // Blocs
+  
+    //----------------new get pending requests----------------
+  _sl.registerFactory<GetPendingRequestCubit>(
+      () => GetPendingRequestCubit( _sl()));
+  _sl.registerFactory<GetPendingRequestUseCase>(
+      () => GetPendingRequestUseCase(  _sl())); 
+  //----------------new sendFreind request----------------
+  _sl.registerFactory<SendFriendRequestCubit>(
+      () => SendFriendRequestCubit( _sl()));
+  _sl.registerFactory<SendFreindRequestUseCase>(
+      () => SendFreindRequestUseCase( repository: _sl())); 
+  //----------------new GetSearchUserByCodeCubit----------------
+  _sl.registerFactory<GetSearchUserByCodeCubit>(
+      () => GetSearchUserByCodeCubit( _sl()));
+  _sl.registerFactory<GetSearchUserByCodeUseCase>(
+      () => GetSearchUserByCodeUseCase( repository: _sl())); 
   //----------------new friendList----------------
     _sl.registerFactory<FriendsListCubit>(
       () => FriendsListCubit( getFriendsListUseCase: _sl()));
@@ -37,25 +59,19 @@ Future<void> initHomeFeatureInjection() async {
       () => GetUserGallaryCubit( _sl()));
   _sl.registerFactory<GetAllUserGallaryUseCase>(
       () => GetAllUserGallaryUseCase(repository: _sl())); 
-  _sl.registerFactory<HomeRepo>(() => HomeRepoImpl(remote: _sl()));
-  _sl.registerLazySingleton<HomeRemoteDataSource>(
-      () => HomeRemoteDataSourceImpl());       
+      
 //-----------------------this is new user social media-------------------
   _sl.registerFactory<GetUserSocialMediaCubit>(
       () => GetUserSocialMediaCubit( _sl()));
   _sl.registerFactory<GetUserSocialMediaUseCase>(
       () => GetUserSocialMediaUseCase( _sl())); 
-  _sl.registerFactory<HomeRepo>(() => HomeRepoImpl(remote: _sl()));
-  _sl.registerLazySingleton<HomeRemoteDataSource>(
-      () => HomeRemoteDataSourceImpl());       
+       
 //-----------------------this is new user social media-------------------
   _sl.registerFactory<GetAllSocialMediaCubit>(
       () => GetAllSocialMediaCubit( _sl()));
   _sl.registerFactory<GetAllSocialMediaUseCase>(
       () => GetAllSocialMediaUseCase( _sl())); 
-  _sl.registerFactory<HomeRepo>(() => HomeRepoImpl(remote: _sl()));
-  _sl.registerLazySingleton<HomeRemoteDataSource>(
-      () => HomeRemoteDataSourceImpl());       
+  
 //-----------------------this is new Add user social media account-------------------
   _sl.registerFactory<AddUserSocialAccountCubit>(
       () => AddUserSocialAccountCubit( _sl()));
@@ -86,6 +102,15 @@ Future<void> initHomeFeatureInjection() async {
 ///-> BlocProvider
 List<BlocProvider> get homeBlocs => <BlocProvider>[
      //----------------new----------
+     BlocProvider<GetPendingRequestCubit>(
+        create: (BuildContext context) => _sl<GetPendingRequestCubit>(),
+      ),
+       BlocProvider<SendFriendRequestCubit>(
+        create: (BuildContext context) => _sl<SendFriendRequestCubit>(),
+      ),
+      BlocProvider<GetSearchUserByCodeCubit>(
+        create: (BuildContext context) => _sl<GetSearchUserByCodeCubit>(),
+      ),
      BlocProvider<AddUserSocialAccountCubit>(
         create: (BuildContext context) => _sl<AddUserSocialAccountCubit>(),
       ),
