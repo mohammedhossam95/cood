@@ -1,12 +1,20 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, sized_box_for_whitespace
 
 import 'package:cood/config/locale/app_localizations.dart';
+import 'package:cood/core/utils/constants.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/utils/values/text_styles.dart';
+import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
 import 'package:cood/core/widgets/search_text_field.dart';
+import 'package:cood/features/categories/presentation/widgets/my_progress.dart';
+import 'package:cood/features/home/domain/entities/search_user_by_code_entity.dart';
+import 'package:cood/features/home/presentation/cubit/get_search_user_by_code/get_search_user_by_code_cubit.dart';
+import 'package:cood/features/home/presentation/cubit/get_search_user_by_code/get_search_user_by_code_state.dart';
+import 'package:cood/injection_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddFriendDialog extends StatefulWidget {
@@ -18,29 +26,6 @@ class AddFriendDialog extends StatefulWidget {
 
 class _AddFriendDialogState extends State<AddFriendDialog> {
   final TextEditingController addFriendController = TextEditingController();
-
-  List<String> searchResults = ['Ali lotfy sharf eldin ', 'Ahmed', 'mohamed', 'ibrahim'];
-  List<String> filteredResults = [];
-  bool isHasResult = false;
-
-  void _onSearch(String? value) {
-    if (!mounted) return;
-
-    setState(() {
-      if (value == null || value.trim().isEmpty) {
-        // If the search query is empty, reset the filtered results
-        filteredResults = [];
-        isHasResult = false;
-      } else {
-        // Filter the results based on the search query
-        filteredResults = searchResults
-            .where((result) =>
-                result.toLowerCase().contains(value.trim().toLowerCase()))
-            .toList();
-        isHasResult = filteredResults.isNotEmpty;
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,91 +54,108 @@ class _AddFriendDialogState extends State<AddFriendDialog> {
               controller: addFriendController,
               hintText: 'searchByCodeNumber'.tr,
               focusNode: FocusNode(),
-              onTap: _onSearch,
-              autoComplete: true,
-              //onSubmit:_onSearch ,
+              onPressed: (){
+                context
+                    .read<GetSearchUserByCodeCubit>()
+                    .getSearchUserByCode(addFriendController.text);
+              },
+              
             ),
+            
             const SizedBox(height: 10),
-            if (isHasResult)
-              SizedBox(
-                height: 150.h,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: filteredResults.length,
-                    itemBuilder: (context, index) => Container(
-                          margin: EdgeInsets.all(10.0.h),
-                          width: double.infinity,
-                          height: 55.0.h,
-                          decoration: BoxDecoration(
-                              color: MyColors.backGround,
-                              borderRadius: BorderRadius.circular(12.0.r),
-                              border: Border.all(
-                                color: MyColors.black,
-                              )),
-                          child: Row(
-                          //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              // First: Container with Image
-                              ClipRRect(
+            BlocBuilder<GetSearchUserByCodeCubit, GetSearchUserByCodeState>(
+              builder: (context, state) {
+                if (state is GetSearchUserByCodeLoading) {
+                  return Center(
+                    child: MyProgrees(),
+                  );
+                } else if (state is GetSearchUserByCodeSuccess) {
+                  SearchUserByCodeEntity searchUserByCodeEntity =
+                      state.response.data;
+                  return  Container(
+                      margin: EdgeInsets.all(10.0.h),
+                      width: double.infinity,
+                      height: 55.0.h,
+                      decoration: BoxDecoration(
+                          color: MyColors.backGround,
+                          borderRadius: BorderRadius.circular(12.0.r),
+                          border: Border.all(
+                            color: MyColors.black,
+                          )),
+                      child: Row(
+                        //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // First: Container with Image
+                          ClipRRect(
+                            
+                            child: Container(
+                              width: 55.0.w, // Width of the image container
+                              height: 55.0.h, // Height of the image container
+                              
+                              child: DiffImage(
+                                image: searchUserByCodeEntity.image??nullNetworkImage,
                                 borderRadius: isArabic
-                                    ?  BorderRadius.only(
-                                        topLeft: Radius.circular(12.0.r),
-                                        topRight: Radius.circular(9.0.r),
-                                        bottomRight: Radius.circular(9.0.r),
-                                      )
-                                    :  BorderRadius.only(
-                                        topLeft: Radius.circular(9.0.r),
-                                        topRight: Radius.circular(12.0.r),
-                                        bottomLeft: Radius.circular(9.0.r),
-                                      ),
-                                child: Container(
-                                  width: 55.0.w, // Width of the image container
-                                  height: 55.0.h, // Height of the image container
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image:AssetImage(
-                                          'assets/images/person.png'), // Use NetworkImage or AssetImage
-                                      fit: BoxFit.cover,
-                                    ),
+                                ? BorderRadius.only(
+                                    topLeft: Radius.circular(12.0.r),
+                                    topRight: Radius.circular(9.0.r),
+                                    bottomRight: Radius.circular(9.0.r),
+                                  )
+                                : BorderRadius.only(
+                                    topLeft: Radius.circular(9.0.r),
+                                    topRight: Radius.circular(12.0.r),
+                                    bottomLeft: Radius.circular(9.0.r),
                                   ),
-                                ),
                               ),
-                              Gaps.hGap12, // Spacing between image and text
-                              
-                               Expanded(
-                                   child: Text(
-                                      filteredResults[index],
-                                      style: TextStyles.bold14(),
-                                      maxLines: 2,
-                                    ),
-                                 ),
-                               
-                              
-                              // Third: Button with Text (Add)
-                              MyDefaultButton(
-                                height: 35.0.h,
-                                width: 75.0.w,
-                                btnText: 'add',
-                                borderRadius:10.0.r,
-                                onPressed: (){},
-                                ),
-                                Gaps.hGap8,
-                            ],
+                            ),
                           ),
-                        ),
-                        ),
-              )
-            else
-              Padding(
-                padding: EdgeInsets.only(top: 8.0.h),
-                child: Text(
-                  'noResult'.tr,
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+                          Gaps.hGap12, // Spacing between image and text
+
+                          Expanded(
+                            child: Text(
+                              searchUserByCodeEntity.name??'null',
+                              style: TextStyles.bold14(),
+                              maxLines: 2,
+                            ),
+                          ),
+
+                          // Third: Button with Text (Add)
+                          MyDefaultButton(
+                            height: 35.0.h,
+                            width: 75.0.w,
+                            btnText: 'add',
+                            borderRadius: 10.0.r,
+                            onPressed: () {},
+                          ),
+                          Gaps.hGap8,
+                        ],
+                      ),
+                    );
+                  
+                } else if(state is GetSearchUserByCodeFailure){
+                  return  Padding(
+                    padding: EdgeInsets.only(top: 20.0.h),
+                    child: Text(
+                      state.errorMessage,
+                      style: TextStyle(
+                        color: colors.main,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  );
+                }else {
+                  return Padding(
+                    padding: EdgeInsets.only(top: 8.0.h),
+                    child: Text(
+                      'noResult'.tr,
+                      style: TextStyle(
+                        color: colors.main,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
           ],
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:cood/core/base_classes/base_one_response.dart';
 import 'package:cood/core/params/add_user_account.dart';
 import 'package:dartz/dartz.dart';
 
@@ -7,6 +8,7 @@ import '/core/params/search_params.dart';
 
 abstract class HomeRepo {
   //-----------------new-----------------
+  Future<Either<Failure, BaseOneResponse>> searchUserByCode(String code);
   Future<Either<Failure, BaseListResponse>> getAllUserGallary();
   Future<Either<Failure, BaseListResponse>> getFriendsList();
   Future<Either<Failure, BaseListResponse>> getUserSocialMedia();
