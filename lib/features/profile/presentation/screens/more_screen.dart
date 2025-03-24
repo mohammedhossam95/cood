@@ -10,6 +10,7 @@ import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
 import 'package:cood/features/auth/domain/entities/login_response.dart';
 import 'package:cood/features/auth/presentation/cubit/auto_login/auto_login_cubit.dart';
+import 'package:cood/features/home/presentation/cubit/get_pending_requests/get_pending_request_cubit.dart';
 import 'package:cood/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -103,6 +104,20 @@ class _MoreScreenState extends State<MoreScreen> {
               icon: ImgAssets.myAccountsIcons,
               title: 'myAccounts',
             ),
+            Gaps.vGap12,
+            //-----------------
+            MoreItemWidget(
+              onTap: () async {
+                Navigator.pushNamed(context, Routes.friendRequests);
+                //--------------------get pending request
+                await context
+                    .read<GetPendingRequestCubit>()
+                    .getPendingRequest();
+              },
+              icon: ImgAssets.friendRequest,
+              title: 'friendRequests',
+            ),
+            //--------------------
             Gaps.vGap12,
             MoreItemWidget(
               onTap: () {

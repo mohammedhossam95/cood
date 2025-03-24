@@ -13,7 +13,7 @@ import 'injection_container.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();  
   await ServiceLocator.init();
-  SystemChrome.setSystemUIOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(  
     const SystemUiOverlayStyle(
       systemNavigationBarColor: Color(0xff297AFF),
       systemNavigationBarIconBrightness: Brightness.light,

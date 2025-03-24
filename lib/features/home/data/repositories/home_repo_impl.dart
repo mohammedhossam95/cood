@@ -102,4 +102,28 @@ class HomeRepoImpl implements HomeRepo {
       return Left(error.toFailure());
     }
   }
+  
+  @override
+  Future<Either<Failure, BaseOneResponse>> sendFriendRequest(int id) async{
+    try {
+      final response = await remote.sendFreindRequest(id);
+      return Right(response);
+    } on AppException catch (error) {
+      Log.e(
+          '[SendFriendRequest] [${error.runtimeType.toString()}] ---- ${error.message}');
+      return Left(error.toFailure());
+    }
+  }
+  
+  @override
+  Future<Either<Failure, BaseListResponse>> getPendingRequests()async {
+    try {
+      final response = await remote.getPendingRequest();
+      return Right(response);
+    } on AppException catch (error) {
+      Log.e(
+          '[GetPendingRequest] [${error.runtimeType.toString()}] ---- ${error.message}');
+      return Left(error.toFailure());
+    }
+  }
 }

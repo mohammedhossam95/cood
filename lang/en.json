@@ -821,5 +821,7 @@
   "searchByCodeNumber": "search by code number ",
   "clickToViewProfile":"Click to view profile",
   "addAccount":"Add Account",
-  "addLink":"Add Link"
+  "addLink":"Add Link",
+  "friendRequests":"friend Requests",
+  "friendRequest":"friend Request"
 }

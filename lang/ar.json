@@ -823,6 +823,8 @@
   "searchByCodeNumber": " ابحث باستخدام رقم الكود",
   "clickToViewProfile":"اضغط لعرض الملف الشخصي",
   "addAccount":"اضافة حساب",
-  "addLink":"اضافة رابط"
+  "addLink":"اضافة رابط",
+  "friendRequests":"طلبات الصداقه",
+  "friendRequest":"طلب صداقه"
 
 }

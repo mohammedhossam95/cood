@@ -53,4 +53,5 @@ class ImgAssets {
   static const String whatsAppImg = 'assets/images/Whatsapp 1.png';
   static const String facbookImg = 'assets/images/facbook.png';
   static const String imoImg = 'assets/images/imo.png';
+  static const String friendRequest = 'assets/images/person.png';
 }
