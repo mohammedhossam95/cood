@@ -3,6 +3,8 @@ import 'package:cood/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:cood/features/auth/presentation/cubit/user_register_cubit/user_register_cubit.dart';
 import 'package:cood/features/auth/presentation/cubit/verify_otp/verify_otp_cubit.dart';
 import 'package:cood/features/categories/presentation/widgets/communication_details_item_sliver.dart';
+import 'package:cood/features/home/presentation/cubit/get_pending_requests/get_pending_request_cubit.dart';
+import 'package:cood/features/profile/presentation/cubit/edit_profile_cubit/edit_profile_cubit.dart';
 import 'package:cood/features/profile/presentation/screens/friend_request_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -149,7 +151,7 @@ class Routes {
   static const String changePasswordRoute = '/changePasswordScreen';
 //---------------------added by ali
   static const String communicationItemSliver = '/CommunicationItemDetails';
-    static const String friendRequests = '/friendRequests';
+  static const String friendRequests = '/friendRequests';
 }
 
 final _sl = ServiceLocator.instance;
@@ -319,7 +321,10 @@ class AppRoutes {
       case Routes.editProfileScreenRoute:
         return MaterialPageRoute(
           settings: routeSettings,
-          builder: (BuildContext context) => const EditProfileScreen(),
+          builder: (BuildContext context) => BlocProvider(
+            create: (context) => _sl<EditProfileCubit>(),
+            child: const EditProfileScreen(),
+          ),
         );
       case Routes.calnederScreemRoute:
         return MaterialPageRoute(
@@ -351,10 +356,14 @@ class AppRoutes {
           settings: routeSettings,
           builder: (BuildContext context) => CommunicationItemDetails(),
         );
-        case Routes.friendRequests:
+      case Routes.friendRequests:
         return MaterialPageRoute(
           settings: routeSettings,
-          builder: (BuildContext context) => FriendRequestsScreen(),
+          builder: (BuildContext context) => BlocProvider(
+            create: (BuildContext context) =>
+                _sl<GetPendingRequestCubit>()..getPendingRequest(),
+            child: FriendRequestsScreen(),
+          ),
         );
 
       default:

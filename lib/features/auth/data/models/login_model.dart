@@ -50,6 +50,7 @@ class UserModel extends User {
     super.phone,
     super.fcmDeviceKey,
     super.code,
+    super.image,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -58,6 +59,7 @@ class UserModel extends User {
         phone: json["phone"],
         fcmDeviceKey: json["fcm_device_key"],
         code: json["code"],
+        image: json["image"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -66,5 +68,6 @@ class UserModel extends User {
         "phone": phone,
         "fcm_device_key": fcmDeviceKey,
         "code": code,
+        "image": image,
       };
 }

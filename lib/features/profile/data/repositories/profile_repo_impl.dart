@@ -1,3 +1,4 @@
+import 'package:cood/core/params/auth_params.dart';
 import 'package:dartz/dartz.dart';
 
 import '/core/base_classes/base_one_response.dart';
@@ -12,14 +13,19 @@ class ProfileRepoImpl implements ProfileRepo {
   ProfileRepoImpl({required this.remote});
 
   @override
-  Future<Either<Failure, BaseOneResponse>> getUser() async {
+  Future<Either<Failure, BaseOneResponse>> editUser(AuthParams params) async {
     try {
-      final BaseOneResponse response = await remote.getUser();
+      final BaseOneResponse response = await remote.editRemoteUser(params);
       return Right(response);
     } on AppException catch (error) {
       Log.e(
           '[getUser] [${error.runtimeType.toString()}] ---- ${error.message}');
       return Left(error.toFailure());
     }
+  }
+
+  @override
+  Future<Either<Failure, BaseOneResponse>> getUser() {
+    throw UnimplementedError();
   }
 }

@@ -10,7 +10,6 @@ import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
 import 'package:cood/features/auth/domain/entities/login_response.dart';
 import 'package:cood/features/auth/presentation/cubit/auto_login/auto_login_cubit.dart';
-import 'package:cood/features/home/presentation/cubit/get_pending_requests/get_pending_request_cubit.dart';
 import 'package:cood/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,12 +47,12 @@ class _MoreScreenState extends State<MoreScreen> {
               'tapBarItemMyAccount'.tr,
               style: TextStyles.bold32(color: colors.main),
             ),
-            Gaps.vGap20,
+            Gaps.vGap10,
             Center(
               child: Center(
                 child: Container(
-                  width: 100.w,
-                  height: 100.w,
+                  width: 90.w,
+                  height: 90.w,
                   decoration: BoxDecoration(
                     color: colors.main,
                     border: Border.all(
@@ -63,9 +62,9 @@ class _MoreScreenState extends State<MoreScreen> {
                   ),
                   clipBehavior: Clip.antiAlias,
                   child: DiffImage(
-                    width: 100.w,
-                    height: 100.w,
-                    image: '',
+                    width: 90.w,
+                    height: 90.w,
+                    image: user.image ?? '',
                     userName: user.name ?? '',
                     fitType: BoxFit.cover,
                   ),
@@ -88,10 +87,16 @@ class _MoreScreenState extends State<MoreScreen> {
               textAlign: TextAlign.center,
               style: TextStyles.medium18(color: colors.main),
             ),
-            Gaps.vGap30,
+            Gaps.vGap20,
             MoreItemWidget(
               onTap: () {
-                Navigator.pushNamed(context, Routes.editProfileScreenRoute);
+                Navigator.pushNamed(context, Routes.editProfileScreenRoute)
+                    .then((value) {
+                  if (value == true) {
+                    user = sharedPreferences.getUser() ?? User();
+                    setState(() {});
+                  }
+                });
               },
               icon: ImgAssets.editMyProfileIcon,
               title: 'editMyProfile',
@@ -110,9 +115,6 @@ class _MoreScreenState extends State<MoreScreen> {
               onTap: () async {
                 Navigator.pushNamed(context, Routes.friendRequests);
                 //--------------------get pending request
-                await context
-                    .read<GetPendingRequestCubit>()
-                    .getPendingRequest();
               },
               icon: ImgAssets.friendRequest,
               title: 'friendRequests',

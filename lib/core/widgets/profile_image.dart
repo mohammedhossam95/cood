@@ -4,6 +4,7 @@ import 'package:cood/core/utils/values/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
 import '/injection_container.dart';
 import '../utils/constants.dart';
@@ -125,12 +126,21 @@ class _ProfileImageState extends State<ProfileImage> {
       source: ImageSource.camera,
       imageQuality: 88,
     );
+    File? image = xImage != null ? File(xImage.path) : null;
     if (!mounted) return;
-    if (xImage != null) {
+    final dir = await path_provider.getTemporaryDirectory();
+    final targetPath =
+        '${dir.absolute.path}/${DateTime.now().millisecondsSinceEpoch}.jpg';
+
+    if (image != null) {
+      File? compressedFile = await Constants().getCompressedFile(
+        image,
+        targetPath,
+      );
       setState(() {
-        avatarImageFile = File(xImage.path);
-        widget.updateBannerImage!(avatarImageFile!);
+        avatarImageFile = compressedFile ?? image;
       });
+      widget.updateBannerImage!(avatarImageFile!);
     }
   }
 
@@ -140,12 +150,22 @@ class _ProfileImageState extends State<ProfileImage> {
       source: ImageSource.gallery,
       imageQuality: 88,
     );
+
+    File? image = xImage != null ? File(xImage.path) : null;
     if (!mounted) return;
-    if (xImage != null) {
+    final dir = await path_provider.getTemporaryDirectory();
+    final targetPath =
+        '${dir.absolute.path}/${DateTime.now().millisecondsSinceEpoch}.jpg';
+
+    if (image != null) {
+      File? compressedFile = await Constants().getCompressedFile(
+        image,
+        targetPath,
+      );
       setState(() {
-        avatarImageFile = File(xImage.path);
-        widget.updateBannerImage!(avatarImageFile!);
+        avatarImageFile = compressedFile ?? image;
       });
+      widget.updateBannerImage!(avatarImageFile!);
     }
   }
 }

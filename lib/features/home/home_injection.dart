@@ -30,56 +30,55 @@ final _sl = ServiceLocator.instance;
 Future<void> initHomeFeatureInjection() async {
   ///-> Cubits
   // Blocs
-  
-    //----------------new get pending requests----------------
+
+  //----------------new get pending requests----------------
   _sl.registerFactory<GetPendingRequestCubit>(
-      () => GetPendingRequestCubit( _sl()));
+      () => GetPendingRequestCubit(_sl()));
   _sl.registerFactory<GetPendingRequestUseCase>(
-      () => GetPendingRequestUseCase(  _sl())); 
+      () => GetPendingRequestUseCase(_sl()));
   //----------------new sendFreind request----------------
   _sl.registerFactory<SendFriendRequestCubit>(
-      () => SendFriendRequestCubit( _sl()));
+      () => SendFriendRequestCubit(_sl()));
   _sl.registerFactory<SendFreindRequestUseCase>(
-      () => SendFreindRequestUseCase( repository: _sl())); 
+      () => SendFreindRequestUseCase(repository: _sl()));
   //----------------new GetSearchUserByCodeCubit----------------
   _sl.registerFactory<GetSearchUserByCodeCubit>(
-      () => GetSearchUserByCodeCubit( _sl()));
+      () => GetSearchUserByCodeCubit(_sl()));
   _sl.registerFactory<GetSearchUserByCodeUseCase>(
-      () => GetSearchUserByCodeUseCase( repository: _sl())); 
+      () => GetSearchUserByCodeUseCase(repository: _sl()));
   //----------------new friendList----------------
-    _sl.registerFactory<FriendsListCubit>(
-      () => FriendsListCubit( getFriendsListUseCase: _sl()));
+  _sl.registerFactory<FriendsListCubit>(
+      () => FriendsListCubit(getFriendsListUseCase: _sl()));
   _sl.registerFactory<GetFriendsListUseCase>(
-      () => GetFriendsListUseCase( _sl())); 
+      () => GetFriendsListUseCase(_sl()));
   _sl.registerFactory<HomeRepo>(() => HomeRepoImpl(remote: _sl()));
   _sl.registerLazySingleton<HomeRemoteDataSource>(
-      () => HomeRemoteDataSourceImpl());  
+      () => HomeRemoteDataSourceImpl());
   //-----------------------this is new gallary-------------------
-  _sl.registerFactory<GetUserGallaryCubit>(
-      () => GetUserGallaryCubit( _sl()));
+  _sl.registerFactory<GetUserGallaryCubit>(() => GetUserGallaryCubit(_sl()));
   _sl.registerFactory<GetAllUserGallaryUseCase>(
-      () => GetAllUserGallaryUseCase(repository: _sl())); 
-      
+      () => GetAllUserGallaryUseCase(repository: _sl()));
+
 //-----------------------this is new user social media-------------------
   _sl.registerFactory<GetUserSocialMediaCubit>(
-      () => GetUserSocialMediaCubit( _sl()));
+      () => GetUserSocialMediaCubit(_sl()));
   _sl.registerFactory<GetUserSocialMediaUseCase>(
-      () => GetUserSocialMediaUseCase( _sl())); 
-       
+      () => GetUserSocialMediaUseCase(_sl()));
+
 //-----------------------this is new user social media-------------------
   _sl.registerFactory<GetAllSocialMediaCubit>(
-      () => GetAllSocialMediaCubit( _sl()));
+      () => GetAllSocialMediaCubit(_sl()));
   _sl.registerFactory<GetAllSocialMediaUseCase>(
-      () => GetAllSocialMediaUseCase( _sl())); 
-  
+      () => GetAllSocialMediaUseCase(_sl()));
+
 //-----------------------this is new Add user social media account-------------------
   _sl.registerFactory<AddUserSocialAccountCubit>(
-      () => AddUserSocialAccountCubit( _sl()));
+      () => AddUserSocialAccountCubit(_sl()));
   _sl.registerFactory<AddUserSocialAccountUseCase>(
-      () => AddUserSocialAccountUseCase( _sl())); 
+      () => AddUserSocialAccountUseCase(_sl()));
   _sl.registerFactory<HomeRepo>(() => HomeRepoImpl(remote: _sl()));
   _sl.registerLazySingleton<HomeRemoteDataSource>(
-      () => HomeRemoteDataSourceImpl());   
+      () => HomeRemoteDataSourceImpl());
 //-----------------------------------------------
 
   _sl.registerFactory<GetCitiesCubit>(
@@ -101,32 +100,30 @@ Future<void> initHomeFeatureInjection() async {
 
 ///-> BlocProvider
 List<BlocProvider> get homeBlocs => <BlocProvider>[
-     //----------------new----------
-     BlocProvider<GetPendingRequestCubit>(
-        create: (BuildContext context) => _sl<GetPendingRequestCubit>(),
-      ),
-       BlocProvider<SendFriendRequestCubit>(
+      //----------------new----------
+
+      BlocProvider<SendFriendRequestCubit>(
         create: (BuildContext context) => _sl<SendFriendRequestCubit>(),
       ),
       BlocProvider<GetSearchUserByCodeCubit>(
         create: (BuildContext context) => _sl<GetSearchUserByCodeCubit>(),
       ),
-     BlocProvider<AddUserSocialAccountCubit>(
+      BlocProvider<AddUserSocialAccountCubit>(
         create: (BuildContext context) => _sl<AddUserSocialAccountCubit>(),
       ),
-     BlocProvider<GetAllSocialMediaCubit>(
+      BlocProvider<GetAllSocialMediaCubit>(
         create: (BuildContext context) => _sl<GetAllSocialMediaCubit>(),
       ),
-     BlocProvider<GetUserSocialMediaCubit>(
+      BlocProvider<GetUserSocialMediaCubit>(
         create: (BuildContext context) => _sl<GetUserSocialMediaCubit>(),
       ),
-     BlocProvider<GetUserGallaryCubit>(
+      BlocProvider<GetUserGallaryCubit>(
         create: (BuildContext context) => _sl<GetUserGallaryCubit>(),
       ),
       BlocProvider<FriendsListCubit>(
         create: (BuildContext context) => _sl<FriendsListCubit>(),
       ),
-     //----------------------------
+      //----------------------------
       BlocProvider<GetCitiesCubit>(
         create: (BuildContext context) => _sl<GetCitiesCubit>(),
       ),

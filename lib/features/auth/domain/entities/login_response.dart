@@ -44,6 +44,7 @@ class User extends Equatable {
   final String? phone;
   final String? fcmDeviceKey;
   final String? code;
+  final String? image;
 
   const User({
     this.id,
@@ -51,6 +52,7 @@ class User extends Equatable {
     this.phone,
     this.fcmDeviceKey,
     this.code,
+    this.image,
   });
 
   @override
@@ -60,5 +62,6 @@ class User extends Equatable {
         phone,
         fcmDeviceKey,
         code,
+        image,
       ];
 }

@@ -8,6 +8,7 @@ import 'package:cood/core/utils/values/text_styles.dart';
 import 'package:cood/core/widgets/diff_img.dart';
 import 'package:cood/core/widgets/error_text.dart';
 import 'package:cood/core/widgets/gaps.dart';
+import 'package:cood/features/auth/presentation/widgets/custom_back_icon.dart';
 import 'package:cood/features/categories/presentation/widgets/my_progress.dart';
 import 'package:cood/features/home/domain/entities/pending_request_entity.dart';
 import 'package:cood/features/home/presentation/cubit/get_pending_requests/get_pending_request_cubit.dart';
@@ -22,123 +23,126 @@ class FriendRequestsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // bool isArabic = AppLocalizations.of(context)!.isArLocale;
     return SafeArea(
-        child: Scaffold(
-      backgroundColor: colors.backGround,
-      body: Column(
-        children: [
-          Text(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
             'friendRequests'.tr,
-            style: TextStyles.bold32(
-              color: colors.main,
-            ),
+            style: TextStyles.bold24(color: colors.main),
           ),
-          BlocBuilder<GetPendingRequestCubit, GetPendingRequestState>(
-            builder: (context, state) {
-              if (state is GetPendingRequestLoading) {
-                return Center(
-                  child: MyProgrees(),
-                );
-              } else if (state is GetPendingRequestSuccess) {
-                 List<PendingRequestentity> pendRequests=state.response.data as  List<PendingRequestentity>;
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) => Container(
-                    margin: EdgeInsets.all(15.h),
-                    height: 80.h,
-                    width: 348.w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.r),
-                      color: colors.baseColor,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: 80.h,
-                          width: 80.w,
-                          child: DiffImage(
-                              image: pendRequests[index].sender?.image??nullNetworkImage,
-                              borderRadius: BorderRadius.circular(20.r)),
+          leading: CustomBack(),
+        ),
+        body: BlocBuilder<GetPendingRequestCubit, GetPendingRequestState>(
+          builder: (context, state) {
+            if (state is GetPendingRequestLoading) {
+              return Center(
+                child: MyProgrees(),
+              );
+            } else if (state is GetPendingRequestSuccess) {
+              List<PendingRequestentity> pendRequests =
+                  state.response.data as List<PendingRequestentity>;
+
+              return pendRequests.isNotEmpty
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: pendRequests.length,
+                      itemBuilder: (context, index) => Container(
+                        margin: EdgeInsets.all(15.h),
+                        height: 80.h,
+                        width: 348.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.r),
+                          color: colors.baseColor,
                         ),
-                        Gaps.hGap12,
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Gaps.vGap5,
-                            Text(
-                              'friendRequest'.tr,
-                              style: TextStyles.semiBold14(
-                                color: colors.main,
-                              ),
+                            DiffImage(
+                              height: 80.h,
+                              width: 80.w,
+                              image: pendRequests[index].sender?.image ??
+                                  nullNetworkImage,
+                              borderRadius: BorderRadius.circular(20.r),
                             ),
-                            Gaps.vGap5,
-                            Text(
-                              pendRequests[index].sender?.name??'',
-                              style: TextStyles.semiBold14(),
-                            ),
-                          ],
-                        ),
-                        Gaps.hGap40,
-                        Row(
-                          children: [
-                            //------------reject request
-                            InkWell(
-                              onTap: () {},
-                              child: Container(
-                                width: 32.w,
-                                height: 32.h,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      ImageAssets.close,
-                                    ),
-                                    fit: BoxFit.cover,
+                            Gaps.hGap12,
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Gaps.vGap5,
+                                Text(
+                                  'friendRequest'.tr,
+                                  style: TextStyles.semiBold14(
+                                    color: colors.main,
                                   ),
                                 ),
-                              ),
+                                Gaps.vGap5,
+                                Text(
+                                  pendRequests[index].sender?.name ?? '',
+                                  style: TextStyles.semiBold14(),
+                                ),
+                              ],
+                            ),
+                            Gaps.hGap40,
+                            Row(
+                              children: [
+                                //------------reject request
+                                InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    width: 32.w,
+                                    height: 32.h,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          ImageAssets.close,
+                                        ),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Gaps.hGap20,
+                                //------------acceptFriend request
+                                InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    width: 32.w,
+                                    height: 32.h,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      color: MyColors.socialGreen,
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          ImageAssets.accept,
+                                        ),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                             Gaps.hGap20,
-                            //------------acceptFriend request
-                            InkWell(
-                              onTap: () {},
-                              child: Container(
-                                width: 32.w,
-                                height: 32.h,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  color: MyColors.socialGreen,
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      ImageAssets.accept,
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ),
                           ],
                         ),
-                        Gaps.hGap20,
-                      ],
-                    ),
-                  ),
-                  itemCount: pendRequests.length,
-                );
-              } else if (state is GetPendingRequestFailure) {
-                return ErrorText(
-                  text: state.errorMessage,
-                  width: ScreenUtil().screenWidth,
-                );
-              } else {
-                return const SizedBox();
-              }
-            },
-          ),
-        ],
+                      ),
+                    )
+                  : ErrorText(
+                      width: ScreenUtil().screenWidth,
+                      text: 'noData'.tr,
+                    );
+            } else if (state is GetPendingRequestFailure) {
+              return ErrorText(
+                text: state.errorMessage,
+                width: ScreenUtil().screenWidth,
+              );
+            } else {
+              return const SizedBox();
+            }
+          },
+        ),
       ),
-    ));
+    );
   }
 }
