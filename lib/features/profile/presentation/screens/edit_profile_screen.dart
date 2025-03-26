@@ -1,9 +1,14 @@
 import 'dart:io';
 
 import 'package:cood/config/routes/app_routes.dart';
+import 'package:cood/core/params/auth_params.dart';
+import 'package:cood/core/utils/constants.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
+import 'package:cood/features/auth/domain/entities/login_response.dart';
 import 'package:cood/features/auth/presentation/widgets/custom_back_icon.dart';
+import 'package:cood/features/profile/presentation/cubit/edit_profile_cubit/edit_profile_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '/config/locale/app_localizations.dart';
@@ -21,13 +26,21 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  final TextEditingController phoneNumberController = TextEditingController();
-  final FocusNode phoneNumberFocus = FocusNode();
   final TextEditingController usernameController = TextEditingController();
   final FocusNode usernameFocus = FocusNode();
 
-  File? passportImage;
-  File? licenseImage;
+  File? profileImage;
+
+  late User user;
+
+  @override
+  void initState() {
+    user = sharedPreferences.getUser() ?? User();
+    usernameController.text = user.name ?? '';
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -51,8 +64,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 Gaps.vGap78,
                 Center(
                   child: ProfileImage(
-                    image: '',
-                    updateBannerImage: (f) {},
+                    image: user.image ?? '',
+                    updateBannerImage: (f) {
+                      setState(() {
+                        profileImage = f;
+                      });
+                    },
                   ),
                 ),
                 Gaps.vGap45,
@@ -62,44 +79,69 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
                 Gaps.vGap10,
                 AppTextFormField(
-                  controller: phoneNumberController,
-                  focusNode: phoneNumberFocus,
+                  controller: usernameController,
+                  focusNode: usernameFocus,
                   hintText: 'name'.tr,
                   borderColor: colors.main,
                 ),
-                Gaps.vGap12,
-                Text(
-                  'phone_number'.tr,
-                  style: TextStyles.bold14(color: colors.main),
-                ),
-                Gaps.vGap10,
-                AppTextFormField(
-                  controller: usernameController,
-                  focusNode: usernameFocus,
-                  hintText: 'phone_number'.tr,
-                  borderColor: colors.main,
+                Gaps.vGap30,
+                Gaps.vGap50,
+                BlocConsumer<EditProfileCubit, EditProfileState>(
+                  listener: (context, state) {
+                    if (state is EditProfileLoaded) {
+                      User updated = state.response.data as User;
+                      Navigator.of(context).pop(true);
+                      sharedPreferences.saveUser(updated);
+                    } else if (state is EditProfileError) {
+                      Constants.showSnakToast(
+                          context: context, message: state.msg, type: 3);
+                    }
+                  },
+                  builder: (context, state) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 60.w),
+                          child: (state is EditProfileIsLoading)
+                              ? const Center(child: CircularProgressIndicator())
+                              : MyDefaultButton(
+                                  onPressed: () {
+                                    BlocProvider.of<EditProfileCubit>(context)
+                                        .editProfile(AuthParams(
+                                      name: usernameController.text,
+                                      image: profileImage,
+                                    ));
+                                  },
+                                  btnText: 'saveChanges',
+                                  borderColor: colors.main,
+                                  color: colors.main,
+                                  textStyle: TextStyles.bold17(),
+                                ),
+                        ),
+                        if (state is EditProfileError) ...[
+                          Gaps.vGap10,
+                          Text(
+                            state.msg,
+                            style: TextStyles.bold14(color: colors.errorColor),
+                          ),
+                        ],
+                      ],
+                    );
+                  },
                 ),
                 Gaps.vGap30,
-                MyDefaultButton(
-                  onPressed: () {
+                InkWell(
+                  onTap: () {
                     Navigator.pushNamed(context, Routes.changePasswordRoute);
                   },
-                  btnText: 'changePassword',
-                  borderColor: colors.baseColor,
-                  color: colors.baseColor,
-                  textStyle: TextStyles.bold14(
-                    color: colors.blackColor,
-                  ),
-                ),
-                Gaps.vGap50,
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 60.w),
-                  child: MyDefaultButton(
-                    onPressed: () {},
-                    btnText: 'saveChanges',
-                    borderColor: colors.main,
-                    color: colors.main,
-                    textStyle: TextStyles.bold17(),
+                  child: SizedBox(
+                    width: ScreenUtil().screenWidth,
+                    child: Text(
+                      'changePassword',
+                      textAlign: TextAlign.center,
+                      style: TextStyles.underlineRegular20(),
+                    ),
                   ),
                 ),
               ],

@@ -129,6 +129,18 @@ class _MainPageState extends State<MainPage> {
                         ),
                         BottomNavigationBarItem(
                           icon: SvgPicture.asset(
+                            SvgAssets.discoverTab,
+                            width: 24.w,
+                            height: 24.h,
+                            colorFilter: const ColorFilter.mode(
+                              Colors.white,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                          label: "discover".tr,
+                        ),
+                        BottomNavigationBarItem(
+                          icon: SvgPicture.asset(
                             SvgAssets.bookmarkTab,
                             width: 24.w,
                             height: 24.h,

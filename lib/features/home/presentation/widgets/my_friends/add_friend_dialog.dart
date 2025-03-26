@@ -11,7 +11,6 @@ import 'package:cood/core/widgets/my_default_button.dart';
 import 'package:cood/core/widgets/search_text_field.dart';
 import 'package:cood/features/categories/presentation/widgets/my_progress.dart';
 import 'package:cood/features/home/domain/entities/search_user_by_code_entity.dart';
-import 'package:cood/features/home/presentation/cubit/get_pending_requests/get_pending_request_cubit.dart';
 import 'package:cood/features/home/presentation/cubit/get_search_user_by_code/get_search_user_by_code_cubit.dart';
 import 'package:cood/features/home/presentation/cubit/get_search_user_by_code/get_search_user_by_code_state.dart';
 import 'package:cood/features/home/presentation/cubit/send_friend_request/send_friend_request_cubit.dart';
@@ -34,7 +33,6 @@ class _AddFriendDialogState extends State<AddFriendDialog> {
   @override
   Widget build(BuildContext context) {
     bool isArabic = AppLocalizations.of(context)!.isArLocale;
-    String sendFriendRequestError = '';
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.all(8.0.h),
@@ -155,7 +153,6 @@ class _AddFriendDialogState extends State<AddFriendDialog> {
                                           .read<SendFriendRequestCubit>()
                                           .sendFriendRequest(
                                               searchUserByCodeEntity.id ?? -1);
-                                      
                                     },
                                   );
                           },

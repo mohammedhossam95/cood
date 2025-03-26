@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 
 class AuthParams extends Equatable {
@@ -9,6 +11,7 @@ class AuthParams extends Equatable {
   final String? userType;
   final int? userId;
   final String? otp;
+  final File? image;
 
   const AuthParams({
     this.name,
@@ -19,6 +22,7 @@ class AuthParams extends Equatable {
     this.userType,
     this.userId,
     this.otp,
+    this.image,
   });
 
   @override
@@ -31,6 +35,7 @@ class AuthParams extends Equatable {
         userType,
         userId,
         otp,
+        image,
       ];
 
   Map<String, dynamic> toJson() => {

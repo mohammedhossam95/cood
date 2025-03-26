@@ -45,7 +45,7 @@ class AllSocialContainerItem extends StatelessWidget {
         children: [
           // Social icon
           Container(
-            padding: EdgeInsets.all(10.r),
+            padding: EdgeInsets.all(16.r),
             width: 70.w,
             height: double.infinity,
             decoration: BoxDecoration(

@@ -5,6 +5,7 @@ class SvgAssets {
   static const String user = 'assets/icons/user.svg';
   static const String bookmarkTab = 'assets/icons/Bookmark_tab.svg';
   static const String homeTab = 'assets/icons/home_tab.svg';
+  static const String discoverTab = 'assets/icons/discover.svg';
   static const String userTab = 'assets/icons/user_tab.svg';
 
   static const String bell = 'assets/icons/bell.svg';

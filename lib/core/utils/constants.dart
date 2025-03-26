@@ -7,6 +7,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -23,7 +24,7 @@ import '../../injection_container.dart';
 final Color baseColorShimmer = Colors.grey.shade300;
 final Color highlightColorShimmer = Colors.grey.shade100;
 
-abstract class Constants {
+class Constants {
   static const String appVersionType = 'test'; // live, test
   static String getSystemLang() {
     Locale locale = ui.PlatformDispatcher.instance.locale;
@@ -457,6 +458,29 @@ abstract class Constants {
     Navigator.of(context).pop();
   }
 
+  Future<int> getImageFileSize(File file) async {
+    int fileSize = file.lengthSync();
+    Log.d("File Size is: $fileSize");
+    return fileSize;
+  }
+
+  Future<File?> getCompressedFile(File file, String targetPath) async {
+    XFile? result = await FlutterImageCompress.compressAndGetFile(
+      file.absolute.path,
+      targetPath,
+      quality: 70,
+    );
+
+    if (result != null) {
+      log(
+        "Original File Size -- ${file.lengthSync()} --- CompressedFile ${File(result.path).lengthSync()} ",
+      );
+      return File(result.path);
+    } else {
+      return null;
+    }
+  }
+
   // static void navigateTo(double lat, double lng) async {
   //   var uri = Uri.parse("google.navigation:q=$lat,$lng&mode=d");
   //   if (await canLaunchUrl(uri)) {
@@ -497,4 +521,5 @@ abstract class ArabicNumeric {
   static String nine = '٩';
 }
 
- const  String nullNetworkImage='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMjnIX5FuaL7lt6QNyi5G1SLM6NvWIF6sd9A&s';
+const String nullNetworkImage =
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMjnIX5FuaL7lt6QNyi5G1SLM6NvWIF6sd9A&s';
