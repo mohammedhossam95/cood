@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       hasBorder: true,
                       width: 60.w,
                       height: 60.w,
-                      image: "",
+                      image: user.image ??"",
                       padding: const EdgeInsets.all(2.0),
                       userName: user.name ?? "",
                     ),

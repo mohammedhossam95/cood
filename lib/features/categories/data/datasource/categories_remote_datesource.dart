@@ -1,5 +1,6 @@
 import 'package:cood/features/categories/data/model/checkout_resp_model.dart';
 import 'package:cood/features/categories/data/model/get_filter_user_by_category_model.dart';
+import 'package:cood/features/categories/data/model/post_selected_category_model.dart';
 import 'package:cood/features/categories/data/model/price_status_resp_model.dart';
 import 'package:cood/features/categories/data/model/reserve_status_resp_model.dart';
 
@@ -11,6 +12,7 @@ import '../model/categoryies_model.dart';
 
 abstract class CategoriesRemoteDatesource {
   //--------------new
+  Future<PostSelectedCategoryRespModel> postSelectedCategory(List<int> ids);
   Future<FilterUserByCategoryRespModel> getFilterUserByCategoryId(int id);
   Future<CategoriesRespModel> getCategoriesRemoteData();
   //-----------------------------------------
@@ -187,6 +189,29 @@ class CategoriesRemoteDatesourceImpl extends CategoriesRemoteDatesource {
       }
       throw ServerException(message: response['message'] ?? '');
     } on ServerException {
+      rethrow;
+    } catch (error) {
+      rethrow;
+    }
+  }
+  
+  @override
+  Future<PostSelectedCategoryRespModel> postSelectedCategory(List<int> ids) async{
+    String branchUrl = '/user/categories';
+    try {
+  final response = await dioConsumer.post(
+    branchUrl,
+    queryParameters: {
+      "category_ids":[
+        ids,
+      ],
+    },
+    );
+  if (response['status'] == 'success' ) {
+    return PostSelectedCategoryRespModel.fromJson(response);
+  }
+      throw ServerException(message: response['message'] ?? '');
+} on ServerException {
       rethrow;
     } catch (error) {
       rethrow;

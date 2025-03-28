@@ -824,5 +824,6 @@
   "addLink":"Add Link",
   "friendRequests":"friend Requests",
   "discover":"Discover",
-  "friendRequest":"friend Request"
+  "friendRequest":"friend Request",
+  "areYouSureToConfirm":"Are You sure ?"
 }

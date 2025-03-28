@@ -109,4 +109,17 @@ class CategoriesRepositryImpl extends CategoriesRepositry {
       return Left(error.toFailure());
     }
   }
+  
+  @override
+  Future<Either<Failure, BaseListResponse>> postSelectedCategory(List<int> ids) async{
+      try {
+      final response = await remoteDataSource.postSelectedCategory(ids);
+      Log.d(response.toString());
+      return Right(response);
+    } on ServerException catch (error) {
+      Log.e(
+          '[postSelectedCategory] [${error.runtimeType.toString()}] ---- ${error.message}');
+      return Left(error.toFailure());
+    }
+  }
 }

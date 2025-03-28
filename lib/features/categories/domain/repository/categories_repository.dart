@@ -8,6 +8,7 @@ import '../../../../core/error/failures.dart';
 
 abstract class CategoriesRepositry {
   //------------------------------
+  Future<Either<Failure, BaseListResponse>> postSelectedCategory(List<int>ids);
   Future<Either<Failure, BaseOneResponse>> getFilterUserByCategory(int id);
   //-------------------------------
   Future<Either<Failure, BaseListResponse>> fetchCategories();

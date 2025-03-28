@@ -9,12 +9,14 @@ import 'package:cood/features/categories/domain/use_case/get_apple_config_usecas
 import 'package:cood/features/categories/domain/use_case/get_filter_users_by_category_use_case.dart';
 import 'package:cood/features/categories/domain/use_case/get_price_status_usecase.dart';
 import 'package:cood/features/categories/domain/use_case/make_reserve_usecase.dart';
+import 'package:cood/features/categories/domain/use_case/post_selected_category_use_case.dart';
 import 'package:cood/features/categories/presentation/cubit/apple_pay_config_cubit/apple_pay_config_cubit.dart';
 import 'package:cood/features/categories/presentation/cubit/categories_cubit/categories_cubit.dart';
 import 'package:cood/features/categories/presentation/cubit/check_reserve_status/check_reserve_status_cubit.dart';
 import 'package:cood/features/categories/presentation/cubit/complete_applepay_cubit/complete_applepay_cubit.dart';
 import 'package:cood/features/categories/presentation/cubit/coupon_validation/coupon_validation_cubit.dart';
 import 'package:cood/features/categories/presentation/cubit/get_filter_user_by_category/get_filter_user_by_category_cubit.dart';
+import 'package:cood/features/categories/presentation/cubit/post_selected_category_cubit/post_selected_category_cubit.dart';
 import 'package:cood/features/categories/presentation/cubit/price_status_cubit/price_status_cubit.dart';
 import 'package:cood/features/categories/presentation/cubit/reserve_cubit/reserve_cubit.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,11 @@ import '/injection_container.dart';
 
 final _sl = ServiceLocator.instance;
 Future<void> initCategoriesInjection() async {
+  //-----------postSelected category
+  _sl.registerFactory<PostSelectedCategoryCubit>(
+      () => PostSelectedCategoryCubit(  _sl()));
+  _sl.registerFactory<PostSelectedCategoryUseCase>(
+      () => PostSelectedCategoryUseCase( categoriesRepository: _sl())); 
   //--------------------------------------------------
           _sl.registerFactory<GetFilterUserByCategoryCubit>(
       () => GetFilterUserByCategoryCubit(  _sl()));
@@ -76,6 +83,9 @@ Future<void> initCategoriesInjection() async {
 
 /// BlocProviders
 List<BlocProvider> get categoriesBlocs => <BlocProvider>[
+  BlocProvider<PostSelectedCategoryCubit>(
+        create: (BuildContext context) => _sl<PostSelectedCategoryCubit>(),
+      ),
   BlocProvider<GetFilterUserByCategoryCubit>(
         create: (BuildContext context) => _sl<GetFilterUserByCategoryCubit>(),
       ),
