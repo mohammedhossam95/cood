@@ -19,6 +19,7 @@ Future<bool?> showAppDialog({
           borderRadius: BorderRadius.circular(borderRadius ?? 12.r),
         ),
         child: Dialog(
+          insetAnimationDuration: Duration(seconds: 3,),
           backgroundColor: backgroundColor ?? Colors.white,
           insetPadding: EdgeInsets.symmetric(
               horizontal: horizontalPadding.w, vertical: verticalPadding.h),

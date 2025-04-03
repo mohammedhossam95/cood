@@ -28,6 +28,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  flutter:
+    sdk: flutter
   animate_do: ^4.2.0
   another_stepper: ^1.2.2
   auto_size_text: ^3.0.0
@@ -47,8 +49,6 @@ dependencies:
   dotted_line: ^3.2.2
   equatable: ^2.0.7
   firebase_messaging: ^15.2.4
-  flutter:
-    sdk: flutter
   flutter_bloc: ^9.0.0
   flutter_date_range_picker: ^0.1.1
   flutter_html: ^3.0.0-alpha.3

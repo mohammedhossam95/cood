@@ -827,6 +827,7 @@
   "addLink":"اضافة رابط",
   "friendRequests":"طلبات الصداقه",
   "discover":"استكشف",
-  "friendRequest":"طلب صداقه"
+  "friendRequest":"طلب صداقه",
+  "areYouSureToConfirm":"هل انت متاكد ?"
 
 }

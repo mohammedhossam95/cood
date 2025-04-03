@@ -26,91 +26,93 @@ class AllSocialContainerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color itemColor =
         convertStringColor(allSocialAccount.color ?? '1877F2');
-    return Container(
-      decoration: BoxDecoration(
-        color: itemColor.withValues(
-          alpha: 0.1,
-        ),
-        borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(
-          color:
-              (itemColor == MyColors.socialYellow) ? MyColors.black : itemColor,
-        ),
-      ),
-      margin: EdgeInsets.all(10.h),
-      width: 348.w,
-      height: 80.h,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // Social icon
-          Container(
-            padding: EdgeInsets.all(16.r),
-            width: 70.w,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              color: itemColor,
-              borderRadius: (AppLocalizations.of(context)?.isArLocale ?? false)
-                  ? BorderRadius.only(
-                      topLeft: Radius.circular(20.r),
-                      topRight: Radius.circular(19.r),
-                      bottomRight: Radius.circular(19.r),
-                    )
-                  : BorderRadius.only(
-                      topLeft: Radius.circular(19.r),
-                      topRight: Radius.circular(20.r),
-                      bottomLeft: Radius.circular(19.r),
-                    ),
-            ),
-            child: DiffImage(
-              width: 40.0.w,
-              height: 40.0.h,
-              image: allSocialAccount.icon ?? '',
-              userName: allSocialAccount.name ?? '',
-            ),
+    return InkWell(
+      onTap: () {
+        showAppDialog(
+          backgroundColor: Colors.transparent,
+          context: context,
+          isDismissible: true,
+          child: AddUserAccountDialog(
+            color: itemColor,
+            id: allSocialAccount.id ?? 1,
+            image: allSocialAccount.icon ?? '',
           ),
-          // Name and link
-          SizedBox(
-            width: 180.w,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  allSocialAccount.name ?? '',
-                  style: TextStyles.bold14(),
-                  maxLines: 2,
-                ),
-                InkWell(
-                  onTap: () {
-                    showAppDialog(
-                      backgroundColor: Colors.transparent,
-                      context: context,
-                      isDismissible: true,
-                      child: AddUserAccountDialog(
-                        color: itemColor,
-                        id: allSocialAccount.id ?? 1,
-                        image: allSocialAccount.icon ?? '',
-                      ),
-                    );
-                  },
-                  child: Text(
-                    'addAccount'.tr,
-                    style: TextStyles.bold14(),
-                  ),
-                ),
-              ],
-            ),
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: itemColor.withValues(
+            alpha: 0.1,
           ),
-          // Menu icon
-          Image.asset(
-            'assets/images/Menu.png',
+          borderRadius: BorderRadius.circular(20.r),
+          border: Border.all(
             color: (itemColor == MyColors.socialYellow)
                 ? MyColors.black
                 : itemColor,
           ),
-          Gaps.hGap1,
-        ],
+        ),
+        margin: EdgeInsets.all(10.h),
+        width: 348.w,
+        height: 80.h,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Social icon
+            Container(
+              padding: EdgeInsets.all(16.r),
+              width: 70.w,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                color: itemColor,
+                borderRadius:
+                    (AppLocalizations.of(context)?.isArLocale ?? false)
+                        ? BorderRadius.only(
+                            topLeft: Radius.circular(20.r),
+                            topRight: Radius.circular(19.r),
+                            bottomRight: Radius.circular(19.r),
+                          )
+                        : BorderRadius.only(
+                            topLeft: Radius.circular(19.r),
+                            topRight: Radius.circular(20.r),
+                            bottomLeft: Radius.circular(19.r),
+                          ),
+              ),
+              child: DiffImage(
+                width: 40.0.w,
+                height: 40.0.h,
+                image: allSocialAccount.icon ?? '',
+                userName: allSocialAccount.name ?? '',
+              ),
+            ),
+            // Name and link
+            SizedBox(
+              width: 180.w,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    allSocialAccount.name ?? '',
+                    style: TextStyles.bold14(),
+                    maxLines: 2,
+                  ),
+                  Text(
+                    'addAccount'.tr,
+                    style: TextStyles.bold14(),
+                  ),
+                ],
+              ),
+            ),
+            // Menu icon
+            Image.asset(
+              'assets/images/Menu.png',
+              color: (itemColor == MyColors.socialYellow)
+                  ? MyColors.black
+                  : itemColor,
+            ),
+            Gaps.hGap1,
+          ],
+        ),
       ),
     );
   }

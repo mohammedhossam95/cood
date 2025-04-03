@@ -13,6 +13,6 @@ class AddUserSocialAccountUseCase
 
   @override
   Future<Either<Failure, BaseListResponse>> call(
-          AddAccountParams param) async =>
-      await repository.addUserSocialAccount(param);
+          AddAccountParams params) async =>
+      await repository.addUserSocialAccount(params);
 }

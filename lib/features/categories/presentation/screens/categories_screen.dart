@@ -31,6 +31,10 @@ class CategoriesScreen extends StatefulWidget {
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
   UserType? userType;
+  bool isUserApproaved = true;
+  final TextEditingController searchController = TextEditingController();
+  List<CategoryEntity> communicationList = [];
+  List<CategoryEntity> filteredCommunicationList = [];
   @override
   void initState() {
     context.read<CategoriesCubit>().getCategoriess();
@@ -38,9 +42,24 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     super.initState();
   }
 
-//-----------------------------------this for test----
-  bool isUserApproaved = true;
-  final TextEditingController searchController = TextEditingController();
+  void _filterCategories(String query,BuildContext context) {
+    setState(() {
+      if (query.isEmpty) {
+        filteredCommunicationList = List.from(communicationList);
+      } else {
+        filteredCommunicationList = communicationList.where((category) {
+          final title = (AppLocalizations.of(context)!.isArLocale)?category.nameAr?.toLowerCase()??'':category.nameEn?.toLowerCase() ?? '';
+          return title.contains(query.toLowerCase());
+        }).toList();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,12 +73,14 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     return const Center(
                       child: MyProgrees(),
                     );
-                    //----------------- this condition should be (state is CategoriesSuccerss)
                   } else if (state is CategoriesSuccerss) {
-                    //List<CategoryEntity> communicationList = [];
-                    List<CategoryEntity> communicationList =
+                    communicationList =
                         state.response.data as List<CategoryEntity>;
-                    return communicationList.isEmpty
+                    if (filteredCommunicationList.isEmpty) {
+                      filteredCommunicationList = List.from(communicationList);
+                    }
+
+                    return filteredCommunicationList.isEmpty
                         ? const NoCategoriess()
                         : Padding(
                             padding: EdgeInsets.all(10.0.w),
@@ -81,12 +102,17 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                   focusNode: FocusNode(),
                                   hintText: "search".tr,
                                   suffixIcon: IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      _filterCategories(searchController.text,context);
+                                    },
                                     icon: Icon(
                                       Icons.search,
                                       color: MyColors.main,
                                     ),
                                   ),
+                                  onChanged: (value) {
+                                    _filterCategories(value??'',context);
+                                  },
                                 ),
                                 Expanded(
                                   child: Container(
@@ -98,11 +124,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                     child: ListView.builder(
                                       scrollDirection: Axis.vertical,
                                       shrinkWrap: true,
-                                      itemCount: communicationList.length,
+                                      itemCount:
+                                          filteredCommunicationList.length,
                                       itemBuilder: (context, index) =>
                                           GestureDetector(
                                         onTap: () async {
-                                          //-------getFilterUserById
                                           Navigator.pushNamed(
                                             context,
                                             Routes.communicationItemSliver,
@@ -111,12 +137,14 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                               .read<
                                                   GetFilterUserByCategoryCubit>()
                                               .getGetFilterUserByCategoryId(
-                                                  communicationList[index].id ??
+                                                  filteredCommunicationList[
+                                                              index]
+                                                          .id ??
                                                       2);
-                                          //-------getFilterUserById
                                         },
                                         child: CommunicationGuideItem(
-                                            item: communicationList[index]),
+                                            item: filteredCommunicationList[
+                                                index]),
                                       ),
                                     ),
                                   ),

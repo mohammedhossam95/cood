@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, sized_box_for_whitespace, use_key_in_widget_constructors
+// ignore_for_file: must_be_immutable, sized_box_for_whitespace, use_key_in_widget_constructors, use_build_context_synchronously
 
 import 'package:cood/config/locale/app_localizations.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
@@ -7,6 +7,7 @@ import 'package:cood/core/widgets/error_text.dart';
 import 'package:cood/core/widgets/gaps.dart';
 import 'package:cood/core/widgets/my_default_button.dart';
 import 'package:cood/core/widgets/show_dialog.dart';
+import 'package:cood/features/categories/presentation/cubit/categories_cubit/categories_cubit.dart';
 import 'package:cood/features/categories/presentation/widgets/my_progress.dart';
 import 'package:cood/features/home/domain/entities/all_social_media_entity.dart';
 import 'package:cood/features/home/domain/entities/user_social_media_entity.dart';
@@ -15,6 +16,7 @@ import 'package:cood/features/home/presentation/cubit/get_all_social_media/get_a
 import 'package:cood/features/home/presentation/cubit/get_user_social_media/get_user_social_media_cubit.dart';
 import 'package:cood/features/home/presentation/cubit/get_user_social_media/get_user_social_media_state.dart';
 import 'package:cood/features/home/presentation/widgets/myAccounts/all_social_media_container_item.dart';
+import 'package:cood/features/home/presentation/widgets/myAccounts/show_communication_channel_dialog.dart';
 import 'package:cood/features/home/presentation/widgets/myAccounts/social_accounts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -92,7 +94,6 @@ class MySocialAccounts extends StatelessWidget {
                       await context
                           .read<GetAllSocialMediaCubit>()
                           .getAllSocialMedia();
-                      // ignore: use_build_context_synchronously
                       addAccountButton(context);
 //---------------------------------/end dialog
                     },
@@ -105,7 +106,10 @@ class MySocialAccounts extends StatelessWidget {
                 child: Container(
                   margin: EdgeInsets.all(10.h),
                   child: MyDefaultButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await context.read<CategoriesCubit>().getCategoriess();
+                      addCommunicationChannelButton(context);
+                    },
                     height: 50.h,
                     btnText: "communication_channels",
                   ),
@@ -195,10 +199,13 @@ class ShowAllAccountsDialog extends StatelessWidget {
                       );
                     },
                   );
-                } else {
-                  return const Center(
-                    child: Text(' please try again !'),
+                } else if (state is GetAllSocialMediaFailure) {
+                  return ErrorText(
+                    text: state.errorMessage,
+                    width: ScreenUtil().screenWidth,
                   );
+                } else {
+                  return const SizedBox();
                 }
               },
             ),
@@ -206,7 +213,7 @@ class ShowAllAccountsDialog extends StatelessWidget {
         ),
         Gaps.vGap20,
         MyDefaultButton(
-          onPressed: () async{
+          onPressed: () async {
             Navigator.pop(context);
             await context.read<GetUserSocialMediaCubit>().getUserSocialMedia();
           },
