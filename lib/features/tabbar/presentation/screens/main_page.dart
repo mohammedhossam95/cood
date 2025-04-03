@@ -1,12 +1,19 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
 import 'package:badges/badges.dart' as badges;
+import 'package:cood/config/routes/app_routes.dart';
+import 'package:cood/core/utils/constants.dart';
 import 'package:cood/core/utils/values/app_colors.dart';
 import 'package:cood/core/utils/values/svg_manager.dart';
+import 'package:cood/features/discover/presentation/screens/story_preview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
 import '/config/locale/app_localizations.dart';
 import '/core/utils/enums.dart';
@@ -90,6 +97,17 @@ class _MainPageState extends State<MainPage> {
                 //         ),
                 //       )
                 //     : null,
+                floatingActionButton: state.index == 1
+                    ? FloatingActionButton(
+                        backgroundColor: colors.main,
+                        child: const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
+                        onPressed: () => _pickMedia(context),
+                      )
+                    : null,
+
                 bottomNavigationBar: Container(
                   height: 80.r,
                   decoration: BoxDecoration(
@@ -242,5 +260,53 @@ class _MainPageState extends State<MainPage> {
   getUser() async {
     userType = await BlocProvider.of<AutoLoginCubit>(context).getUserType();
     setState(() {});
+  }
+
+  Future<void> _pickMedia(BuildContext context) async {
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80,
+    ); // or pickVideo
+
+    File? file = picked != null ? File(picked.path) : null;
+    if (!mounted) return;
+    final dir = await path_provider.getTemporaryDirectory();
+    final targetPath =
+        '${dir.absolute.path}/${DateTime.now().millisecondsSinceEpoch}.jpg';
+
+    if (file != null) {
+      File? compressedFile = await Constants().getCompressedFile(
+        file,
+        targetPath,
+      );
+      final isVideo = picked!.path.endsWith('.mp4'); // crude check
+      navigate(PreviewParams(
+        mediaFile: compressedFile ?? file,
+        isVideo: isVideo,
+      ));
+    }
+  }
+
+  navigate(PreviewParams params) {
+    if (checkFileSize(params.mediaFile) == true) {
+      Navigator.pushNamed(context, Routes.storyPreviewRoute, arguments: params);
+    }
+  }
+
+  bool? checkFileSize(File file) {
+    if (file.existsSync()) {
+      int fileSizeInBytes = file.lengthSync();
+      double fileSizeInKB = fileSizeInBytes / 1024;
+      double fileSizeInMB = fileSizeInKB / 1024;
+
+      if (fileSizeInMB < 10) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return null;
+    }
   }
 }
