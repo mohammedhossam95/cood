@@ -1,4 +1,5 @@
 import 'package:cood/features/categories/categories_injection.dart';
+import 'package:cood/features/discover/discover_injection.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -32,6 +33,7 @@ abstract class ServiceLocator {
     await initHomeFeatureInjection();
     await initCategoriesInjection();
     await initProfileFeatureInjection();
+    await initDiscoverFeatureInjection();
 
     /// Core
     await _injectSharedPreferences();

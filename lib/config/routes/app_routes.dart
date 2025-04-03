@@ -3,6 +3,10 @@ import 'package:cood/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:cood/features/auth/presentation/cubit/user_register_cubit/user_register_cubit.dart';
 import 'package:cood/features/auth/presentation/cubit/verify_otp/verify_otp_cubit.dart';
 import 'package:cood/features/categories/presentation/widgets/communication_details_item_sliver.dart';
+import 'package:cood/features/discover/domain/entities/stories_response.dart';
+import 'package:cood/features/discover/presentation/cubit/add_story_cubit/add_story_cubit.dart';
+import 'package:cood/features/discover/presentation/screens/story_preview_screen.dart';
+import 'package:cood/features/discover/presentation/screens/story_video.dart';
 import 'package:cood/features/home/presentation/cubit/get_pending_requests/get_pending_request_cubit.dart';
 import 'package:cood/features/profile/presentation/cubit/edit_profile_cubit/edit_profile_cubit.dart';
 import 'package:cood/features/profile/presentation/screens/friend_request_screen.dart';
@@ -78,6 +82,9 @@ class Routes {
   static const String saveMedicalHistoryRoute = '/SaveMyMedicalHistoryScreen';
   static const String addFollowUpScreenRoute = '/AddFollowUpScreen';
   static const String medHistoryFilterScreenRoute = '/MedHistoryFiltersScreen';
+
+  static const String storyPreviewRoute = '/StoryPreviewScreen';
+  static const String storyVideoRoute = '/StoryVideoScreen';
   static const String fullPhotoRoute = '/FullPhoto';
   static const String photoListRoute = '/PhotoList';
   static const String walletScreenRoute = '/walletScreenRoute';
@@ -245,6 +252,21 @@ class AppRoutes {
         return MaterialPageRoute(
           settings: routeSettings,
           builder: (context) => FullPhotoScreen(image: item),
+        );
+      case Routes.storyPreviewRoute:
+        PreviewParams params = routeSettings.arguments as PreviewParams;
+        return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (context) => BlocProvider(
+            create: (context) => ServiceLocator.instance<AddStoryCubit>(),
+            child: StoryPreviewScreen(params: params),
+          ),
+        );
+      case Routes.storyVideoRoute:
+        Story item = routeSettings.arguments as Story;
+        return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (context) => StoryVideoScreen(item: item),
         );
       case Routes.photoListRoute:
         Map<String, dynamic> map =
