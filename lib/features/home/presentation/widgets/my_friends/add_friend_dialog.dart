@@ -73,94 +73,108 @@ class _AddFriendDialogState extends State<AddFriendDialog> {
                 } else if (state is GetSearchUserByCodeSuccess) {
                   SearchUserByCodeEntity searchUserByCodeEntity =
                       state.response.data;
-                  return Container(
-                    margin: EdgeInsets.all(10.0.h),
-                    width: double.infinity,
-                    height: 55.0.h,
-                    decoration: BoxDecoration(
-                        color: MyColors.backGround,
-                        borderRadius: BorderRadius.circular(12.0.r),
-                        border: Border.all(
-                          color: MyColors.black,
-                        )),
-                    child: Row(
-                      //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // First: Container with Image
-                        ClipRRect(
-                          child: Container(
-                            width: 55.0.w, // Width of the image container
-                            height: 55.0.h, // Height of the image container
+                  return searchUserByCodeEntity.id != null
+                      ? Container(
+                          margin: EdgeInsets.all(10.0.h),
+                          width: double.infinity,
+                          height: 55.0.h,
+                          decoration: BoxDecoration(
+                              color: MyColors.backGround,
+                              borderRadius: BorderRadius.circular(12.0.r),
+                              border: Border.all(
+                                color: MyColors.black,
+                              )),
+                          child: Row(
+                            //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // First: Container with Image
+                              ClipRRect(
+                                child: Container(
+                                  width: 55.0.w, // Width of the image container
+                                  height:
+                                      55.0.h, // Height of the image container
 
-                            child: DiffImage(
-                              image: searchUserByCodeEntity.image ??
-                                  nullNetworkImage,
-                              borderRadius: isArabic
-                                  ? BorderRadius.only(
-                                      topLeft: Radius.circular(12.0.r),
-                                      topRight: Radius.circular(9.0.r),
-                                      bottomRight: Radius.circular(9.0.r),
-                                    )
-                                  : BorderRadius.only(
-                                      topLeft: Radius.circular(9.0.r),
-                                      topRight: Radius.circular(12.0.r),
-                                      bottomLeft: Radius.circular(9.0.r),
-                                    ),
+                                  child: DiffImage(
+                                    image: searchUserByCodeEntity.image ??
+                                        nullNetworkImage,
+                                    borderRadius: isArabic
+                                        ? BorderRadius.only(
+                                            topLeft: Radius.circular(12.0.r),
+                                            topRight: Radius.circular(9.0.r),
+                                            bottomRight: Radius.circular(9.0.r),
+                                          )
+                                        : BorderRadius.only(
+                                            topLeft: Radius.circular(9.0.r),
+                                            topRight: Radius.circular(12.0.r),
+                                            bottomLeft: Radius.circular(9.0.r),
+                                          ),
+                                  ),
+                                ),
+                              ),
+                              Gaps.hGap12, // Spacing between image and text
+
+                              Expanded(
+                                child: Text(
+                                  searchUserByCodeEntity.name ?? '',
+                                  style: TextStyles.bold14(),
+                                  maxLines: 2,
+                                ),
+                              ),
+
+                              // Third: Button with Text (Add)
+                              BlocConsumer<SendFriendRequestCubit,
+                                  SendFriendRequestState>(
+                                listener: (context, state) {
+                                  if (state is SendFriendRequestSuccess) {
+                                    showAppSnackBar(
+                                      context: context,
+                                      message:
+                                          state.response.message ?? 'success',
+                                      type: ToastType.success,
+                                    );
+                                    Navigator.pop(context);
+                                  } else if (state
+                                      is SendFriendRequestFailure) {
+                                    showAppSnackBar(
+                                      context: context,
+                                      message: state.errorMessage,
+                                      type: ToastType.error,
+                                    );
+                                  }
+                                },
+                                builder: (context, state) {
+                                  return (state is SendFriendRequestLoading)
+                                      ? Center(
+                                          child: CircularProgressIndicator())
+                                      : MyDefaultButton(
+                                          height: 35.0.h,
+                                          width: 75.0.w,
+                                          btnText: 'add',
+                                          borderRadius: 10.0.r,
+                                          onPressed: () async {
+                                            //--------------send friend request----
+                                            await context
+                                                .read<SendFriendRequestCubit>()
+                                                .sendFriendRequest(
+                                                    searchUserByCodeEntity.id ??
+                                                        -1);
+                                          },
+                                        );
+                                },
+                              ),
+                              Gaps.hGap8,
+                            ],
+                          ),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.only(top: 8.0.h),
+                          child: Text(
+                            'noResult'.tr,
+                            style: TextStyles.regular14(
+                              color: colors.main,
                             ),
                           ),
-                        ),
-                        Gaps.hGap12, // Spacing between image and text
-
-                        Expanded(
-                          child: Text(
-                            searchUserByCodeEntity.name ?? 'null',
-                            style: TextStyles.bold14(),
-                            maxLines: 2,
-                          ),
-                        ),
-
-                        // Third: Button with Text (Add)
-                        BlocConsumer<SendFriendRequestCubit,
-                            SendFriendRequestState>(
-                          listener: (context, state) {
-                            if (state is SendFriendRequestSuccess) {
-                              showAppSnackBar(
-                                context: context,
-                                message: state.response.message ?? 'success',
-                                type: ToastType.success,
-                              );
-                              Navigator.pop(context);
-                            }
-                            if (state is SendFriendRequestFailure) {
-                              showAppSnackBar(
-                                context: context,
-                                message: state.errorMessage,
-                                type: ToastType.error,
-                              );
-                            }
-                          },
-                          builder: (context, state) {
-                            return (state is SendFriendRequestLoading)
-                                ? Center(child: CircularProgressIndicator())
-                                : MyDefaultButton(
-                                    height: 35.0.h,
-                                    width: 75.0.w,
-                                    btnText: 'add',
-                                    borderRadius: 10.0.r,
-                                    onPressed: () async {
-                                      //--------------send friend request----
-                                      await context
-                                          .read<SendFriendRequestCubit>()
-                                          .sendFriendRequest(
-                                              searchUserByCodeEntity.id ?? -1);
-                                    },
-                                  );
-                          },
-                        ),
-                        Gaps.hGap8,
-                      ],
-                    ),
-                  );
+                        );
                 } else if (state is GetSearchUserByCodeFailure) {
                   return Padding(
                     padding: EdgeInsets.only(top: 20.0.h),
@@ -173,16 +187,7 @@ class _AddFriendDialogState extends State<AddFriendDialog> {
                     ),
                   );
                 } else {
-                  return Padding(
-                    padding: EdgeInsets.only(top: 8.0.h),
-                    child: Text(
-                      'noResult'.tr,
-                      style: TextStyle(
-                        color: colors.main,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  );
+                  return Container();
                 }
               },
             ),
