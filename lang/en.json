@@ -81,6 +81,7 @@
   "successDelete": "تمت العملية بنجاح.",
   "rebook": "إعادة الحجز",
   "imagePreview": "Image preview",
+  "videoPreview": "Video preview",
   "error_field_required": "Field is required",
   "error_valid_name": "Please enter your second and last name",
   "error_valid_phone_number": "Please enter a valid phone number",

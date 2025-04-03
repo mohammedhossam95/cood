@@ -13,9 +13,7 @@ class FullPhotoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)!.text('imagePreview'),
-        ),
+        title: Text('imagePreview'.tr),
         elevation: 4,
       ),
       body: Container(

@@ -84,6 +84,7 @@
   "delete_booking_alert": "هل انت متأكد من ان المريض لم يحضر ؟",
   "rebook": "إعادة الحجز",
   "imagePreview": "معاينة الصورة",
+  "videoPreview": "معاينة الفيديو",
   "error_field_required": "حقل مطلوب",
   "error_valid_name": "يرجى إدخال الإسم الثاني والإسم الأخير",
   "error_valid_phone_number": "يرجى إدخال رقم هاتف صحيح",
